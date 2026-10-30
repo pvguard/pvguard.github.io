@@ -1,0 +1,21 @@
+---
+layout: default
+---
+{% assign card = page %}
+<article class="post-outer post-single">
+  <h3 class="post-title">{{ page.title }}</h3>
+  <div class="post-body" id="post-body">
+    {{ content | replace: '<!--more-->', '<span id="more"></span>' }}
+  </div>
+  {% include post-footer.html %}
+</article>
+
+<nav class="blog-pager" aria-label="Más entradas">
+  {% if page.next %}
+    <a class="blog-pager-newer-link" href="{{ page.next.url | relative_url }}" title="{{ page.next.title }}">« Entrada más reciente</a>
+  {% endif %}
+  <a class="home-link" href="{{ '/' | relative_url }}">Página Principal</a>
+  {% if page.previous %}
+    <a class="blog-pager-older-link" href="{{ page.previous.url | relative_url }}" title="{{ page.previous.title }}">Entrada antigua »</a>
+  {% endif %}
+</nav>

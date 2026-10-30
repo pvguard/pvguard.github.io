@@ -1,0 +1,21 @@
+---
+layout: page
+title: Archivo del Blog
+permalink: /archivo/
+---
+{% assign meses = "enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre" | split: "," %}
+{% assign last_key = "" %}
+<div class="archive-page">
+{% for post in site.posts %}
+  {% assign key = post.date | date: "%Y-%m" %}
+  {% if key != last_key %}
+    {% unless forloop.first %}</ul>{% endunless %}
+    {% assign m = post.date | date: "%-m" | minus: 1 %}
+    <h2 id="{{ key }}">{{ meses[m] }} {{ post.date | date: "%Y" }}</h2>
+    <ul class="archive-list">
+    {% assign last_key = key %}
+  {% endif %}
+  <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a>{% if post.tags.size > 0 %} <span class="count">[{{ post.tags | join: ", " }}]</span>{% endif %}</li>
+  {% if forloop.last %}</ul>{% endif %}
+{% endfor %}
+</div>

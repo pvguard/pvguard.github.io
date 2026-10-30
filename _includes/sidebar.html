@@ -1,0 +1,64 @@
+<aside class="sidebar" aria-label="Barra lateral">
+
+  <section class="widget">
+    <h2>Buscar este blog</h2>
+    <form class="search-form" action="{{ '/buscar/' | relative_url }}" method="get" role="search">
+      <input type="search" name="q" placeholder="grep -i ..." aria-label="Buscar en el blog">
+      <button type="submit">Buscar</button>
+    </form>
+  </section>
+
+  <section class="widget">
+    <h2>BIENVENIDO</h2>
+    <p class="widget-tagline">{{ site.sidebar.tagline }}</p>
+    <p>{{ site.sidebar.about }}</p>
+  </section>
+
+  <section class="widget">
+    <h2>Mis Perfiles Profesionales</h2>
+    <ul class="widget-list">
+      {% if site.social.github %}<li><a href="{{ site.social.github }}" target="_blank" rel="noopener">GitHub</a></li>{% endif %}
+      {% if site.social.linkedin %}<li><a href="{{ site.social.linkedin }}" target="_blank" rel="noopener">LinkedIn</a></li>{% endif %}
+    </ul>
+  </section>
+
+  {% if site.social.coffee %}
+  <section class="widget">
+    <h2>☕ Buy me a coffee</h2>
+    <p>{{ site.sidebar.coffee_text }}</p>
+    <a class="coffee-btn" href="{{ site.social.coffee }}" target="_blank" rel="noopener">☕ Buy me a coffee</a>
+  </section>
+  {% endif %}
+
+  <section class="widget">
+    <h2>Etiquetas</h2>
+    {% capture tag_names %}{% for t in site.tags %}{{ t[0] }}|{% endfor %}{% endcapture %}
+    {% assign tag_names = tag_names | split: '|' | sort_natural %}
+    <ul class="widget-list label-list">
+      {% for name in tag_names %}{% if name != "" %}
+        {% capture tag_url %}/search/label/{{ name | slugify }}/{% endcapture %}
+        <li><a href="{{ tag_url | relative_url }}">{{ name }}</a> <span class="count">({{ site.tags[name].size }})</span></li>
+      {% endif %}{% endfor %}
+    </ul>
+  </section>
+
+  <section class="widget">
+    <h2>Archivo del Blog</h2>
+    {% assign meses = "enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre" | split: "," %}
+    <select class="archive-select" aria-label="Archivo del Blog">
+      <option value="">Archivo del Blog</option>
+      {% assign last_key = "" %}
+      {% for post in site.posts %}
+        {% assign key = post.date | date: "%Y-%m" %}
+        {% if key != last_key %}
+          {% assign m = post.date | date: "%-m" | minus: 1 %}
+          {% assign count = 0 %}
+          {% for p in site.posts %}{% assign pk = p.date | date: "%Y-%m" %}{% if pk == key %}{% assign count = count | plus: 1 %}{% endif %}{% endfor %}
+          <option value="{{ '/archivo/' | relative_url }}#{{ key }}">{{ meses[m] }} {{ post.date | date: "%Y" }} ({{ count }})</option>
+          {% assign last_key = key %}
+        {% endif %}
+      {% endfor %}
+    </select>
+  </section>
+
+</aside>

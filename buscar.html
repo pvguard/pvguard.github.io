@@ -1,0 +1,15 @@
+---
+layout: page
+title: Buscar
+permalink: /buscar/
+---
+<div class="search-page">
+  <form class="search-form big" action="{{ '/buscar/' | relative_url }}" method="get" role="search">
+    <span class="prompt" aria-hidden="true">r00t@pvguard:~$ grep -ri</span>
+    <input type="search" name="q" id="search-input" placeholder="kerberoasting, sqlmap, htb..." aria-label="Buscar en el blog" autofocus>
+    <button type="submit">Buscar</button>
+  </form>
+  <p class="search-status" id="search-status" aria-live="polite"></p>
+  <ul class="search-results" id="search-results"></ul>
+</div>
+<script>window.PVGUARD_SEARCH_INDEX = "{{ '/search.json' | relative_url }}";</script>

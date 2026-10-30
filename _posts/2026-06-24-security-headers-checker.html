@@ -1,0 +1,1335 @@
+---
+title: "Security Headers Checker"
+date: 2026-06-24 20:39:42 -0500
+tags: ["repositorios"]
+description: "[+] Inicializando módulo Pentesting Web... [+] Cargando PVGUARD Security Headers Checker v1.0... [+] Analizando headers: HSTS / CSP / XFO / CORS /…"
+image: "/assets/img/posts/security-headers-checker-202606/01-security-headers-checker.png"
+permalink: "/2026/06/security-headers-checker.html"
+blogger_url: "https://pvguard.blogspot.com/2026/06/security-headers-checker.html"
+---
+{% raw %}<h1 style="text-align: center;">
+  <span style="color: red;">
+    PVGUARD Security Headers Checker: Herramienta para analizar cabeceras HTTP de seguridad
+  </span>
+</h1>
+
+<div class="separator" style="clear: both;">
+  <a href="/assets/img/posts/security-headers-checker-202606/01-security-headers-checker.png" style="display: block; padding: 1em 0; text-align: center;">
+    <img alt="PVGUARD Security Headers Checker" border="0" width="600" data-original-height="941" data-original-width="1672" src="/assets/img/posts/security-headers-checker-202606/01-security-headers-checker.png"/>
+  </a>
+</div>
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+<style>
+/* =========================================================
+   BLOGGER POST - PVGUARD SECURITY HEADERS CHECKER
+   Style Blogger / Terminal Hacker / by Gh0s7m4n
+   ========================================================= */
+
+.pvguard-post {
+  --bg: #05070b;
+  --bg2: #07111b;
+  --card: rgba(9, 18, 30, .92);
+  --card2: rgba(5, 12, 22, .96);
+  --green: #00ff88;
+  --green2: #00c46f;
+  --cyan: #00d9ff;
+  --blue: #2b7cff;
+  --yellow: #ffd166;
+  --red: #ff4d6d;
+  --text: #e9fff5;
+  --muted: #a8b8c6;
+  --line: rgba(0, 255, 136, .28);
+  --shadow: 0 0 28px rgba(0,255,136,.18);
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0,255,136,.14), transparent 32%),
+    radial-gradient(circle at 80% 20%, rgba(0,217,255,.11), transparent 28%),
+    linear-gradient(135deg, #020409 0%, #07111c 48%, #020409 100%);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,136,.25);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.pvguard-post * {
+  box-sizing: border-box;
+}
+
+.pvguard-post a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pvguard-post code {
+  color: #dfffee;
+  background: rgba(0,0,0,.34);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,255,136,.12);
+}
+
+.pvguard-post::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,136,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,.055) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .45;
+  pointer-events: none;
+}
+
+.pvguard-post::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, rgba(0,0,0,.18) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: .28;
+}
+
+.pv-inner {
+  position: relative;
+  z-index: 2;
+  padding: 26px;
+}
+
+/* ================= LOADER ================= */
+
+.pv-loader {
+  background: rgba(0, 0, 0, .62);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 22px;
+  box-shadow: inset 0 0 25px rgba(0,255,136,.06);
+  overflow: hidden;
+  animation: pvLoaderExit .65s ease 2.8s forwards;
+}
+
+.pv-loader-top {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.pv-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 14px var(--green);
+}
+
+.pv-dot:nth-child(2) {
+  background: var(--yellow);
+  box-shadow: 0 0 14px var(--yellow);
+}
+
+.pv-dot:nth-child(3) {
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red);
+}
+
+.pv-loader-code {
+  font-family: Consolas, Monaco, monospace;
+  color: var(--green);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.pv-loader-code span {
+  color: var(--cyan);
+}
+
+.pv-main {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: pvMainShow .7s ease 3s forwards;
+}
+
+@keyframes pvLoaderExit {
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-width: 0;
+  }
+}
+
+@keyframes pvMainShow {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= HERO ================= */
+
+.pv-hero {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 24px;
+  align-items: center;
+  padding: 28px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(0,255,136,.08), rgba(0,217,255,.05)),
+    rgba(0,0,0,.36);
+  box-shadow: inset 0 0 45px rgba(0,255,136,.05);
+}
+
+.pv-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,.35);
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(0,255,136,.06);
+  margin-bottom: 16px;
+}
+
+.pv-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 14px var(--green);
+}
+
+.pv-title {
+  font-size: clamp(32px, 6vw, 64px);
+  line-height: .94;
+  margin: 0 0 16px;
+  letter-spacing: -1.8px;
+  color: #ffffff;
+  text-shadow: 0 0 22px rgba(0,255,136,.28);
+}
+
+.pv-title span {
+  display: block;
+  color: var(--green);
+}
+
+.pv-desc {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 20px;
+}
+
+.pv-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.pv-badge {
+  border: 1px solid rgba(0,255,136,.28);
+  background: rgba(0,0,0,.34);
+  color: #dfffee;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(0,255,136,.06);
+}
+
+.pv-badge.blue {
+  border-color: rgba(0,217,255,.35);
+  color: var(--cyan);
+}
+
+.pv-badge.yellow {
+  border-color: rgba(255,209,102,.45);
+  color: var(--yellow);
+}
+
+.pv-badge.red {
+  border-color: rgba(255,77,109,.45);
+  color: var(--red);
+}
+
+.pv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.pv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 17px;
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.pv-btn.primary {
+  color: #00150b;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  box-shadow: 0 0 22px rgba(0,255,136,.28);
+}
+
+.pv-btn.secondary {
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,.42);
+  background: rgba(0,0,0,.35);
+}
+
+.pv-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(0,255,136,.28);
+}
+
+/* ================= TERMINAL ================= */
+
+.pv-terminal {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(0,255,136,.25);
+  box-shadow: 0 0 35px rgba(0,0,0,.45);
+}
+
+.pv-terminal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  background: rgba(255,255,255,.05);
+  border-bottom: 1px solid rgba(0,255,136,.18);
+}
+
+.pv-term-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.pv-term-dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+
+.pv-term-dots i:nth-child(2) {
+  background: var(--yellow);
+  box-shadow: 0 0 10px var(--yellow);
+}
+
+.pv-term-dots i:nth-child(3) {
+  background: var(--red);
+  box-shadow: 0 0 10px var(--red);
+}
+
+.pv-terminal-title {
+  color: var(--muted);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+}
+
+.pv-terminal-body {
+  padding: 18px;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #dfffee;
+  overflow-x: auto;
+}
+
+.pv-prompt {
+  color: var(--green);
+}
+
+.pv-cyan {
+  color: var(--cyan);
+}
+
+.pv-yellow {
+  color: var(--yellow);
+}
+
+.pv-red {
+  color: var(--red);
+}
+
+.pv-green {
+  color: var(--green);
+}
+
+.pv-comment {
+  color: #7d8fa1;
+}
+
+/* ================= SECTIONS ================= */
+
+.pv-section {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid rgba(0,255,136,.18);
+  box-shadow: 0 0 28px rgba(0,0,0,.24);
+}
+
+.pv-section h2 {
+  margin: 0 0 14px;
+  font-size: 26px;
+  color: #ffffff;
+  letter-spacing: -.6px;
+}
+
+.pv-section h2 span {
+  color: var(--green);
+}
+
+.pv-section p {
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0 0 14px;
+  font-size: 15.5px;
+}
+
+.pv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.pv-card {
+  background:
+    linear-gradient(135deg, rgba(0,255,136,.055), rgba(0,217,255,.035)),
+    rgba(0,0,0,.28);
+  border: 1px solid rgba(0,255,136,.18);
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 140px;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.pv-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0,255,136,.5);
+  box-shadow: 0 0 24px rgba(0,255,136,.13);
+}
+
+.pv-card-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(0,255,136,.09);
+  border: 1px solid rgba(0,255,136,.24);
+  color: var(--green);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.pv-card h3 {
+  margin: 0 0 9px;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.pv-card p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ================= CODE BLOCKS ================= */
+
+.pv-code {
+  position: relative;
+  margin: 14px 0;
+  border-radius: 15px;
+  border: 1px solid rgba(0,255,136,.22);
+  background: #02060a;
+  overflow: hidden;
+}
+
+.pv-code-title {
+  padding: 10px 14px;
+  color: var(--muted);
+  background: rgba(255,255,255,.045);
+  border-bottom: 1px solid rgba(0,255,136,.15);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+}
+
+.pv-code pre {
+  margin: 0;
+  padding: 15px;
+  overflow-x: auto;
+  color: #dfffee;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.pv-code .cmd {
+  color: var(--green);
+}
+
+.pv-code .arg {
+  color: var(--cyan);
+}
+
+/* ================= TABLES ================= */
+
+.pv-mini-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 14px;
+  margin-top: 15px;
+  border: 1px solid rgba(0,255,136,.2);
+}
+
+.pv-mini-table th,
+.pv-mini-table td {
+  padding: 13px;
+  border-bottom: 1px solid rgba(0,255,136,.12);
+  text-align: left;
+  color: var(--muted);
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.pv-mini-table th {
+  color: var(--green);
+  background: rgba(0,255,136,.07);
+}
+
+.pv-mini-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.pv-mini-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ================= ALERTS ================= */
+
+.pv-alert {
+  margin-top: 18px;
+  padding: 17px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,209,102,.35);
+  background: rgba(255,209,102,.08);
+  color: #fff6d8;
+  line-height: 1.7;
+}
+
+.pv-alert strong {
+  color: var(--yellow);
+}
+
+.pv-danger-box {
+  margin-top: 18px;
+  padding: 17px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,77,109,.35);
+  background: rgba(255,77,109,.08);
+  color: #ffe3e9;
+  line-height: 1.7;
+}
+
+.pv-danger-box strong {
+  color: var(--red);
+}
+
+/* ================= STATUS ================= */
+
+.pv-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pv-status.ok {
+  color: #00150b;
+  background: var(--green);
+}
+
+.pv-status.medium {
+  color: #160e00;
+  background: var(--yellow);
+}
+
+.pv-status.high {
+  color: #fff;
+  background: var(--red);
+}
+
+.pv-status.info {
+  color: #001217;
+  background: var(--cyan);
+}
+
+/* ================= VIDEO / GIF DEMO CORREGIDO ================= */
+
+.pv-demo-box {
+  border-radius: 20px;
+  padding: 22px;
+  margin-top: 18px;
+  background:
+    linear-gradient(135deg, rgba(0,217,255,.08), rgba(0,255,136,.05)),
+    rgba(0,0,0,.34);
+  border: 1px solid rgba(0,217,255,.28);
+  box-shadow: 0 0 28px rgba(0,217,255,.08);
+}
+
+.pv-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,136,.35);
+  background:
+    radial-gradient(circle at center, rgba(0,255,136,.10), transparent 48%),
+    #02060a;
+  box-shadow:
+    0 0 35px rgba(0,255,136,.16),
+    inset 0 0 40px rgba(0,255,136,.04);
+}
+
+.pv-video-frame::before {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--green);
+  background: rgba(0,0,0,.68);
+  border: 1px solid rgba(0,255,136,.30);
+  padding: 8px 11px;
+  border-radius: 999px;
+  box-shadow: 0 0 16px rgba(0,255,136,.18);
+}
+
+.pv-video-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(transparent 50%, rgba(0,0,0,.18) 50%),
+    radial-gradient(circle at center, transparent 45%, rgba(0,0,0,.18) 100%);
+  background-size: 100% 4px, auto;
+  opacity: .28;
+}
+
+.pv-video-frame a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pv-video-frame img.pv-demo-gif {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #02060a;
+  border: 0;
+}
+
+.pv-demo-caption {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 15px;
+  background: rgba(0,0,0,.30);
+  border: 1px solid rgba(0,255,136,.18);
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.pv-demo-caption strong {
+  color: var(--green);
+}
+
+/* ================= FOOTER ================= */
+
+.pv-footer {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(0,255,136,.14), transparent 55%),
+    rgba(0,0,0,.48);
+  border: 1px solid rgba(0,255,136,.22);
+}
+
+.pv-footer h2 {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: 28px;
+}
+
+.pv-footer p {
+  margin: 0 auto 18px;
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.pv-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,.28);
+  background: rgba(0,0,0,.32);
+  font-family: Consolas, Monaco, monospace;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .pv-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pv-inner {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-hero,
+  .pv-section,
+  .pv-footer {
+    padding: 18px;
+  }
+
+  .pv-title {
+    font-size: 38px;
+  }
+
+  .pv-actions {
+    flex-direction: column;
+  }
+
+  .pv-btn {
+    width: 100%;
+  }
+
+  .pv-code pre {
+    font-size: 12.5px;
+  }
+
+  .pv-video-frame::before {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+}
+</style>
+
+<div class="pvguard-post">
+  <div class="pv-inner">
+
+    <!-- LOADING TERMINAL -->
+    <div class="pv-loader">
+      <div class="pv-loader-top">
+        <div class="pv-dot"></div>
+        <div class="pv-dot"></div>
+        <div class="pv-dot"></div>
+      </div>
+
+      <div class="pv-loader-code">
+        <div><span>[+]</span> Inicializando módulo Pentesting Web...</div>
+        <div><span>[+]</span> Cargando PVGUARD Security Headers Checker v1.0...</div>
+        <div><span>[+]</span> Analizando headers: HSTS / CSP / XFO / CORS / Referrer-Policy...</div>
+        <div><span>[OK]</span> Generando entorno visual para Blogger...</div>
+      </div>
+    </div>
+
+    <div class="pv-main">
+
+      <!-- HERO -->
+      <section class="pv-hero">
+        <div>
+          <div class="pv-kicker">Security Tool / Python / Web Pentesting</div>
+
+          <h1 class="pv-title">
+            PVGUARD
+            <span>Security Headers Checker</span>
+          </h1>
+
+          <p class="pv-desc">
+            Herramienta creada para pentesters, auditores de seguridad, Blue Team y equipos DevSecOps.
+            Permite analizar cabeceras HTTP de seguridad, detectar configuraciones débiles, validar
+            controles defensivos y generar evidencia técnica profesional para auditorías web.
+          </p>
+
+          <div class="pv-badges">
+            <span class="pv-badge">Version 1.0</span>
+            <span class="pv-badge blue">Python 3</span>
+            <span class="pv-badge yellow">HTML Report</span>
+            <span class="pv-badge">JSON / CSV</span>
+            <span class="pv-badge blue">Linux x86_64</span>
+            <span class="pv-badge red">by Gh0s7m4n</span>
+          </div>
+
+          <div class="pv-actions">
+            <a class="pv-btn primary" href="https://github.com/joepm21/CheckerSecurityHeaders" rel="noopener noreferrer" target="_blank">
+              Ver proyecto en GitHub
+            </a>
+            <a class="pv-btn secondary" href="#demo-security-headers">
+              Ver video demo
+            </a>
+          </div>
+        </div>
+
+        <div class="pv-terminal">
+          <div class="pv-terminal-head">
+            <div class="pv-term-dots">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="pv-terminal-title">root💀gh0s7m4n:~/PVGUARD</div>
+          </div>
+
+          <div class="pv-terminal-body">
+            <div><span class="pv-prompt">┌──(root💀gh0s7m4n)-[~/CheckerSecurityHeaders]</span></div>
+            <div><span class="pv-prompt">└─$</span> ./PVGUARD_SecurityHeaders <span class="pv-cyan">https://example.com --report --lang es</span></div>
+            <br />
+            <div><span class="pv-yellow">[INFO]</span> Verificando cabeceras de seguridad...</div>
+            <div><span class="pv-yellow">[CHECK]</span> Strict-Transport-Security</div>
+            <div><span class="pv-yellow">[CHECK]</span> Content-Security-Policy</div>
+            <div><span class="pv-yellow">[CHECK]</span> X-Frame-Options</div>
+            <div><span class="pv-yellow">[CHECK]</span> X-Content-Type-Options</div>
+            <div><span class="pv-green">[OK]</span> Reporte HTML generado correctamente</div>
+            <div><span class="pv-comment"># Uso únicamente en entornos autorizados</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESCRIPCION -->
+      <section class="pv-section">
+        <h2><span>01.</span> ¿Qué es PVGUARD Security Headers Checker?</h2>
+
+        <p>
+          <strong>PVGUARD Security Headers Checker</strong> es una herramienta enfocada en la revisión técnica
+          de cabeceras HTTP de seguridad. Su objetivo es identificar headers ausentes, configuraciones débiles,
+          políticas demasiado permisivas y exposición innecesaria de información del servidor.
+        </p>
+
+        <p>
+          Es útil durante pruebas de penetración web, auditorías de hardening, validaciones DevSecOps,
+          revisiones de cumplimiento y generación de evidencia para reportes técnicos.
+        </p>
+
+        <div class="pv-grid">
+          <div class="pv-card">
+            <div class="pv-card-icon">🛡️</div>
+            <h3>Validación de Headers</h3>
+            <p>Evalúa cabeceras como HSTS, CSP, X-Frame-Options, Referrer-Policy, Permissions-Policy y más.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">📄</div>
+            <h3>Reporte HTML</h3>
+            <p>Permite generar evidencia visual para adjuntar en informes técnicos de auditoría.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🧪</div>
+            <h3>Pruebas Autenticadas</h3>
+            <p>Soporta cookies, tokens Bearer y cabeceras personalizadas para evaluar rutas protegidas.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">⚙️</div>
+            <h3>Uso por CLI</h3>
+            <p>Ejecuta análisis rápidos desde terminal con parámetros simples y salida clara.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🔎</div>
+            <h3>Modo Proxy</h3>
+            <p>Puede trabajar junto con Burp Suite, OWASP ZAP o mitmproxy para conservar evidencia.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">💀</div>
+            <h3>Estilo Pentesting</h3>
+            <p>Diseñada para laboratorios, auditorías autorizadas y validaciones de seguridad web.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFORMACION TECNICA -->
+      <section class="pv-section">
+        <h2><span>02.</span> Información técnica</h2>
+
+        <p>
+          La herramienta fue empaquetada para facilitar su ejecución en entornos Linux, especialmente en distribuciones
+          usadas para auditoría como Kali Linux, Parrot OS o Ubuntu.
+        </p>
+
+        <div class="pv-mini-table-wrap">
+          <table class="pv-mini-table">
+            <thead>
+              <tr>
+                <th>Propiedad</th>
+                <th>Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nombre</td>
+                <td><code>PVGUARD_SecurityHeaders</code></td>
+              </tr>
+              <tr>
+                <td>Versión</td>
+                <td>1.0</td>
+              </tr>
+              <tr>
+                <td>Plataforma</td>
+                <td>Linux x86_64</td>
+              </tr>
+              <tr>
+                <td>Tipo</td>
+                <td>Herramienta de análisis de cabeceras HTTP de seguridad</td>
+              </tr>
+              <tr>
+                <td>Formatos de salida</td>
+                <td>Consola, HTML, JSON y CSV</td>
+              </tr>
+              <tr>
+                <td>Autor</td>
+                <td>Gh0s7m4n</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- INSTALACION -->
+      <section class="pv-section">
+        <h2><span>03.</span> Instalación</h2>
+
+        <p>
+          Clona el repositorio desde GitHub y entra al directorio del proyecto.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Clonar repositorio</div>
+          <pre><span class="cmd">git clone</span> <span class="arg">https://github.com/joepm21/CheckerSecurityHeaders.git</span>
+<span class="cmd">cd</span> <span class="arg">CheckerSecurityHeaders</span></pre>
+        </div>
+
+        <p>
+          Luego asigna permisos de ejecución al binario.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Permisos de ejecución</div>
+          <pre><span class="cmd">chmod</span> <span class="arg">+x PVGUARD_SecurityHeaders</span></pre>
+        </div>
+
+        <p>
+          Para visualizar todas las opciones disponibles, ejecuta la ayuda.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Ver ayuda</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">--help</span></pre>
+        </div>
+      </section>
+
+      <!-- USO GENERAL -->
+      <section class="pv-section">
+        <h2><span>04.</span> Uso general</h2>
+
+        <p>
+          Puedes ejecutar la herramienta de forma interactiva o enviar directamente una URL objetivo.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Modo interactivo</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Análisis básico en consola</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com --console --lang es</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Generar reporte HTML</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com --report --lang es --html pvguard_report.html</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Exportar evidencia en HTML, JSON y CSV</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com \
+  --report \
+  --html pvguard_report.html \
+  --json pvguard_result.json \
+  --csv pvguard_findings.csv \
+  --no-browser</span></pre>
+        </div>
+      </section>
+
+      <!-- PRUEBAS AVANZADAS -->
+      <section class="pv-section">
+        <h2><span>05.</span> Pruebas avanzadas</h2>
+
+        <p>
+          PVGUARD también puede utilizarse en escenarios donde se requiere autenticación, análisis mediante proxy
+          o modificación de cabeceras para validar comportamientos específicos.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Prueba usando Burp Suite como proxy</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com \
+  --report \
+  --proxy http://127.0.0.1:8080 \
+  -k</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Prueba autenticada con cookie</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com/dashboard \
+  --console \
+  --cookie "SESSIONID=abc123; csrftoken=xyz"</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Prueba con token Bearer</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com/api/profile \
+  --console \
+  -a "Bearer eyJhbGciOi..."</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Cabeceras personalizadas</div>
+          <pre><span class="cmd">./PVGUARD_SecurityHeaders</span> <span class="arg">https://example.com \
+  --report \
+  -H "X-Forwarded-For: 127.0.0.1" \
+  -H "X-Test: PVGUARD"</span></pre>
+        </div>
+      </section>
+
+      <!-- VIDEO DEMO CORREGIDO CON NUEVO GIF -->
+      <section class="pv-section" id="demo-security-headers">
+        <h2><span>06.</span> Video demo de uso</h2>
+
+        <p>
+          En este apartado se realiza una demostración ejecutando la herramienta,
+          analizando una URL y generando el reporte final.
+        </p>
+
+        <div class="pv-demo-box">
+          <div class="pv-video-frame">
+
+            <!-- 
+              GIF DIRECTO PARA BLOGGER.
+              IMPORTANTE:
+              - No lo coloques dentro de iframe.
+              - No uses el bloque placeholder.
+              - Se usa /s1218/ para conservar mejor resolución.
+            -->
+
+            <a href="/assets/img/posts/security-headers-checker-202606/02-test_1.5x_HD.gif" target="_blank" rel="noopener noreferrer">
+              <img
+                class="pv-demo-gif"
+                src="/assets/img/posts/security-headers-checker-202606/02-test_1.5x_HD.gif"
+                alt="Demo de uso de PVGUARD Security Headers Checker"
+                loading="eager"
+              />
+            </a>
+
+          </div>
+
+         </div>
+      </section>
+
+      <!-- HEADERS EVALUADOS -->
+      <section class="pv-section">
+        <h2><span>07.</span> Cabeceras evaluadas</h2>
+
+        <p>
+          La herramienta permite revisar cabeceras críticas para endurecimiento web y controles defensivos del navegador.
+          Estas cabeceras ayudan a reducir riesgos como Clickjacking, MIME Sniffing, downgrade HTTPS, exposición de información,
+          abuso de APIs del navegador y políticas CORS inseguras.
+        </p>
+
+        <div class="pv-mini-table-wrap">
+          <table class="pv-mini-table">
+            <thead>
+              <tr>
+                <th>Header</th>
+                <th>Riesgo asociado</th>
+                <th>Valor recomendado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>Strict-Transport-Security</code></td>
+                <td>Downgrade HTTPS / SSL Stripping</td>
+                <td><code>max-age=31536000; includeSubDomains</code></td>
+              </tr>
+              <tr>
+                <td><code>Content-Security-Policy</code></td>
+                <td>XSS, carga de recursos no confiables y Clickjacking</td>
+                <td>Política restrictiva sin <code>unsafe-inline</code> ni <code>unsafe-eval</code></td>
+              </tr>
+              <tr>
+                <td><code>X-Frame-Options</code></td>
+                <td>Clickjacking</td>
+                <td><code>DENY</code> o <code>SAMEORIGIN</code></td>
+              </tr>
+              <tr>
+                <td><code>X-Content-Type-Options</code></td>
+                <td>MIME Sniffing</td>
+                <td><code>nosniff</code></td>
+              </tr>
+              <tr>
+                <td><code>Referrer-Policy</code></td>
+                <td>Exposición de rutas, tokens o parámetros sensibles</td>
+                <td><code>strict-origin-when-cross-origin</code></td>
+              </tr>
+              <tr>
+                <td><code>Permissions-Policy</code></td>
+                <td>Uso no controlado de cámara, micrófono, geolocalización y APIs del navegador</td>
+                <td>Restringir permisos innecesarios</td>
+              </tr>
+              <tr>
+                <td><code>Access-Control-Allow-Origin</code></td>
+                <td>CORS permisivo</td>
+                <td>Evitar <code>*</code> cuando existan credenciales</td>
+              </tr>
+              <tr>
+                <td><code>Server</code> / <code>X-Powered-By</code></td>
+                <td>Divulgación de tecnología o versiones</td>
+                <td>Reducir o eliminar información innecesaria</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- INTERPRETACION -->
+      <section class="pv-section">
+        <h2><span>08.</span> Interpretación de resultados</h2>
+
+        <p>
+          Los resultados deben interpretarse según el contexto de la aplicación, exposición pública, criticidad del activo
+          y controles compensatorios existentes.
+        </p>
+
+        <div class="pv-mini-table-wrap">
+          <table class="pv-mini-table">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Significado</th>
+                <th>Ejemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="pv-status ok">OK</span></td>
+                <td>La cabecera existe y tiene una configuración aceptable.</td>
+                <td><code>X-Content-Type-Options: nosniff</code></td>
+              </tr>
+              <tr>
+                <td><span class="pv-status high">HIGH</span></td>
+                <td>Falta una cabecera crítica o existe una configuración de alto riesgo.</td>
+                <td>Ausencia de HSTS en aplicación HTTPS.</td>
+              </tr>
+              <tr>
+                <td><span class="pv-status medium">WARNING</span></td>
+                <td>La cabecera existe, pero requiere endurecimiento.</td>
+                <td>CSP con <code>unsafe-inline</code> o <code>unsafe-eval</code>.</td>
+              </tr>
+              <tr>
+                <td><span class="pv-status info">INFO</span></td>
+                <td>Hallazgo informativo o dependiente del contexto.</td>
+                <td>Divulgación de servidor mediante <code>Server</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pv-danger-box">
+          <strong>Importante:</strong> una cabecera ausente no siempre significa explotación directa,
+          pero sí representa una debilidad de hardening que debe ser evaluada y priorizada.
+        </div>
+      </section>
+
+      <!-- HARDENING -->
+      <section class="pv-section">
+        <h2><span>09.</span> Recomendaciones de hardening</h2>
+
+        <p>
+          Las siguientes configuraciones ayudan a reducir riesgos comunes relacionados con seguridad del navegador,
+          exposición de información y abuso de políticas permisivas.
+        </p>
+
+        <div class="pv-grid">
+          <div class="pv-card">
+            <div class="pv-card-icon">🔐</div>
+            <h3>HSTS</h3>
+            <p>Configurar Strict-Transport-Security para forzar HTTPS y reducir riesgos de downgrade.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🧱</div>
+            <h3>CSP</h3>
+            <p>Implementar Content-Security-Policy evitando unsafe-inline, unsafe-eval y orígenes amplios.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🖼️</div>
+            <h3>Clickjacking</h3>
+            <p>Usar X-Frame-Options o CSP frame-ancestors para controlar carga dentro de iframes.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🧬</div>
+            <h3>MIME Sniffing</h3>
+            <p>Mantener X-Content-Type-Options con valor nosniff.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🌐</div>
+            <h3>CORS</h3>
+            <p>Evitar Access-Control-Allow-Origin abierto cuando existan credenciales o datos sensibles.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🕵️</div>
+            <h3>Divulgación</h3>
+            <p>Reducir información expuesta en Server, X-Powered-By y cabeceras con versiones internas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CASOS DE USO -->
+      <section class="pv-section">
+        <h2><span>10.</span> Casos de uso</h2>
+
+        <p>
+          PVGUARD Security Headers Checker está pensado para escenarios donde existe autorización previa y el objetivo
+          es validar controles de seguridad web de forma responsable.
+        </p>
+
+        <div class="pv-grid">
+          <div class="pv-card">
+            <div class="pv-card-icon">🔍</div>
+            <h3>Pentesting Web</h3>
+            <p>Validación rápida de cabeceras HTTP durante pruebas de penetración autorizadas.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">📊</div>
+            <h3>Reportes Técnicos</h3>
+            <p>Permite documentar impacto, evidencia y recomendaciones claras.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🏢</div>
+            <h3>Auditorías</h3>
+            <p>Útil para revisar hardening web en aplicaciones corporativas.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">⚙️</div>
+            <h3>DevSecOps</h3>
+            <p>Puede integrarse en validaciones internas antes de publicación.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🎓</div>
+            <h3>Laboratorios</h3>
+            <p>Ideal para aprender sobre cabeceras HTTP y controles del navegador.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🛡️</div>
+            <h3>Blue Team</h3>
+            <p>Ayuda a comprobar si los controles defensivos fueron configurados correctamente.</p>
+          </div>
+        </div>
+
+        <div class="pv-alert">
+          <strong>Aviso legal:</strong> utiliza esta herramienta únicamente en sistemas propios,
+          laboratorios, auditorías con permiso o programas donde este tipo de validación esté permitido.
+        </div>
+      </section>
+
+      <!-- FOOTER CTA -->
+      <section class="pv-footer">
+        <h2>Descarga PVGUARD Security Headers Checker</h2>
+
+        <p>
+          Proyecto creado para apoyar pruebas de seguridad web, validación de cabeceras HTTP,
+          hardening y generación de evidencia técnica para auditorías.
+        </p>
+
+        <div class="pv-actions" style="justify-content: center;">
+          <a class="pv-btn primary" href="https://github.com/joepm21/CheckerSecurityHeaders" rel="noopener noreferrer" target="_blank">
+            Abrir repositorio
+          </a>
+          <a class="pv-btn secondary" href="#demo-security-headers">
+            Ver video demo
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>{% endraw %}

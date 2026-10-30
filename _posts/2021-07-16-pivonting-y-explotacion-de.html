@@ -1,0 +1,2447 @@
+---
+title: "Pivonting y explotación de vulnerabilidad eternalblue"
+date: 2021-07-16 13:28:00 -0500
+tags: ["red team"]
+description: "☠ OFFENSIVE SECURITY · PIVOTING · MS17-010 Pivoting y explotación controlada de EternalBlue Laboratorio técnico orientado a comprender un escenario de…"
+image: "/assets/img/posts/pivonting-y-explotacion-de-202107/12-hacker.jpg"
+permalink: "/2021/07/pivonting-y-explotacion-de.html"
+blogger_url: "https://pvguard.blogspot.com/2021/07/pivonting-y-explotacion-de.html"
+---
+{% raw %}<!-- =========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     ========================================================= -->
+
+<h1 style="
+    text-align:center;
+    margin:0 0 22px 0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:30px;
+    line-height:1.25;
+    font-weight:800;
+    color:#00f5ff;
+    text-shadow:
+        0 0 8px rgba(0,245,255,.55),
+        0 0 18px rgba(0,245,255,.20);
+">
+    Pivoting y explotación controlada de EternalBlue
+</h1>
+
+
+<div class="separator"
+     style="
+        clear:both;
+        text-align:center;
+        margin:0 0 24px 0;
+     ">
+
+    <a
+        href="/assets/img/posts/pivonting-y-explotacion-de-202107/12-hacker.jpg"
+        style="display:block;text-align:center;"
+    >
+
+        <img
+            alt="Pivoting y explotación controlada de EternalBlue"
+            border="0"
+            data-original-height="364"
+            data-original-width="612"
+            src="/assets/img/posts/pivonting-y-explotacion-de-202107/12-hacker.jpg"
+
+            style="
+                width:100%;
+                max-width:760px;
+                height:auto;
+                border-radius:16px;
+                border:1px solid rgba(0,245,255,.38);
+                box-shadow:
+                    0 0 24px rgba(0,245,255,.18),
+                    0 14px 38px rgba(0,0,0,.60);
+            "
+        />
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CORTE DE PORTADA BLOGGER
+     ========================================================= -->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   EternalBlue + Pivoting Lab
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    position:relative;
+
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   CYBER GRID
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+
+    mask-image:
+
+        linear-gradient(
+            to bottom,
+            black 0%,
+            rgba(0,0,0,.85) 52%,
+            transparent 100%
+        );
+}
+
+
+/* =========================================================
+   SCANLINES
+   ========================================================= */
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+
+        rgba(0,0,0,.45);
+
+    box-shadow:
+
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+
+    height:340px;
+
+    right:-140px;
+
+    top:-160px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+
+        0 0 10px rgba(0,245,255,.55),
+
+        0 0 25px rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 0 12px rgba(0,245,255,.045);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   LAB CARDS
+   ========================================================= */
+
+.pt-cards {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.pt-card {
+
+    position:relative;
+
+    min-height:165px;
+
+    padding:19px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(0,245,255,.055),
+            rgba(0,0,0,.14)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.17);
+
+    border-radius:16px;
+
+    transition:.22s ease;
+}
+
+
+.pt-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:22px;
+
+    bottom:22px;
+
+    width:2px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+}
+
+
+.pt-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.50);
+
+    box-shadow:
+        0 0 20px rgba(0,245,255,.10);
+}
+
+
+.pt-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:var(--white);
+}
+
+
+.pt-card p {
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    text-align:left;
+}
+
+
+.pt-icon {
+
+    width:42px;
+
+    height:42px;
+
+    margin-bottom:13px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.25);
+}
+
+
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+.pt-terminal {
+
+    margin-top:19px;
+
+    overflow:hidden;
+
+    background:#000405;
+
+    border:
+        1px solid rgba(0,245,255,.28);
+
+    border-radius:15px;
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.07),
+        0 15px 35px rgba(0,0,0,.60);
+}
+
+
+.pt-terminal-top {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:
+        10px 14px;
+
+    color:var(--cyan);
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.12),
+            rgba(0,245,255,.025)
+        );
+
+    border-bottom:
+        1px solid rgba(0,245,255,.18);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+.pt-dots {
+
+    display:flex;
+
+    gap:6px;
+}
+
+
+.pt-dot {
+
+    width:9px;
+
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 8px var(--cyan);
+}
+
+
+.pt-terminal pre {
+
+    margin:0;
+
+    padding:18px;
+
+    overflow-x:auto;
+
+    color:#d8feff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    white-space:pre-wrap;
+}
+
+
+.pt-prompt {
+    color:var(--green);
+}
+
+
+.pt-command {
+    color:var(--cyan);
+}
+
+
+.pt-comment {
+    color:#5d898e;
+}
+
+
+/* =========================================================
+   INFO / WARNING / SUCCESS
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#ffdce4;
+
+    background:
+        rgba(255,59,98,.07);
+
+    border-left:
+        3px solid var(--red);
+}
+
+
+.pt-warning strong {
+    color:#ff859b;
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   NETWORK BOX
+   ========================================================= */
+
+.pt-network {
+
+    margin-top:18px;
+
+    padding:18px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:14px;
+}
+
+
+.pt-network-row {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    padding:8px 0;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.09);
+}
+
+
+.pt-network-row:last-child {
+    border-bottom:none;
+}
+
+
+.pt-network-label {
+
+    min-width:150px;
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+
+    font-weight:700;
+}
+
+
+.pt-network-value {
+
+    color:#e4ffff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+}
+
+
+/* =========================================================
+   INLINE CODE
+   ========================================================= */
+
+.pt-code {
+
+    display:inline-block;
+
+    padding:
+        3px 7px;
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.06);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:7px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.pt-separator {
+
+    height:1px;
+
+    margin:22px 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-cards {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .pt-content {
+
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+
+        padding:18px;
+    }
+
+    .pt-title {
+
+        font-size:31px;
+    }
+
+    .pt-btn {
+
+        width:100%;
+    }
+
+    .pt-network-row {
+
+        display:block;
+    }
+
+    .pt-network-label {
+
+        display:block;
+
+        margin-bottom:5px;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+    <div class="pt-scanlines"></div>
+
+
+    <div class="pt-content">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="pt-hero">
+
+            <div class="pt-kicker">
+                ☠ OFFENSIVE SECURITY · PIVOTING · MS17-010
+            </div>
+
+
+            <h1 class="pt-title">
+
+                Pivoting y explotación controlada de
+
+                <span>
+                    EternalBlue
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Laboratorio técnico orientado a comprender un escenario
+                de post-explotación y movimiento a través de redes
+                internas utilizando una máquina Windows 7 vulnerable a
+                MS17-010 como punto de pivote hacia un segundo segmento.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    🐧 Kali Linux
+                </span>
+
+                <span class="pt-badge">
+                    🪟 Windows 7 x64
+                </span>
+
+                <span class="pt-badge">
+                    ☠ MS17-010
+                </span>
+
+                <span class="pt-badge">
+                    ↪ Pivoting
+                </span>
+
+                <span class="pt-badge">
+                    ⚙ Metasploit
+                </span>
+
+                <span class="pt-badge">
+                    🛡 Authorized Lab
+                </span>
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                <strong>⚠ Uso controlado:</strong>
+
+                las técnicas descritas deben utilizarse únicamente
+                en laboratorios, CTFs, infraestructuras propias o
+                sistemas sobre los que exista autorización explícita
+                para realizar pruebas de seguridad.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRODUCCIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📘 Introducción
+            </h2>
+
+
+            <p>
+
+                En este laboratorio se analiza el concepto de
+                <strong>pivoting</strong> y su aplicación dentro de
+                un escenario controlado de pentesting.
+
+            </p>
+
+
+            <p>
+
+                El objetivo inicial corresponde a un sistema
+                <strong>Windows 7 x64</strong> vulnerable a
+                <strong>MS17-010 / EternalBlue</strong>. Una vez
+                obtenida una sesión sobre dicho host, se identificará
+                una segunda interfaz de red conectada a un segmento
+                interno que no es directamente accesible desde el
+                sistema de pruebas.
+
+            </p>
+
+
+            <p>
+
+                Utilizando el host comprometido como punto de pivote,
+                se configurará el enrutamiento dentro de Metasploit
+                para realizar reconocimiento sobre la red interna y
+                validar la conectividad con un segundo objetivo
+                representado por un servidor Metasploitable.
+
+            </p>
+
+
+            <div class="pt-info">
+
+                <strong>[ PIVOTING ]</strong>
+
+                Técnica de post-explotación mediante la cual un sistema
+                comprometido se utiliza como punto intermedio para
+                acceder o enrutar tráfico hacia redes que originalmente
+                no son alcanzables desde la máquina de auditoría.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TOPOLOGÍA
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🌐 Arquitectura del laboratorio
+            </h2>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        ⚔
+                    </div>
+
+                    <h3>
+                        Sistema de pruebas
+                    </h3>
+
+                    <p>
+                        Kali Linux utilizado para reconocimiento,
+                        explotación controlada y configuración
+                        del pivoting.
+                    </p>
+
+                    <p style="margin-top:12px;">
+                        <strong>IP:</strong> 192.168.1.71
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        ↪
+                    </div>
+
+                    <h3>
+                        Host pivote
+                    </h3>
+
+                    <p>
+                        Windows 7 x64 vulnerable a EternalBlue
+                        y conectado simultáneamente a dos
+                        segmentos de red.
+                    </p>
+
+                    <p style="margin-top:12px;">
+                        <strong>red1:</strong> 192.168.1.40
+                        <br>
+                        <strong>red2:</strong> 10.10.10.2
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🖥
+                    </div>
+
+                    <h3>
+                        Segundo objetivo
+                    </h3>
+
+                    <p>
+                        Servidor Metasploitable ubicado dentro
+                        del segmento interno.
+                    </p>
+
+                    <p style="margin-top:12px;">
+                        <strong>IP:</strong> 10.10.10.1
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/24-kali.png"
+                    alt="Arquitectura del laboratorio de pivoting">
+
+                <div class="pt-caption">
+                    [ LAB ] Topología utilizada para el escenario de pivoting
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HOST PIVOTE
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🪟 Host pivote · Windows 7 x64
+            </h2>
+
+
+            <p>
+
+                El primer objetivo corresponde a un sistema Windows 7
+                x64 expuesto a la vulnerabilidad EternalBlue.
+
+            </p>
+
+
+            <p>
+
+                El host dispone de dos interfaces de red. La primera
+                mantiene conectividad con el sistema Kali Linux,
+                mientras que la segunda proporciona acceso al segmento
+                interno <span class="pt-code">10.10.10.0/24</span>.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/29-win7.png"
+                    alt="Windows 7 vulnerable a EternalBlue">
+
+                <div class="pt-caption">
+                    [ TARGET ] Windows 7 x64 vulnerable a MS17-010
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/08-red.png"
+                    alt="Interfaces de red Windows 7">
+
+                <div class="pt-caption">
+                    [ NETWORK ] Segunda interfaz conectada al segmento interno
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/19-win.png"
+                    alt="Segmento interno Windows 7">
+
+                <div class="pt-caption">
+                    [ NETWORK ] Configuración del segmento interno
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/11-metasploitable.png"
+                    alt="Servidor Metasploitable">
+
+                <div class="pt-caption">
+                    [ INTERNAL TARGET ] Metasploitable · 10.10.10.1
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ETERNALBLUE
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                ☠ Validación controlada de EternalBlue
+            </h2>
+
+
+            <p>
+
+                Una vez completado el proceso previo de reconocimiento,
+                enumeración y análisis del host Windows 7, se procede
+                a validar la exposición a MS17-010 mediante Metasploit.
+
+            </p>
+
+
+            <h3>
+                Iniciar Metasploit Framework
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@pentest · metasploit
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">┌──(root㉿kali)-[~]</span>
+<span class="pt-prompt">└─#</span> <span class="pt-command">msfconsole</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/25-msfconsole.png"
+                    alt="Inicio de Metasploit">
+
+                <div class="pt-caption">
+                    [ METASPLOIT ] Inicialización del framework
+                </div>
+
+            </div>
+
+
+            <h3>
+                Buscar módulos asociados a MS17-010
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        metasploit · search
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">msf6 &gt;</span> <span class="pt-command">search ms17</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/15-search.png"
+                    alt="Búsqueda de MS17-010">
+
+                <div class="pt-caption">
+                    [ SEARCH ] Módulos disponibles para MS17-010
+                </div>
+
+            </div>
+
+
+            <h3>
+                Seleccionar módulo EternalBlue
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        metasploit · ms17-010
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">msf6 &gt;</span> <span class="pt-command">use exploit/windows/smb/ms17_010_eternalblue</span>
+
+<span class="pt-prompt">msf6 exploit(ms17_010_eternalblue) &gt;</span> <span class="pt-command">show options</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/09-use.png"
+                    alt="Opciones EternalBlue">
+
+                <div class="pt-caption">
+                    [ MODULE ] Opciones del exploit MS17-010 EternalBlue
+                </div>
+
+            </div>
+
+
+            <h3>
+                Configurar el objetivo
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        metasploit · target configuration
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">msf6 exploit(ms17_010_eternalblue) &gt;</span> <span class="pt-command">set rhosts 192.168.1.40</span>
+
+<span class="pt-prompt">msf6 exploit(ms17_010_eternalblue) &gt;</span> <span class="pt-command">show options</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/07-victima.png"
+                    alt="Configuración RHOSTS">
+
+                <div class="pt-caption">
+                    [ TARGET ] Configuración de RHOSTS
+                </div>
+
+            </div>
+
+
+            <h3>
+                Ejecutar la validación
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        metasploit · exploit
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">msf6 exploit(ms17_010_eternalblue) &gt;</span> <span class="pt-command">exploit</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/10-exploit.png"
+                    alt="Ejecución de EternalBlue">
+
+                <div class="pt-caption">
+                    [ EXPLOIT ] Validación controlada de MS17-010
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/02-sysinfo.png"
+                    alt="Información de la sesión Meterpreter">
+
+                <div class="pt-caption">
+                    [ SESSION ] Información del sistema objetivo
+                </div>
+
+            </div>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    [ + ] SESSION ESTABLISHED
+                </strong>
+
+                <br>
+
+                La explotación controlada permitió establecer una
+                sesión sobre el sistema Windows 7 del laboratorio.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             NETWORK DISCOVERY
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔎 Identificación de redes internas
+            </h2>
+
+
+            <p>
+
+                Con la sesión activa, el siguiente paso consiste en
+                identificar las rutas y adaptadores de red disponibles
+                en el host comprometido.
+
+            </p>
+
+
+            <p>
+
+                Esta fase permite determinar si el sistema dispone de
+                conectividad hacia segmentos que no son accesibles
+                directamente desde Kali Linux.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        meterpreter · network discovery
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">meterpreter &gt;</span> <span class="pt-command">route</span>
+
+<span class="pt-prompt">meterpreter &gt;</span> <span class="pt-command">ipconfig</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/16-route.png"
+                    alt="Route Meterpreter">
+
+                <div class="pt-caption">
+                    [ ROUTING ] Consulta inicial de rutas
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/18-route2.png"
+                    alt="Rutas del sistema objetivo">
+
+                <div class="pt-caption">
+                    [ ROUTING ] Identificación del segmento interno
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/22-ipconfig.png"
+                    alt="IPConfig Meterpreter">
+
+                <div class="pt-caption">
+                    [ NETWORK ] Interfaces disponibles en el host pivote
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/04-ipconfig2.png"
+                    alt="Segunda interfaz del host pivote">
+
+                <div class="pt-caption">
+                    [ NETWORK ] Segunda interfaz vinculada a 10.10.10.0/24
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    [ DISCOVERY ]
+                </strong>
+
+                El sistema Windows 7 dispone de conectividad hacia
+                una segunda red interna, lo que permite utilizarlo
+                como punto de pivote.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             AUTOROUTE
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                ↪ Autoroute y pivoting
+            </h2>
+
+
+            <p>
+
+                Una vez identificado el segmento interno, se utiliza
+                la funcionalidad de enrutamiento de Metasploit para
+                dirigir tráfico hacia dicha red utilizando la sesión
+                comprometida como intermediario.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/03-autorute.png"
+                    alt="Autoroute Metasploit">
+
+                <div class="pt-caption">
+                    [ PIVOT ] Selección del módulo autoroute
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/32-autoroute2.png"
+                    alt="Configuración autoroute">
+
+                <div class="pt-caption">
+                    [ PIVOT ] Configuración de la red interna
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Se configura la subred identificada, la máscara
+                correspondiente y la sesión que actuará como punto
+                de pivote.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/20-autoroute3.png"
+                    alt="Configuración de subnet">
+
+                <div class="pt-caption">
+                    [ ROUTE ] Incorporación del segmento interno
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/14-autoroute4.png"
+                    alt="Rutas Metasploit">
+
+                <div class="pt-caption">
+                    [ ROUTING TABLE ] Rutas agregadas correctamente
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTERNAL DISCOVERY
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📡 Reconocimiento del segmento interno
+            </h2>
+
+
+            <p>
+
+                Con la ruta configurada, se realiza reconocimiento
+                sobre el segmento interno para identificar sistemas
+                alcanzables a través del host pivote.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/26-ping_sw.png"
+                    alt="Ping sweep interno">
+
+                <div class="pt-caption">
+                    [ DISCOVERY ] Reconocimiento de hosts internos
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/13-ping_sw2.png"
+                    alt="Resultado ping sweep">
+
+                <div class="pt-caption">
+                    [ DISCOVERY ] Identificación del segundo objetivo
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PORT SCAN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔍 Reconocimiento de puertos
+            </h2>
+
+
+            <p>
+
+                Después de identificar el host interno, se realiza
+                enumeración TCP mediante el módulo de port scanning
+                incluido en Metasploit.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        metasploit · port scanner
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">msf6 &gt;</span> <span class="pt-command">search portscan</span>
+
+<span class="pt-prompt">msf6 &gt;</span> <span class="pt-command">use auxiliary/scanner/portscan/tcp</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/01-portscan.png"
+                    alt="Módulo portscan Metasploit">
+
+                <div class="pt-caption">
+                    [ SCANNER ] Selección del módulo TCP Port Scanner
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/28-portscan2.png"
+                    alt="Resultado de escaneo de puertos">
+
+                <div class="pt-caption">
+                    [ RESULTS ] Servicios expuestos por el segundo objetivo
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PORT FORWARDING
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔀 Port Forwarding
+            </h2>
+
+
+            <p>
+
+                Para acceder desde Kali Linux a servicios disponibles
+                únicamente dentro del segmento interno, se utiliza
+                port forwarding a través de la sesión Meterpreter.
+
+            </p>
+
+
+            <p>
+
+                Esta técnica establece una redirección entre un puerto
+                local del sistema de auditoría y un servicio remoto
+                accesible únicamente mediante el host pivote.
+
+            </p>
+
+
+            <div class="pt-network">
+
+                <div class="pt-network-row">
+
+                    <span class="pt-network-label">
+                        ADD
+                    </span>
+
+                    <span class="pt-network-value">
+                        Añade una nueva regla de forwarding.
+                    </span>
+
+                </div>
+
+
+                <div class="pt-network-row">
+
+                    <span class="pt-network-label">
+                        DELETE
+                    </span>
+
+                    <span class="pt-network-value">
+                        Elimina una regla específica.
+                    </span>
+
+                </div>
+
+
+                <div class="pt-network-row">
+
+                    <span class="pt-network-label">
+                        LIST
+                    </span>
+
+                    <span class="pt-network-value">
+                        Lista las reglas configuradas.
+                    </span>
+
+                </div>
+
+
+                <div class="pt-network-row">
+
+                    <span class="pt-network-label">
+                        FLUSH
+                    </span>
+
+                    <span class="pt-network-value">
+                        Elimina las reglas existentes.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/23-portfwd.png"
+                    alt="Port forwarding Meterpreter">
+
+                <div class="pt-caption">
+                    [ PORTFWD ] Configuración de forwarding
+                </div>
+
+            </div>
+
+
+            <p>
+
+                En el primer caso se redirige el servicio FTP del
+                servidor interno hacia el puerto local
+                <span class="pt-code">2121</span>.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/21-portfwd2.png"
+                    alt="FTP mediante port forwarding">
+
+                <div class="pt-caption">
+                    [ FTP ] Acceso mediante localhost:2121
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Posteriormente se configura una nueva redirección
+                para acceder al servicio HTTP disponible en el
+                puerto 80 del segundo objetivo.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/30-portfwd3.png"
+                    alt="Port forwarding HTTP">
+
+                <div class="pt-caption">
+                    [ PORTFWD ] Redirección del servicio HTTP
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/05-portfwd4.png"
+                    alt="Acceso HTTP interno">
+
+                <div class="pt-caption">
+                    [ HTTP ] Acceso al servicio interno mediante forwarding
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/17-portfwd5.png"
+                    alt="Resultado port forwarding">
+
+                <div class="pt-caption">
+                    [ STATUS ] Validación de la regla de forwarding
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SECOND TARGET
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🎯 Validación del segundo objetivo
+            </h2>
+
+
+            <p>
+
+                Durante la enumeración del servidor Metasploitable
+                se identifica un servicio FTP expuesto dentro del
+                segmento interno.
+
+            </p>
+
+
+            <p>
+
+                Utilizando la redirección previamente configurada,
+                se valida el acceso al servicio y posteriormente se
+                ejecuta la prueba de concepto correspondiente dentro
+                del laboratorio.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/23-portfwd.png"
+                    alt="Configuración FTP forwarding">
+
+                <div class="pt-caption">
+                    [ PIVOT ] Acceso al servicio FTP interno
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/06-vsftp.png"
+                    alt="VSFTPD Metasploitable">
+
+                <div class="pt-caption">
+                    [ SERVICE ] Validación del servicio FTP
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/27-vsftp2.png"
+                    alt="Shell sobre Metasploitable">
+
+                <div class="pt-caption">
+                    [ SESSION ] Acceso obtenido sobre el segundo objetivo
+                </div>
+
+            </div>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    [ + ] PIVOT SUCCESSFUL
+                </strong>
+
+                <br>
+
+                El escenario demuestra cómo una sesión inicial sobre
+                un host conectado a múltiples segmentos puede utilizarse
+                como punto de pivote para alcanzar y evaluar un sistema
+                ubicado en una red interna.
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/pivonting-y-explotacion-de-202107/31-final.png"
+                    alt="Resultado final pivoting">
+
+                <div class="pt-caption">
+                    [ FINAL ] Sesiones obtenidas dentro del laboratorio
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONCLUSION
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛡 Conclusión técnica
+            </h2>
+
+
+            <p>
+
+                El laboratorio demuestra de forma práctica cómo una
+                vulnerabilidad en un sistema conectado a múltiples
+                segmentos de red puede convertirse en un punto de
+                entrada para realizar movimiento lateral y pivoting
+                hacia infraestructura interna.
+
+            </p>
+
+
+            <p>
+
+                Después de establecer una sesión sobre Windows 7
+                mediante EternalBlue, se identificaron las interfaces
+                adicionales del host, se configuró el enrutamiento
+                dentro de Metasploit y se realizó reconocimiento
+                sobre el segmento <span class="pt-code">10.10.10.0/24</span>.
+
+            </p>
+
+
+            <p>
+
+                Finalmente, mediante port forwarding fue posible
+                acceder a servicios del servidor Metasploitable
+                desde el sistema Kali Linux y completar la validación
+                del segundo objetivo.
+
+            </p>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    Security Note:
+                </strong>
+
+                la segmentación de red, el parcheo de sistemas,
+                la eliminación de protocolos obsoletos, el control
+                de rutas entre segmentos y la monitorización del
+                tráfico lateral son controles fundamentales para
+                reducir el impacto de este tipo de escenarios.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <section class="pt-footer">
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Cybersecurity · Pentesting · Pivoting · Offensive Security
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div
+                class="pt-actions"
+                style="justify-content:center;">
+
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+            </div>
+
+
+            <p style="margin-top:20px;">
+
+                Desarrollado por
+
+                <strong style="
+                    color:#00f5ff;
+                    text-shadow:
+                        0 0 9px rgba(0,245,255,.55);
+                ">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}

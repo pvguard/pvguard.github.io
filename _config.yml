@@ -1,0 +1,63 @@
+# ==========================================================
+#  PVGuard Cybersecurity Technology - Configuracion del sitio
+# ==========================================================
+
+title: "PVGuard Cybersecurity Technology"
+description: "Seguridad informática | Ethical hacking | Pentesting | Red Team"
+author: "Gh0s7m4n"
+lang: es
+timezone: America/Lima
+
+# Cambia esto cuando tengas tu dominio (ej. https://pvguard.com)
+url: "https://pvguard.github.io"
+baseurl: ""
+
+# Estilo del sitio: "cyan" (panel hacker cian, el de tu plantilla) o "green" (Matrix verde, como se ve hoy el blog)
+estilo: cyan
+
+# Icono que aparece junto al titulo (el script de migracion lo descarga a assets/img/logo.png)
+logo: "/assets/img/logo.png"
+
+# Widget "Bienvenido" de la barra lateral
+sidebar:
+  tagline: "Cybersecurity · Pentesting · Offensive Security"
+  about: "Comparto contenido técnico sobre pruebas de penetración, Red Team, seguridad web y móvil, laboratorios, herramientas, PoC y writeups."
+  coffee_text: "Tu apoyo me ayuda a seguir desarrollando herramientas, PoC y contenido técnico para la comunidad."
+
+social:
+  github: "https://github.com/joepm21/"
+  linkedin: "https://www.linkedin.com/in/joe-p-95907a203"
+  coffee: "https://www.buymeacoffee.com/joemonroy2y"
+
+# Las URLs quedan igual que en Blogger: /2026/07/ghostinject.html
+permalink: /:year/:month/:title.html
+
+# Todo lo que va antes de <!--more--> se muestra en la portada
+excerpt_separator: "<!--more-->"
+
+paginate: 10
+paginate_path: "/page:num/"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+include:
+  - _headers
+
+exclude:
+  - scripts/
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .jekyll-cache/

@@ -1,0 +1,18 @@
+{% assign share_url = card.url | absolute_url | url_encode %}{% assign share_title = card.title | url_encode %}
+<div class="post-footer">
+  <div class="post-footer-line">
+    <span class="post-author">By <a href="{{ site.social.github }}" rel="author">{{ card.author | default: site.author }}</a></span>
+    <span class="post-share">
+      <a href="mailto:?subject={{ share_title }}&amp;body={{ share_url }}" title="Enviar por correo">Email</a>
+      <a href="https://x.com/intent/post?url={{ share_url }}&amp;text={{ share_title }}" target="_blank" rel="noopener" title="Compartir en X">X</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener" title="Compartir en Facebook">Facebook</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" target="_blank" rel="noopener" title="Compartir en LinkedIn">LinkedIn</a>
+    </span>
+  </div>
+  {% if card.tags.size > 0 %}
+  <div class="post-footer-line post-labels">
+    Labels:
+    {% for tag in card.tags %}{% capture tag_url %}/search/label/{{ tag | slugify }}/{% endcapture %}<a href="{{ tag_url | relative_url }}" rel="tag">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}
+  </div>
+  {% endif %}
+</div>

@@ -1,0 +1,2101 @@
+---
+title: "EMAPT Review"
+date: 2023-06-14 14:56:00 -0500
+tags: ["Certificaciones"]
+description: "📱 MOBILE SECURITY · ANDROID · REVERSE ENGINEERING eLearnSecurity Mobile Application Penetration Tester eMAPT Review Mi experiencia personal preparando y…"
+image: "/assets/img/posts/emapt-review-202306/01-AVvXsEiNZdjV4xDLVoDseRySoBfh-Hcw76lepSksL9J0t630HgcBoNEqsSjx.png"
+permalink: "/2023/06/emapt-review.html"
+blogger_url: "https://pvguard.blogspot.com/2023/06/emapt-review.html"
+---
+{% raw %}<!-- =========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     ========================================================= -->
+
+<h1 style="
+    text-align:center;
+    margin:0 0 22px 0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:30px;
+    line-height:1.25;
+    font-weight:800;
+    color:#00f5ff;
+    text-shadow:
+        0 0 8px rgba(0,245,255,.55),
+        0 0 18px rgba(0,245,255,.20);
+">
+    eMAPT Review: Mobile Application Penetration Tester
+</h1>
+
+
+<div class="separator"
+     style="
+        clear:both;
+        text-align:center;
+        margin:0 0 24px 0;
+     ">
+
+    <a
+        href="/assets/img/posts/emapt-review-202306/01-AVvXsEiNZdjV4xDLVoDseRySoBfh-Hcw76lepSksL9J0t630HgcBoNEqsSjx.png"
+        style="display:block;text-align:center;"
+        target="_blank"
+        rel="noopener">
+
+        <img
+            alt="eLearnSecurity Mobile Application Penetration Tester eMAPT"
+            border="0"
+            data-original-height="400"
+            data-original-width="400"
+            src="/assets/img/posts/emapt-review-202306/01-AVvXsEiNZdjV4xDLVoDseRySoBfh-Hcw76lepSksL9J0t630HgcBoNEqsSjx.png"
+
+            style="
+                width:100%;
+                max-width:520px;
+                height:auto;
+                border-radius:16px;
+                border:1px solid rgba(0,245,255,.38);
+                box-shadow:
+                    0 0 24px rgba(0,245,255,.18),
+                    0 14px 38px rgba(0,0,0,.60);
+            ">
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CORTE DE PORTADA BLOGGER
+     ========================================================= -->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   eMAPT REVIEW
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+    margin:0 auto;
+
+    position:relative;
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+}
+
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+        rgba(0,0,0,.45);
+
+    box-shadow:
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+    height:340px;
+
+    right:-140px;
+    top:-160px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.55),
+        0 0 25px rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.pt-cards {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.pt-card {
+
+    position:relative;
+
+    min-height:165px;
+
+    padding:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,245,255,.055),
+            rgba(0,0,0,.14)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.17);
+
+    border-radius:16px;
+
+    transition:.22s ease;
+}
+
+
+.pt-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:22px;
+    bottom:22px;
+
+    width:2px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+}
+
+
+.pt-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.50);
+
+    box-shadow:
+        0 0 20px rgba(0,245,255,.10);
+}
+
+
+.pt-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:var(--white);
+}
+
+
+.pt-card p {
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    text-align:left;
+}
+
+
+.pt-icon {
+
+    width:42px;
+    height:42px;
+
+    margin-bottom:13px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.25);
+}
+
+
+/* =========================================================
+   INFO BOXES
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#ffdce4;
+
+    background:
+        rgba(255,59,98,.07);
+
+    border-left:
+        3px solid var(--red);
+}
+
+
+.pt-warning strong {
+    color:#ff859b;
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   LISTS
+   ========================================================= */
+
+.pt-list {
+
+    margin-top:18px;
+
+    padding:
+        18px 20px 18px 40px;
+
+    background:
+        rgba(0,245,255,.025);
+
+    border:
+        1px solid rgba(0,245,255,.16);
+
+    border-radius:14px;
+}
+
+
+.pt-list li {
+
+    margin:
+        10px 0;
+
+    color:#d5f8fa;
+
+    line-height:1.65;
+}
+
+
+/* =========================================================
+   FLOW
+   ========================================================= */
+
+.pt-flow {
+
+    counter-reset:ptstep;
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:18px;
+}
+
+
+.pt-step {
+
+    position:relative;
+
+    padding:
+        16px 16px 16px 58px;
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    color:#d7fafd;
+
+    line-height:1.65;
+}
+
+
+.pt-step::before {
+
+    counter-increment:ptstep;
+
+    content:
+        counter(ptstep);
+
+    position:absolute;
+
+    left:15px;
+    top:15px;
+
+    width:29px;
+    height:29px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:8px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 13px rgba(0,245,255,.28);
+}
+
+
+/* =========================================================
+   RESOURCE LINKS
+   ========================================================= */
+
+.pt-resource {
+
+    margin-top:11px;
+
+    padding:13px 15px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    border:
+        1px solid rgba(0,245,255,.16);
+
+    border-radius:11px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   SEPARATOR
+   ========================================================= */
+
+.pt-separator {
+
+    height:1px;
+
+    margin:22px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-cards {
+        grid-template-columns:1fr;
+    }
+
+    .pt-content {
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+        padding:18px;
+    }
+
+    .pt-title {
+        font-size:31px;
+    }
+
+    .pt-btn {
+        width:100%;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+    <div class="pt-scanlines"></div>
+
+
+    <div class="pt-content">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="pt-hero">
+
+            <div class="pt-kicker">
+                📱 MOBILE SECURITY · ANDROID · REVERSE ENGINEERING
+            </div>
+
+
+            <h1 class="pt-title">
+
+                eLearnSecurity Mobile Application Penetration Tester
+
+                <span>
+                    eMAPT Review
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Mi experiencia personal preparando y presentando
+                la certificación eMAPT, incluyendo el enfoque práctico
+                del examen, ingeniería inversa sobre aplicaciones Android,
+                desarrollo de APK, recursos de estudio y recomendaciones
+                basadas en mi proceso de preparación.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    📱 Mobile Pentesting
+                </span>
+
+                <span class="pt-badge">
+                    🤖 Android
+                </span>
+
+                <span class="pt-badge">
+                    🔍 Reverse Engineering
+                </span>
+
+                <span class="pt-badge">
+                    🔐 Cryptography
+                </span>
+
+                <span class="pt-badge">
+                    🧪 Practical Exam
+                </span>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                Esta publicación está basada en mi experiencia personal
+                durante la preparación y presentación del examen.
+                El objetivo es compartir una referencia general sobre
+                el proceso sin revelar soluciones específicas del entorno.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRODUCCIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📘 Introducción
+            </h2>
+
+
+            <p>
+
+                En esta oportunidad quiero compartir el proceso que
+                seguí para presentar la certificación
+                <strong>eMAPT</strong>, junto con algunas recomendaciones
+                basadas en mi experiencia personal de preparación.
+
+            </p>
+
+
+            <p>
+
+                A diferencia de otras certificaciones enfocadas
+                principalmente en pentesting de infraestructura,
+                esta evaluación incorpora un componente importante
+                relacionado con análisis de aplicaciones móviles,
+                ingeniería inversa y desarrollo sobre Android.
+
+            </p>
+
+
+            <p>
+
+                Antes de presentar el examen ya contaba con experiencia
+                previa en programación y había dedicado tiempo adicional
+                a estudiar pentesting móvil mediante diferentes
+                plataformas de formación.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTEXTO
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🎯 Contexto de la certificación
+            </h2>
+
+
+            <p>
+
+                Desde mi experiencia, eMAPT es una certificación
+                completamente práctica orientada a evaluar habilidades
+                relacionadas con pentesting de aplicaciones móviles
+                y análisis de aplicaciones Android.
+
+            </p>
+
+
+            <p>
+
+                Además de identificar vulnerabilidades, el examen
+                requería comprender el funcionamiento interno de
+                determinadas aplicaciones y aplicar conocimientos
+                relacionados con ingeniería inversa y desarrollo.
+
+            </p>
+
+
+            <h3>
+                Áreas que estudié durante la preparación
+            </h3>
+
+
+            <ul class="pt-list">
+
+                <li>
+                    Recopilación de información.
+                </li>
+
+                <li>
+                    Ingeniería inversa de aplicaciones Android.
+                </li>
+
+                <li>
+                    Identificación y explotación de vulnerabilidades Android.
+                </li>
+
+                <li>
+                    Principios de seguridad aplicados.
+                </li>
+
+                <li>
+                    Análisis de fallos y defectos lógicos.
+                </li>
+
+                <li>
+                    Desarrollo orientado a entornos Android.
+                </li>
+
+                <li>
+                    Cifrado y criptografía.
+                </li>
+
+                <li>
+                    Identificación de implementaciones vulnerables.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =====================================================
+             VALE LA PENA
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                ⭐ ¿Vale la pena?
+            </h2>
+
+
+            <p>
+
+                En mi caso considero que sí.
+
+            </p>
+
+
+            <p>
+
+                Me pareció una certificación diferente a otras
+                evaluaciones que había realizado anteriormente,
+                porque va más allá de ejecutar una prueba de penetración
+                convencional.
+
+            </p>
+
+
+            <p>
+
+                Parte del proceso consiste en analizar aplicaciones,
+                comprender su funcionamiento mediante ingeniería inversa
+                y posteriormente desarrollar una APK capaz de interactuar
+                con las vulnerabilidades o mecanismos identificados
+                dentro de las aplicaciones de prueba.
+
+            </p>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    ✓ Enfoque práctico
+                </strong>
+
+                <br>
+
+                Uno de los aspectos que más valoré fue la combinación
+                entre pentesting móvil, análisis de código,
+                ingeniería inversa y desarrollo Android.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DIFICULTAD
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📊 ¿Qué tan difícil fue?
+            </h2>
+
+
+            <p>
+
+                Personalmente no lo consideré un examen extremadamente
+                difícil, pero tampoco sencillo.
+
+            </p>
+
+
+            <p>
+
+                El componente que representó el mayor desafío para mí
+                fue el desarrollo de la APK requerida durante la
+                evaluación. Para resolver correctamente esta parte
+                resulta muy útil disponer de conocimientos previos
+                de programación Android.
+
+            </p>
+
+
+            <p>
+
+                Antes del examen me había preparado utilizando contenido
+                de <strong>INE</strong> y
+                <strong>7ASecurity</strong>, además de contar con
+                conocimientos previos de programación.
+
+            </p>
+
+
+            <p>
+
+                Inicialmente esperaba encontrar una mayor cantidad
+                de actividades relacionadas con descubrimiento de
+                vulnerabilidades, flags, ataques Man-in-the-Middle
+                o SSL Pinning.
+
+            </p>
+
+
+            <p>
+
+                Sin embargo, en mi experiencia el componente de
+                desarrollo tuvo bastante importancia: era necesario
+                entender las aplicaciones proporcionadas y desarrollar
+                otra APK que automatizara determinadas funciones
+                relacionadas con el proceso de análisis y descifrado.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             EXAMEN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🧪 ¿Cómo fue el examen?
+            </h2>
+
+
+            <p>
+
+                Al comenzar la evaluación recibí una
+                <strong>carta de compromiso</strong> en formato PDF.
+                Este documento contenía la información necesaria
+                para comenzar a trabajar con el entorno del examen.
+
+            </p>
+
+
+            <p>
+
+                Una vez revisado el documento, procedí a descargar
+                las cuatro APK proporcionadas para la evaluación.
+
+            </p>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        4
+                    </div>
+
+                    <h3>
+                        Aplicaciones
+                    </h3>
+
+                    <p>
+
+                        En mi intento recibí cuatro APK para realizar
+                        las diferentes actividades de la evaluación.
+
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        📱
+                    </div>
+
+                    <h3>
+                        Emulador Android
+                    </h3>
+
+                    <p>
+
+                        Fue necesario disponer de un entorno donde
+                        ejecutar, analizar y probar las aplicaciones.
+
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        ⏱
+                    </div>
+
+                    <h3>
+                        Tiempo
+                    </h3>
+
+                    <p>
+
+                        En mi experiencia, el examen permaneció activo
+                        durante siete días desde el momento de activación.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             APK
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🤖 Análisis y desarrollo de las APK
+            </h2>
+
+
+            <p>
+
+                Antes de comenzar la evaluación práctica considero
+                importante disponer de un emulador Android correctamente
+                configurado para ejecutar y analizar las aplicaciones
+                proporcionadas.
+
+            </p>
+
+
+            <p>
+
+                En mi intento recibí dos APK orientadas a pruebas
+                iniciales y otras dos relacionadas con el componente
+                de desarrollo.
+
+            </p>
+
+
+            <p>
+
+                El proceso requería analizar cuidadosamente cómo
+                funcionaban las aplicaciones proporcionadas y,
+                posteriormente, determinar cómo desarrollar una APK
+                que realizara de forma automática determinadas
+                funciones relacionadas con el desafío.
+
+            </p>
+
+
+            <div class="pt-flow">
+
+                <div class="pt-step">
+
+                    Descargar y organizar las APK proporcionadas
+                    por el examen.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Ejecutar las aplicaciones dentro del entorno
+                    Android disponible.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Analizar su comportamiento y funcionamiento.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Aplicar técnicas de ingeniería inversa cuando
+                    resulte necesario.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Identificar la lógica o implementación vulnerable.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Desarrollar la APK requerida para completar
+                    el objetivo del laboratorio.
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/emapt-review-202306/04-2.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/emapt-review-202306/04-2.png"
+                        alt="Archivos utilizados durante el examen eMAPT">
+
+                </a>
+
+                <div class="pt-caption">
+                    Archivos utilizados durante el proceso de evaluación
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/emapt-review-202306/05-apk.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/emapt-review-202306/05-apk.png"
+                        alt="APK desarrollada para el examen">
+
+                </a>
+
+                <div class="pt-caption">
+                    APK desarrollada como parte de la evaluación
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/emapt-review-202306/03-PRUEBA.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/emapt-review-202306/03-PRUEBA.png"
+                        alt="Prueba de funcionamiento de la APK">
+
+                </a>
+
+                <div class="pt-caption">
+                    Validación del funcionamiento de la aplicación desarrollada
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ENTREGA
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📦 Entrega final
+            </h2>
+
+
+            <p>
+
+                Una vez terminado el desarrollo, en mi caso envié
+                tanto el código fuente como la APK compilada.
+
+            </p>
+
+
+            <p>
+
+                Adicionalmente preparé una carpeta de
+                <strong>Proof of Concept</strong> con capturas de
+                pantalla que mostraban el funcionamiento de la
+                aplicación desarrollada.
+
+            </p>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        &lt;/&gt;
+                    </div>
+
+                    <h3>
+                        Código fuente
+                    </h3>
+
+                    <p>
+                        Proyecto utilizado para desarrollar
+                        la aplicación requerida.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        APK
+                    </div>
+
+                    <h3>
+                        Aplicación compilada
+                    </h3>
+
+                    <p>
+                        Archivo APK generado a partir del proyecto
+                        desarrollado.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        📸
+                    </div>
+
+                    <h3>
+                        PoC
+                    </h3>
+
+                    <p>
+                        Evidencias gráficas adicionales que preparé
+                        para documentar el funcionamiento.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                En mi experiencia, la evaluación estuvo enfocada
+                únicamente en aplicaciones Android.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PREPARACIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📚 Mi preparación
+            </h2>
+
+
+            <p>
+
+                Mi preparación estuvo centrada principalmente en
+                contenido de <strong>INE</strong> y
+                <strong>7ASecurity</strong>, plataformas en las que
+                dediqué una parte importante de mi tiempo a estudiar
+                pentesting móvil.
+
+            </p>
+
+
+            <p>
+
+                Además, anteriormente había realizado cursos de
+                programación, por lo que ya contaba con conocimientos
+                previos que facilitaron la parte de desarrollo del examen.
+
+            </p>
+
+
+            <p>
+
+                Desde mi experiencia, disponer de fundamentos de
+                programación resulta especialmente útil para afrontar
+                este tipo de evaluación.
+
+            </p>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    Recomendación personal:
+                </strong>
+
+                <br>
+
+                si estás preparando una certificación orientada a
+                seguridad móvil, no te limites únicamente a aprender
+                herramientas. Practica también programación,
+                análisis estático, análisis dinámico e ingeniería
+                inversa.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RECURSOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔗 Recursos que utilicé
+            </h2>
+
+
+            <p>
+
+                A continuación comparto algunos de los recursos
+                que me resultaron útiles durante mi proceso de
+                aprendizaje y preparación.
+
+            </p>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://owasp.org/www-project-mobile-security-testing-guide/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    OWASP Mobile Security Testing Guide
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://www.amazon.com/Mobile-Application-Penetration-Testing-Vijay-ebook/dp/B019IOX4Y2/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Mobile Application Penetration Testing
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://github.com/OWASP/owasp-mstg/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    OWASP MSTG · GitHub
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://pentester.land/cheatsheets/2018/10/12/list-of-Intentionally-vulnerable-android-apps.html"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Intentionally Vulnerable Android Applications
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://github.com/xtiankisutsa/awesome-mobile-CTF"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Awesome Mobile CTF
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://mobexler.com/checklist.htm"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Mobexler Checklist
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://github.com/b-mueller/android_app_security_checklist"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Android Application Security Checklist
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://www.mindmeister.com/1713501700?t=Rv9UQ7aC2t"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Mobile Security Mind Map
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://github.com/tjunxiang92/Android-Vulnerabilities"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Android Vulnerabilities
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-resource">
+
+                <a
+                    href="https://www.raywenderlich.com/778533-encryption-tutorial-for-android-getting-started"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Android Encryption Tutorial
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONSEJOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                💡 Recomendaciones personales
+            </h2>
+
+
+            <div class="pt-flow">
+
+                <div class="pt-step">
+
+                    Aprende los fundamentos de Android antes de
+                    profundizar en pruebas de seguridad móvil.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Practica análisis estático para comprender
+                    manifest, componentes, recursos y código de
+                    las aplicaciones.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Complementa el análisis estático con pruebas
+                    dinámicas dentro de un emulador.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Desarrolla conocimientos básicos de programación
+                    Android para comprender mejor la lógica de las
+                    aplicaciones.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Estudia conceptos relacionados con criptografía,
+                    almacenamiento local y mecanismos de protección.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Practica ingeniería inversa sobre aplicaciones
+                    diseñadas específicamente para aprendizaje.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONCLUSIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛡 Conclusión
+            </h2>
+
+
+            <p>
+
+                Personalmente considero que eMAPT fue una evaluación
+                interactiva y diferente, ya que combina conocimientos
+                de pentesting móvil con programación y análisis
+                de aplicaciones Android.
+
+            </p>
+
+
+            <p>
+
+                Los conocimientos previos de desarrollo me ayudaron
+                especialmente durante la parte relacionada con la
+                creación de la APK requerida.
+
+            </p>
+
+
+            <p>
+
+                Si estás preparando esta certificación, mi principal
+                recomendación es practicar tanto seguridad móvil
+                como desarrollo. Comprender cómo funciona una aplicación
+                desde el punto de vista del desarrollador facilita
+                considerablemente el trabajo de análisis y
+                reverse engineering.
+
+            </p>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    Practica · Analiza · Desarrolla · Comprende
+                </strong>
+
+                <br>
+
+                La combinación entre seguridad ofensiva y desarrollo
+                permite abordar el pentesting móvil con una perspectiva
+                mucho más completa.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             IMAGEN FINAL
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/emapt-review-202306/02-AVvXsEimIdCEZly61Xv7vY4VAFaUt4CQyOAVJQ6POM5h4lvRBoqruKa_UzTg.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/emapt-review-202306/02-AVvXsEimIdCEZly61Xv7vY4VAFaUt4CQyOAVJQ6POM5h4lvRBoqruKa_UzTg.png"
+                        alt="Proceso de preparación eMAPT">
+
+                </a>
+
+                <div class="pt-caption">
+                    Experiencia y proceso de preparación para eMAPT
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <section class="pt-footer">
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Mobile Security · Android · Pentesting · Reverse Engineering
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div
+                class="pt-actions"
+                style="justify-content:center;">
+
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+            </div>
+
+
+            <p style="margin-top:20px;">
+
+                Desarrollado por
+
+                <strong style="
+                    color:#00f5ff;
+                    text-shadow:
+                        0 0 9px rgba(0,245,255,.55);
+                ">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}

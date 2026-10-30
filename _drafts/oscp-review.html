@@ -1,0 +1,1060 @@
+---
+title: "OSCP Review"
+date: 2026-06-23 16:02:09 -0500
+tags: ["Certificaciones"]
+description: "OSCP Review · Setiembre 2025 Mi experiencia con el OSCP+ : preparación, presión y una victoria que valió cada noche de práctica Este artículo no es un…"
+image: "/assets/img/posts/oscp-review-202606/01-oscp1.png"
+permalink: "/2026/06/oscp-review.html"
+blogger_url: "https://pvguard.blogspot.com/2026/06/oscp-review.html"
+---
+{% raw %}<div class="separator" style="clear: both;"><h1 style="text-align: center;"><span data-darkreader-inline-color="" style="--darkreader-inline-color: var(--darkreader-text-ff0000, #ff1a1a); color: red;">CERTIFICACIÓN OSCP REVIEW&nbsp;</span></h1><a href="/assets/img/posts/oscp-review-202606/01-oscp1.png" style="display: block; padding: 1em 0px; text-align: center;"><img alt="" border="0" data-original-height="941" data-original-width="1672" src="/assets/img/posts/oscp-review-202606/01-oscp1.png" width="600" /></a></div>
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span><div>&nbsp; &nbsp;<style>
+  .ghost-oscp-review {
+    --bg: #070b10;
+    --bg2: #0d141d;
+    --card: #101923;
+    --card2: #121f2c;
+    --text: #e6edf5;
+    --muted: #9cadba;
+    --orange: #ff5b12;
+    --orange-dark: #d24708;
+    --green: #00ff9c;
+    --line: rgba(255,255,255,.12);
+    --soft: rgba(255,255,255,.055);
+
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 18px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.75;
+    text-align: left !important;
+    word-spacing: normal !important;
+    letter-spacing: normal !important;
+    overflow: hidden;
+  }
+
+  .ghost-oscp-review * {
+    box-sizing: border-box;
+  }
+
+  .ghost-oscp-review p,
+  .ghost-oscp-review div,
+  .ghost-oscp-review span,
+  .ghost-oscp-review h1,
+  .ghost-oscp-review h2,
+  .ghost-oscp-review h3 {
+    text-align: left !important;
+    word-spacing: normal !important;
+    letter-spacing: normal !important;
+  }
+
+  .ghost-oscp-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 38px;
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,91,18,.22), transparent 32%),
+      radial-gradient(circle at 85% 5%, rgba(0,255,156,.13), transparent 26%),
+      linear-gradient(135deg, #0d141d 0%, #090d13 60%, #190b06 100%);
+    box-shadow: 0 22px 60px rgba(0,0,0,.42);
+  }
+
+  .ghost-oscp-hero:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: .6;
+    pointer-events: none;
+  }
+
+  .ghost-oscp-kali {
+    position: absolute;
+    right: 25px;
+    bottom: 20px;
+    width: 120px;
+    height: 120px;
+    opacity: .08;
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(0,255,156,.25);
+  }
+
+  .ghost-oscp-badge {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: auto;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255,91,18,.13);
+    border: 1px solid rgba(255,91,18,.35);
+    color: #ffd8c7;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .ghost-oscp-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 16px var(--green);
+  }
+
+  .ghost-oscp-title {
+    position: relative;
+    z-index: 2;
+    margin: 22px 0 14px;
+    color: #fff;
+    font-size: clamp(32px, 5vw, 58px);
+    line-height: 1.08;
+    font-weight: 800;
+  }
+
+  .ghost-oscp-title strong {
+    color: var(--orange);
+  }
+
+  .ghost-oscp-subtitle {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 0 26px;
+    color: var(--muted);
+    font-size: 17px;
+  }
+
+  .ghost-terminal {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,255,156,.22);
+    background: rgba(0,0,0,.38);
+    color: var(--green);
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 14px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .ghost-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    margin-left: 4px;
+    background: var(--green);
+    vertical-align: middle;
+    animation: ghostBlink 1s infinite;
+  }
+
+  @keyframes ghostBlink {
+    0%, 48% { opacity: 1; }
+    49%, 100% { opacity: 0; }
+  }
+
+  .ghost-cert {
+    margin: 26px 0;
+    padding: 14px;
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    background: #0c121a;
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  }
+
+  .ghost-cert img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+
+  .ghost-cert-caption {
+    margin-top: 10px;
+    color: var(--muted);
+    text-align: center !important;
+    font-size: 13px;
+  }
+
+  .ghost-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  .ghost-stat {
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--card2), var(--card));
+  }
+
+  .ghost-stat b {
+    display: block;
+    margin-bottom: 4px;
+    color: #fff;
+    font-size: 25px;
+  }
+
+  .ghost-stat span {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .ghost-section {
+    margin: 22px 0;
+    padding: 28px;
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    background:
+      linear-gradient(180deg, rgba(18,31,44,.95), rgba(12,18,26,.96));
+    box-shadow: 0 14px 34px rgba(0,0,0,.26);
+    overflow: hidden;
+  }
+
+  .ghost-section h2 {
+    margin: 0 0 15px;
+    color: #fff;
+    font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  .ghost-section h2 span {
+    color: var(--orange);
+  }
+
+  .ghost-section h3 {
+    margin: 24px 0 12px;
+    color: #fff;
+    font-size: 21px;
+    line-height: 1.3;
+  }
+
+  .ghost-section p {
+    margin: 12px 0;
+    color: var(--text);
+    font-size: 16px;
+  }
+
+  .ghost-section strong {
+    color: #fff;
+  }
+
+  .ghost-note {
+    margin: 20px 0;
+    padding: 16px 18px;
+    border-left: 4px solid var(--orange);
+    border-radius: 14px;
+    background: rgba(255,91,18,.11);
+    color: #ffe3d5;
+  }
+
+  .ghost-quote {
+    margin: 22px 0;
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px solid rgba(0,255,156,.20);
+    background: rgba(0,255,156,.075);
+    color: #dffff2;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .ghost-list {
+    display: grid;
+    gap: 10px;
+    margin: 16px 0 4px;
+  }
+
+  .ghost-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.04);
+    color: var(--text);
+  }
+
+  .ghost-check {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 23px;
+    height: 23px;
+    margin-top: 2px;
+    border-radius: 7px;
+    background: rgba(0,255,156,.12);
+    color: var(--green);
+    font-weight: 900;
+    font-size: 15px;
+    box-shadow: 0 0 18px rgba(0,255,156,.12);
+  }
+
+  .ghost-item-text {
+    display: block;
+    min-width: 0;
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .ghost-timeline {
+    position: relative;
+    display: grid;
+    gap: 13px;
+    margin-top: 18px;
+    padding-left: 18px;
+  }
+
+  .ghost-timeline:before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(var(--orange), var(--green));
+  }
+
+  .ghost-time {
+    position: relative;
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.045);
+  }
+
+  .ghost-time:before {
+    content: "";
+    position: absolute;
+    left: -18px;
+    top: 22px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 16px rgba(255,91,18,.85);
+  }
+
+  .ghost-time b {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    font-size: 17px;
+  }
+
+  .ghost-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0 6px;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+  }
+
+  .ghost-table th,
+  .ghost-table td {
+    padding: 13px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    color: var(--text);
+    vertical-align: top;
+    text-align: left !important;
+  }
+
+  .ghost-table th {
+    background: rgba(255,91,18,.15);
+    color: #fff;
+  }
+
+  .ghost-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .ghost-footer {
+    padding: 30px 18px;
+    color: var(--muted);
+    text-align: center !important;
+    font-size: 14px;
+  }
+
+  .ghost-footer b {
+    color: #fff;
+  }
+
+  @media (max-width: 820px) {
+    .ghost-oscp-review {
+      padding: 10px;
+    }
+
+    .ghost-oscp-hero {
+      padding: 25px;
+    }
+
+    .ghost-section {
+      padding: 21px;
+    }
+
+    .ghost-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .ghost-table,
+    .ghost-table thead,
+    .ghost-table tbody,
+    .ghost-table th,
+    .ghost-table td,
+    .ghost-table tr {
+      display: block;
+      width: 100%;
+    }
+
+    .ghost-table th {
+      display: none;
+    }
+
+    .ghost-table td {
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .ghost-table td:before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 4px;
+      color: var(--orange);
+      font-weight: 700;
+    }
+  }
+</style><div class="ghost-oscp-review">
+  <div class="ghost-oscp-hero">
+    <div class="ghost-oscp-badge">
+      <span class="ghost-oscp-dot"></span>OSCP Review · Setiembre 2025
+    </div>
+
+    <h1 class="ghost-oscp-title">
+      Mi experiencia con el <strong>OSCP+</strong>: preparación, presión y una
+      victoria que valió cada noche de práctica
+    </h1>
+
+    <p class="ghost-oscp-subtitle">
+      Este artículo no es un write-up del examen ni contiene información
+      confidencial. Es mi review personal: cómo me preparé, qué aprendí, cómo
+      viví el día del examen y qué consejos le daría a alguien que quiere ir por
+      el OSCP.
+    </p>
+
+    <div class="ghost-terminal">
+      root@kali:~$ echo "enumerate · exploit · privilege escalation ·
+      report"<span class="ghost-cursor"></span>
+    </div>
+
+    <div class="ghost-oscp-kali"></div>
+  </div>
+
+  <div class="ghost-cert">
+    <!--Reemplaza esta URL por la imagen de tu certificado subida a Blogger-->
+    <img alt="Certificado OSCP de Joe Antony Peña Monroy" src="https://api.accredible.com/v1/frontend/credential_website_embed_image/certificate/160029400" />
+    <div class="ghost-cert-caption">
+      	      <center> Certificación obtenida en setiembre de 2025.</center>   
+    </div>
+  </div>
+
+  <div class="ghost-stats">
+    <div class="ghost-stat">
+      <b>OSCP</b>
+      <span>OffSec Certified Professional</span>
+    </div>
+
+    <div class="ghost-stat">
+      <b>Setiembre</b>
+      <span>Mes en el que rendí el examen</span>
+    </div>
+
+    <div class="ghost-stat">
+      <b>Clave</b>
+      <span>Metodología, calma y documentación</span>
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Introducción</h2>
+
+    <p>
+      El OSCP fue una de esas metas que tenía marcada desde hace tiempo. No solo
+      por el peso que tiene la certificación en el mundo de la ciberseguridad
+      ofensiva, sino porque representa un reto muy real: aplicar metodología,
+      explotar vulnerabilidades, escalar privilegios, mantener la calma y
+      documentar todo de forma profesional.
+    </p>
+
+    <p>
+      En mi caso, rendí el examen en <strong>setiembre de 2025</strong>. Fue una
+      experiencia intensa, cansada y muy retadora, pero también una de las más
+      satisfactorias de mi carrera. El OSCP no solo prueba tus conocimientos
+      técnicos; también prueba tu paciencia, tu resistencia mental y tu
+      capacidad para seguir enumerando cuando algo no sale a la primera.
+    </p>
+
+    <div class="ghost-note">
+      Por respeto a las reglas de OffSec, este review no comparte máquinas,
+      vulnerabilidades específicas, rutas internas ni detalles protegidos del
+      examen. Todo está enfocado en experiencia, preparación, metodología y
+      recomendaciones.
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Por qué decidí tomar el OSCP</h2>
+
+    <p>
+      Decidí ir por el OSCP porque quería validar mis habilidades en un entorno
+      práctico. Hay certificaciones donde puedes estudiar teoría y aprobar, pero
+      el OSCP es diferente: aquí tienes que demostrar que sabes hacer las cosas.
+      Tienes que analizar, fallar, corregir, probar otra ruta y documentar como
+      si fuera una evaluación real.
+    </p>
+
+    <p>
+      Para mí, esta certificación representaba mucho más que un logro
+      profesional. Era una forma de medir mi crecimiento en pentesting, reforzar
+      mi metodología y demostrarme que podía mantenerme firme bajo presión.
+    </p>
+
+    <div class="ghost-quote">
+      “El OSCP no se gana solo con herramientas. Se gana con metodología,
+      paciencia, práctica y una mentalidad fuerte.”
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Mi preparación antes del examen</h2>
+
+    <p>
+      Durante la preparación me enfoqué en construir una metodología repetible.
+      Al inicio uno quiere probar muchas herramientas, muchos comandos y muchas
+      técnicas al mismo tiempo. Pero con el tiempo entendí que lo más importante
+      era tener orden.
+    </p>
+
+    <p>
+      Prepararme para el OSCP me obligó a dejar de correr comandos por correr.
+      Empecé a trabajar con preguntas más claras:
+      <strong>¿qué estoy buscando?, ¿qué evidencia tengo?, ¿qué servicio puede ser el
+        punto de entrada?, ¿qué hipótesis puedo validar?</strong>
+    </p>
+
+    <h3>Lo que más trabajé durante mi preparación</h3>
+
+    <div class="ghost-list">
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Enumeración inicial de servicios, puertos y versiones.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Análisis manual antes de depender de herramientas automáticas.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Explotación web básica y validación de vulnerabilidades.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Escalada de privilegios en Linux y Windows.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Active Directory, movimiento lateral y abuso de credenciales.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Gestión del tiempo durante laboratorios y simulaciones.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Redacción de reportes claros, ordenados y reproducibles.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Recursos que más me ayudaron</h2>
+
+    <p>
+      No existe un único recurso mágico para aprobar. Lo que realmente ayuda es
+      combinar práctica, lectura, notas, repetición y análisis. En mi caso, me
+      sirvió mucho dividir la preparación por bloques.
+    </p>
+
+    <table class="ghost-table">
+      <thead>
+        <tr>
+          <th>Área</th>
+          <th>Objetivo</th>
+          <th>Cómo lo practiqué</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="Área">Enumeración</td>
+          <td data-label="Objetivo">Encontrar rutas reales de ataque.</td>
+          <td data-label="Cómo lo practiqué">
+            Revisando servicios manualmente, validando versiones y anotando cada
+            hallazgo.
+          </td>
+        </tr>
+        <tr>
+          <td data-label="Área">Web</td>
+          <td data-label="Objetivo">Detectar vectores comunes.</td>
+          <td data-label="Cómo lo practiqué">
+            Probando login, uploads, parámetros, rutas ocultas y validaciones
+            débiles.
+          </td>
+        </tr>
+        <tr>
+          <td data-label="Área">Linux PE</td>
+          <td data-label="Objetivo">Escalar privilegios con metodología.</td>
+          <td data-label="Cómo lo practiqué">
+            Permisos, SUID, sudo, cron, servicios, PATH hijacking y
+            credenciales.
+          </td>
+        </tr>
+        <tr>
+          <td data-label="Área">Windows PE</td>
+          <td data-label="Objetivo">Entender vectores típicos de escalada.</td>
+          <td data-label="Cómo lo practiqué">
+            Servicios, permisos, credenciales, configuraciones débiles y rutas
+            inseguras.
+          </td>
+        </tr>
+        <tr>
+          <td data-label="Área">Active Directory</td>
+          <td data-label="Objetivo">Entender cadena de ataque completa.</td>
+          <td data-label="Cómo lo practiqué">
+            Enumeración, usuarios, grupos, shares, Kerberos, credenciales y
+            movimiento lateral.
+          </td>
+        </tr>
+        <tr>
+          <td data-label="Área">Reporte</td>
+          <td data-label="Objetivo">Documentar de forma profesional.</td>
+          <td data-label="Cómo lo practiqué">
+            Plantillas, capturas, comandos, evidencias y pasos reproducibles.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Mi metodología</h2>
+
+    <p>
+      La metodología fue la parte más importante. Puedes conocer muchas
+      técnicas, pero si no tienes orden, el examen se puede volver caótico muy
+      rápido. Mi objetivo fue trabajar con un flujo claro y repetirlo en cada
+      máquina.
+    </p>
+
+    <div class="ghost-timeline">
+      <div class="ghost-time">
+        <b>1. Reconocimiento inicial</b>
+        Identificar puertos abiertos, servicios, tecnologías, versiones y
+        posibles puntos de entrada.
+      </div>
+
+      <div class="ghost-time">
+        <b>2. Enumeración profunda</b>
+        Revisar cada servicio con calma, buscar rutas, credenciales,
+        configuraciones débiles y pistas reales.
+      </div>
+
+      <div class="ghost-time">
+        <b>3. Hipótesis de ataque</b>
+        No lanzar exploits al azar. Primero validar si el vector realmente tiene
+        sentido.
+      </div>
+
+      <div class="ghost-time">
+        <b>4. Explotación controlada</b>
+        Ejecutar pruebas con evidencia, guardar comandos y confirmar el acceso
+        obtenido.
+      </div>
+
+      <div class="ghost-time">
+        <b>5. Escalada de privilegios</b>
+        Revisar permisos, procesos, servicios, credenciales, configuraciones y
+        errores comunes.
+      </div>
+
+      <div class="ghost-time">
+        <b>6. Documentación</b>
+        Guardar desde el inicio comandos, capturas, rutas, payloads y pasos de
+        explotación.
+      </div>
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> El día del examen</h2>
+
+    <p>
+      El día del examen sentí una mezcla de nervios, emoción y presión. Sabía
+      que había practicado, pero también sabía que el OSCP puede ponerte en
+      situaciones donde una ruta parece correcta y al final no lo es.
+    </p>
+
+    <p>
+      Mi enfoque fue no desesperarme. Cuando algo no funcionaba, volvía a
+      enumerar. Cuando sentía bloqueo, tomaba una pausa corta. Cuando una
+      hipótesis no tenía evidencia, la descartaba y seguía con otra.
+    </p>
+
+    <h3>Lo que me ayudó durante el examen</h3>
+
+    <div class="ghost-list">
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">No saltarme la enumeración por ansiedad.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Tomar notas desde el primer minuto.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">No depender de una sola herramienta.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Revisar lo básico antes de buscar técnicas complejas.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Separar hipótesis reales de simples suposiciones.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Hacer pausas cortas cuando sentía bloqueo mental.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> La parte mental del OSCP</h2>
+
+    <p>
+      Mucha gente habla de comandos, exploits y herramientas, pero la parte
+      mental pesa muchísimo. El cansancio puede hacer que ignores detalles
+      simples. La presión puede hacer que dudes de tu propia metodología.
+    </p>
+
+    <p>
+      En mi experiencia, el OSCP te enseña a controlar la frustración. Habrá
+      momentos donde sientes que no avanzas, pero muchas veces la respuesta no
+      está en probar algo más complejo, sino en volver a mirar lo que ya tenías
+      delante.
+    </p>
+
+    <div class="ghost-quote">
+      “Cuando algo no salía, mi mejor herramienta no era otro exploit. Era
+      volver a enumerar con calma.”
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> El reporte</h2>
+
+    <p>
+      El reporte es una parte fundamental. No basta con comprometer máquinas;
+      también tienes que explicar claramente qué hiciste, cómo lo hiciste y qué
+      evidencia obtuviste.
+    </p>
+
+    <p>
+      Mi recomendación es documentar durante todo el examen, no al final. Cuando
+      estás cansado, es muy fácil olvidar comandos, rutas, payloads, capturas o
+      pasos importantes.
+    </p>
+
+    <h3>Mi estructura mental para documentar</h3>
+
+    <div class="ghost-list">
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Nombre o identificador de la máquina.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Puertos y servicios encontrados.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Vector de acceso inicial.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Pasos para explotación.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Prueba de acceso obtenido.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Proceso de escalada de privilegios.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Evidencia final y capturas necesarias.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Lo que haría diferente</h2>
+
+    <p>
+      Si volviera a prepararme desde cero, practicaría más simulaciones
+      completas. No solo máquinas individuales, sino bloques de práctica con
+      tiempo limitado, pausas controladas y documentación obligatoria.
+    </p>
+
+    <p>
+      También practicaría más la redacción del reporte antes del examen. Muchas
+      veces nos enfocamos tanto en explotar que dejamos la documentación para el
+      final, y eso puede jugar en contra.
+    </p>
+
+    <div class="ghost-list">
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Practicar más bajo presión de tiempo.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Crear plantillas de notas desde el inicio.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Reforzar más Windows Privilege Escalation.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Reforzar más Linux Privilege Escalation.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Practicar más escenarios de Active Directory.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Evitar perder demasiado tiempo en una sola ruta.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Consejos para quienes van por el OSCP</h2>
+
+    <p>
+      Si estás pensando en tomar el OSCP, mi consejo es que no lo veas solamente
+      como un examen. Véelo como un proceso de crecimiento. Te va a obligar a
+      mejorar tu metodología, tu paciencia, tu documentación y tu forma de
+      pensar.
+    </p>
+
+    <div class="ghost-list">
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">No memorices comandos sin entenderlos.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Aprende a enumerar manualmente.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Documenta todo, incluso lo que no funcionó.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">No ignores los servicios que parecen simples.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Haz pausas y cuida tu energía.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">Practica reportes antes del examen real.</span>
+      </div>
+
+      <div class="ghost-item">
+        <span class="ghost-check">✓</span>
+        <span class="ghost-item-text">No te compares con otros; cada camino es diferente.</span>
+      </div>
+    </div>
+
+    <div class="ghost-note">
+      El OSCP no se trata de saberlo todo. Se trata de saber investigar, probar,
+      fallar, corregir y continuar.
+    </div>
+  </div>
+
+  <div class="ghost-section">
+    <h2><span>#</span> Conclusión</h2>
+
+    <p>
+      Obtener el OSCP en setiembre fue una de las experiencias más importantes
+      de mi camino en ciberseguridad. Fue un reto técnico, pero también un reto
+      personal. Me enseñó a confiar más en mi metodología, a manejar mejor la
+      presión y a entender que la disciplina pesa más que la motivación
+      momentánea.
+    </p>
+
+    <p>
+      Para quienes están en este camino: no se rindan. Habrá días donde sentirán
+      que no avanzan, máquinas que parecen imposibles y momentos de frustración.
+      Pero cada error también construye experiencia.
+    </p>
+
+    <p>
+      Al final, el OSCP no solo valida conocimientos técnicos. También valida
+      carácter, constancia y la capacidad de seguir intentando hasta encontrar
+      el camino correcto.
+    </p>
+
+<style>
+  .ghost-roadmap-iframe-box {
+    width: 100%;
+    margin: 25px 0;
+    padding: 14px;
+    border-radius: 18px;
+    background: #0c121a;
+    border: 1px solid rgba(0, 255, 156, .18);
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    overflow: hidden;
+  }
+
+  .ghost-roadmap-iframe-title {
+    margin: 0 0 12px;
+    color: #00ff9c;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 14px;
+  }
+
+  .ghost-roadmap-iframe-full {
+    display: block;
+    width: 100%;
+    height: 720px;
+    border: 0;
+    border-radius: 14px;
+    background: #ffffff;
+  }
+
+  @media (max-width: 820px) {
+    .ghost-roadmap-iframe-full {
+      height: 430px;
+    }
+  }
+</style>
+
+<div class="ghost-roadmap-iframe-box">
+  <div class="ghost-roadmap-iframe-title">
+    root@kali:~$ echo "Roadmap OSCP+"
+  </div>
+
+  <iframe class="ghost-roadmap-iframe-full" loading="lazy" srcdoc="
+      &lt;!DOCTYPE html&gt;
+      &lt;html&gt;
+      &lt;head&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+        &lt;style&gt;
+          html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            overflow: hidden;
+          }
+
+          .img-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+          }
+
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        &lt;/style&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div class=&quot;img-wrap&quot;&gt;
+          &lt;img src=&quot;/assets/img/posts/oscp-review-202606/02-ChatGPT-Image-23-jun-2026-04_28_54-p.m..png alt=&quot;Roadmap OSCP+&quot;&gt;
+        &lt;/div&gt;
+      &lt;/body&gt;
+      &lt;/html&gt;
+    ">
+  </iframe>
+</div>
+  </div>
+</div>
+</div>{% endraw %}

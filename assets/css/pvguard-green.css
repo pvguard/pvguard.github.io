@@ -1,0 +1,417 @@
+/* ==========================================================
+   PVGuard Cybersecurity Technology - tema Matrix / terminal
+   Replica del diseño de pvguard.blogspot.com, responsive.
+   ========================================================== */
+
+:root {
+  --bg-0: #000;
+  --bg-1: #020503;
+  --panel: #010506;        /* fondo del contenedor principal */
+  --panel-2: #020f11;      /* pie de cada post */
+  --line: #0b3439;         /* bordes del menu y pies */
+  --green: #00ff66;        /* texto general */
+  --nav-green: #00ff00;    /* enlaces del menu */
+  --cyan: #00f5ff;         /* titulos y enlaces */
+  --muted: #8fbfc4;        /* subtitulo */
+  --muted-2: #6f9fa4;      /* texto del pie de post */
+  --mono: "Share Tech Mono", "Fira Code", ui-monospace, monospace;
+  --code: "Fira Code", "Share Tech Mono", ui-monospace, monospace;
+  --sans: "Segoe UI", Arial, Helvetica, sans-serif;
+  --title: Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px;
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.4;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(0, 255, 102, .13), transparent 28%),
+    radial-gradient(circle at 90% 80%, rgba(0, 255, 102, .07), transparent 30%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+  background-attachment: fixed;
+  background-color: var(--bg-0);
+}
+
+/* Lineas de escaneo tipo monitor CRT */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background: repeating-linear-gradient(to bottom,
+    rgba(255, 255, 255, .03) 0, rgba(255, 255, 255, .03) 1px,
+    transparent 2px, transparent 5px);
+  opacity: .14;
+}
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--green); text-shadow: 0 0 8px rgba(0, 255, 102, .55); }
+
+::selection { background: rgba(0, 255, 102, .3); color: #fff; }
+
+/* ---------- Contenedor ---------- */
+.content-outer {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 10px;
+  background: var(--panel);
+  box-shadow: 0 0 40px rgba(0, 0, 0, .15);
+}
+
+/* ---------- Cabecera ---------- */
+.header-outer { padding: 34px 30px 26px; }
+
+.site-title {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, .2);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.site-title a { color: var(--cyan); }
+.site-title a:hover { color: var(--cyan); text-shadow: 0 0 14px rgba(0, 245, 255, .55); }
+.site-logo { width: 70px; height: 70px; object-fit: contain; }
+
+.site-description {
+  margin: 22px 0 0;
+  padding: 0 2px;
+  color: var(--muted);
+  font-size: 21px;
+}
+
+/* ---------- Menu ---------- */
+.tabs-outer {
+  position: relative;
+  z-index: 20;
+  background: var(--bg-0);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.menu > li { position: relative; display: flex; align-items: center; }
+
+.menu a {
+  display: block;
+  padding: 8.4px 14px;
+  color: var(--nav-green);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+/* Igual que en Blogger: al pasar el raton la pestaña se pinta de verde */
+.menu > li:hover > a,
+.menu a:hover,
+.menu a:focus-visible { color: #000; background: var(--nav-green); text-shadow: none; }
+
+.sub-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  color: var(--nav-green);
+  font: inherit;
+  cursor: pointer;
+}
+
+.sub-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 170px;
+  background: #000;
+  box-shadow: 0 0 18px rgba(0, 255, 0, .18), 0 12px 30px rgba(0, 0, 0, .8);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .12s, visibility .12s;
+}
+.sub-menu a {
+  padding: 7px 10px;
+  background: #000;
+  border-top: 2px solid var(--nav-green);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-align: left;
+}
+
+.has-sub:hover > .sub-menu,
+.has-sub:focus-within > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-toggle {
+  display: none;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: 0;
+  color: var(--nav-green);
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  vertical-align: middle;
+  position: relative;
+}
+.nav-toggle-bars { margin-right: 10px; }
+.nav-toggle-bars::before,
+.nav-toggle-bars::after { content: ""; position: absolute; left: 0; }
+.nav-toggle-bars::before { top: -6px; }
+.nav-toggle-bars::after { top: 6px; }
+
+/* ---------- Columnas ---------- */
+.main-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 20px;
+  padding: 30px 0;
+}
+.main-column { min-width: 0; padding: 0 0 0 30px; }
+
+/* ---------- Posts ---------- */
+.post-outer { margin-bottom: 26px; }
+
+.post-title {
+  margin: 0 0 10px;
+  font-family: var(--title);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--cyan);
+}
+.post-title a { color: var(--cyan); }
+
+.post-body {
+  font-size: 16.5px;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+}
+.post-body :where(h1) {
+  font-size: 33px;
+  line-height: 1.4;
+  margin: .4em 0;
+}
+.post-body :where(img) { max-width: 100%; height: auto; }
+.post-body :where(.separator a) { display: block; padding: 1em 0; text-align: center; }
+.post-body :where(pre, code) { font-family: var(--code); }
+.post-body :where(pre) {
+  overflow-x: auto;
+  padding: 14px 16px;
+  background: #000;
+  border: 1px solid rgba(0, 255, 102, .3);
+  box-shadow: inset 0 0 18px rgba(0, 255, 102, .06);
+  font-size: 14px;
+}
+.post-body :where(table) { max-width: 100%; display: block; overflow-x: auto; }
+.post-body :where(iframe) { max-width: 100%; }
+
+.jump-link { margin: 18px 0 12px; }
+.jump-link a { color: var(--cyan); font-family: var(--mono); font-size: 15px; }
+
+.post-footer {
+  margin: 20px 0 0;
+  padding: 5px 10px;
+  background: var(--panel-2);
+  border-bottom: 1px solid var(--line);
+  color: var(--muted-2);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.post-footer-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 26px; padding: 4px 0; }
+.post-share { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.post-share a {
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  color: var(--muted-2);
+  font-size: 12px;
+}
+.post-share a:hover { border-color: var(--cyan); color: var(--cyan); }
+.post-footer-line.post-labels { display: block; }
+.post-labels a { color: var(--cyan); }
+
+/* ---------- Paginacion ---------- */
+.blog-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.blog-pager .home-link { margin: 0 auto; }
+.blog-pager-newer-link { order: -1; }
+
+.status-msg {
+  margin: 0 0 24px;
+  padding: 10px 14px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.empty-msg { color: var(--muted-2); }
+
+/* ---------- Barra lateral ---------- */
+.sidebar { padding: 0 15px; }
+.widget { margin: 0 0 30px; }
+.widget h2 {
+  margin: 0 0 10px;
+  font-family: var(--title);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--cyan);
+}
+.widget p { margin: 0 0 12px; }
+.widget-tagline { color: var(--cyan); font-weight: 700; }
+.widget-list { margin: 0; padding-left: 18px; }
+.widget-list li { margin: 3px 0; }
+.label-list { list-style: none; padding: 0; }
+.label-list li::before { content: "# "; color: var(--muted-2); }
+.count { color: var(--muted-2); }
+
+.coffee-btn {
+  display: inline-block;
+  padding: 2px 0;
+  color: var(--cyan);
+}
+
+.search-form { display: flex; gap: 8px; }
+.search-form input,
+.archive-select {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 8px;
+  background: #000;
+  border: 1px solid rgba(0, 255, 102, .4);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 14px;
+}
+.search-form input:focus,
+.archive-select:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 10px rgba(0, 245, 255, .35); }
+.search-form button {
+  padding: 5px 10px;
+  background: rgba(0, 255, 102, .1);
+  border: 1px solid rgba(0, 255, 102, .45);
+  color: var(--green);
+  font-family: var(--mono);
+  cursor: pointer;
+}
+.search-form button:hover { background: rgba(0, 255, 102, .2); box-shadow: 0 0 10px rgba(0, 255, 102, .35); }
+.archive-select { width: 100%; }
+
+/* ---------- Busqueda y archivo ---------- */
+.search-form.big { flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+.search-form.big .prompt { color: var(--green); white-space: nowrap; }
+.search-form.big input { font-size: 16px; padding: 8px 10px; }
+.search-status { color: var(--muted); }
+.search-results { list-style: none; padding: 0; }
+.search-results li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.search-results .r-title { font-family: var(--title); font-size: 19px; }
+.search-results .r-meta { color: var(--muted-2); font-size: 13px; }
+.search-results .r-snippet { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.search-results mark { background: rgba(0, 255, 102, .25); color: #fff; }
+
+.archive-page h2 { color: var(--cyan); font-family: var(--title); font-size: 18px; font-weight: 400; text-transform: capitalize; margin: 26px 0 8px; }
+.archive-list { margin: 0; padding-left: 20px; }
+.archive-list li { margin: 4px 0; }
+
+.terminal-404 { font-family: var(--code); font-size: 16px; padding: 30px 0; }
+.terminal-404 .err { color: #ff375f; }
+.cursor { display: inline-block; animation: pv-blink 1s steps(2) infinite; }
+@keyframes pv-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+/* ---------- Pie ---------- */
+.footer-outer {
+  padding: 18px 30px 26px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.share-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 14px; }
+.share-title { color: var(--cyan); font-family: var(--title); font-size: 11px; font-weight: 700; }
+.copyright { margin: 0; color: var(--muted-2); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  body { padding: 12px; }
+  .main-inner { grid-template-columns: minmax(0, 1fr); }
+  .main-column { padding: 0 16px; }
+  .sidebar { padding: 20px 16px 0; border-top: 1px solid var(--line); }
+}
+
+@media (max-width: 760px) {
+  body { padding: 0; }
+  .content-outer { padding: 0; }
+  .header-outer { padding: 24px 16px 18px; }
+  .site-title { font-size: 30px; gap: 10px; }
+  .site-logo { width: 44px; height: 44px; }
+  .site-description { font-size: 15px; margin-top: 12px; }
+
+  .nav-toggle { display: block; }
+  .menu { display: none; flex-direction: column; padding: 0 0 8px; }
+  .tabs-outer.open .menu { display: flex; }
+  .menu > li { flex-wrap: wrap; border-top: 1px solid var(--line); }
+  .menu > li > a { flex: 1; padding: 12px 16px; }
+  .sub-toggle { display: block; padding: 12px 16px; }
+  .sub-menu {
+    position: static;
+    flex-basis: 100%;
+    width: auto;
+    display: none;
+    opacity: 1;
+    visibility: visible;
+    box-shadow: none;
+    border: 0;
+    border-top: 1px solid var(--line);
+    background: rgba(0, 255, 102, .04);
+  }
+  .has-sub.open > .sub-menu { display: block; }
+  .sub-menu a { padding: 10px 28px; border-top: 1px solid var(--line); font-size: 13px; }
+  .menu > li:hover > a { color: var(--nav-green); background: none; }
+
+  .main-inner { padding: 20px 0; }
+  .post-title { font-size: 20px; }
+  .post-body { font-size: 15.5px; }
+  .post-body :where(h1) { font-size: 23px; }
+  .footer-outer { padding: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+  .sub-menu { transition: none; }
+}

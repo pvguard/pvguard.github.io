@@ -1,0 +1,2312 @@
+---
+title: "VPN : MANTENER EL ANONIMATO EN INTERNET CON UNA RED PRIVADA"
+date: 2021-06-17 16:01:00 -0500
+tags: ["articulos"]
+description: "🛡 NETWORK PRIVACY · VPN · KALI LINUX Privacidad y navegación segura con VPN en Kali Linux Guía técnica para comprender el funcionamiento básico de una…"
+image: "/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/16-img.jpg"
+permalink: "/2021/06/vpn-mantener-el-anonimato-en-internet.html"
+blogger_url: "https://pvguard.blogspot.com/2021/06/vpn-mantener-el-anonimato-en-internet.html"
+---
+{% raw %}<!-- =========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     ========================================================= -->
+
+<h1 style="
+    text-align:center;
+    margin:0 0 22px 0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:30px;
+    line-height:1.25;
+    font-weight:800;
+    color:#00f5ff;
+    text-shadow:
+        0 0 8px rgba(0,245,255,.55),
+        0 0 18px rgba(0,245,255,.20);
+">
+    VPN en Kali Linux: privacidad y navegación segura con NordVPN
+</h1>
+
+
+<div class="separator"
+     style="
+        clear:both;
+        text-align:center;
+        margin:0 0 24px 0;
+     ">
+
+    <a
+        href="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/16-img.jpg"
+        style="display:block;text-align:center;"
+    >
+
+        <img
+            alt="VPN en Kali Linux con NordVPN"
+            border="0"
+            data-original-height="675"
+            data-original-width="1200"
+            src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/16-img.jpg"
+
+            style="
+                width:100%;
+                max-width:760px;
+                height:auto;
+                border-radius:16px;
+                border:1px solid rgba(0,245,255,.38);
+                box-shadow:
+                    0 0 24px rgba(0,245,255,.18),
+                    0 14px 38px rgba(0,0,0,.60);
+            "
+        />
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CORTE DE PORTADA BLOGGER
+     ========================================================= -->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   VPN PRIVACY + KALI LINUX
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+    margin:0 auto;
+
+    position:relative;
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+}
+
+
+/* =========================================================
+   SCANLINES
+   ========================================================= */
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+
+        rgba(0,0,0,.45);
+
+    box-shadow:
+
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+    height:340px;
+
+    right:-140px;
+    top:-160px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+
+        0 0 10px
+        rgba(0,245,255,.55),
+
+        0 0 25px
+        rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 0 12px
+        rgba(0,245,255,.045);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px
+        rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px
+        rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.pt-cards {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.pt-card {
+
+    position:relative;
+
+    min-height:165px;
+
+    padding:19px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(0,245,255,.055),
+            rgba(0,0,0,.14)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.17);
+
+    border-radius:16px;
+
+    transition:.22s ease;
+}
+
+
+.pt-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:22px;
+
+    bottom:22px;
+
+    width:2px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+}
+
+
+.pt-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.50);
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.10);
+}
+
+
+.pt-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:var(--white);
+}
+
+
+.pt-card p {
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    text-align:left;
+}
+
+
+.pt-icon {
+
+    width:42px;
+
+    height:42px;
+
+    margin-bottom:13px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.25);
+}
+
+
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+.pt-terminal {
+
+    margin-top:19px;
+
+    overflow:hidden;
+
+    background:#000405;
+
+    border:
+        1px solid rgba(0,245,255,.28);
+
+    border-radius:15px;
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.07),
+        0 15px 35px rgba(0,0,0,.60);
+}
+
+
+.pt-terminal-top {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:
+        10px 14px;
+
+    color:var(--cyan);
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.12),
+            rgba(0,245,255,.025)
+        );
+
+    border-bottom:
+        1px solid rgba(0,245,255,.18);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+.pt-dots {
+
+    display:flex;
+
+    gap:6px;
+}
+
+
+.pt-dot {
+
+    width:9px;
+
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 8px
+        var(--cyan);
+}
+
+
+.pt-terminal pre {
+
+    margin:0;
+
+    padding:18px;
+
+    overflow-x:auto;
+
+    color:#d8feff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    white-space:pre-wrap;
+}
+
+
+.pt-prompt {
+    color:var(--green);
+}
+
+
+.pt-command {
+    color:var(--cyan);
+}
+
+
+.pt-comment {
+    color:#5d898e;
+}
+
+
+/* =========================================================
+   INFO / WARNING / SUCCESS
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#ffdce4;
+
+    background:
+        rgba(255,59,98,.07);
+
+    border-left:
+        3px solid var(--red);
+}
+
+
+.pt-warning strong {
+    color:#ff859b;
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   INLINE CODE
+   ========================================================= */
+
+.pt-code {
+
+    display:inline-block;
+
+    padding:
+        3px 7px;
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.06);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:7px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   CHECKLIST / FLOW
+   ========================================================= */
+
+.pt-flow {
+
+    counter-reset:ptstep;
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:18px;
+}
+
+
+.pt-step {
+
+    position:relative;
+
+    padding:
+        16px 16px 16px 58px;
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    color:#d7fafd;
+
+    line-height:1.65;
+}
+
+
+.pt-step::before {
+
+    counter-increment:ptstep;
+
+    content:
+        counter(ptstep);
+
+    position:absolute;
+
+    left:15px;
+
+    top:15px;
+
+    width:29px;
+
+    height:29px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:8px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 13px
+        rgba(0,245,255,.28);
+}
+
+
+/* =========================================================
+   LINK BOX
+   ========================================================= */
+
+.pt-link-box {
+
+    margin-top:18px;
+
+    padding:16px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:12px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   PROVIDERS
+   ========================================================= */
+
+.pt-provider-grid {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+
+    margin-top:18px;
+}
+
+
+.pt-provider {
+
+    padding:12px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.15);
+
+    border-radius:11px;
+
+    background:
+        rgba(0,245,255,.025);
+
+    color:#d7fafd;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px
+        rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+.pt-separator {
+
+    height:1px;
+
+    margin:22px 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-cards {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .pt-provider-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .pt-content {
+
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+
+        padding:18px;
+    }
+
+    .pt-title {
+
+        font-size:31px;
+    }
+
+    .pt-btn {
+
+        width:100%;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+    <div class="pt-scanlines"></div>
+
+
+    <div class="pt-content">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="pt-hero">
+
+
+            <div class="pt-kicker">
+
+                🛡 NETWORK PRIVACY · VPN · KALI LINUX
+
+            </div>
+
+
+            <h1 class="pt-title">
+
+                Privacidad y navegación segura con
+
+                <span>
+                    VPN en Kali Linux
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Guía técnica para comprender el funcionamiento básico
+                de una VPN, instalar NordVPN en Kali Linux, establecer
+                una conexión remota y validar el cambio de la dirección
+                IP pública de salida.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    🐧 Kali Linux
+                </span>
+
+                <span class="pt-badge">
+                    🔐 VPN
+                </span>
+
+                <span class="pt-badge">
+                    🌐 Public IP
+                </span>
+
+                <span class="pt-badge">
+                    🛡 Privacy
+                </span>
+
+                <span class="pt-badge">
+                    ⌨ CLI
+                </span>
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    ⚠ Concepto importante:
+                </strong>
+
+                una VPN no proporciona anonimato absoluto.
+                El tráfico se enruta a través del proveedor VPN y la
+                IP pública visible para los servicios de Internet pasa
+                a ser la IP de salida del servidor VPN. La privacidad
+                final también depende del navegador, cookies, cuentas
+                autenticadas, DNS, configuración del sistema y política
+                del proveedor.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRODUCCIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📘 ¿Qué aporta una VPN?
+            </h2>
+
+
+            <p>
+
+                Una
+                <strong>Virtual Private Network (VPN)</strong>
+                establece un túnel entre el dispositivo del usuario
+                y un servidor remoto operado por el proveedor VPN.
+
+            </p>
+
+
+            <p>
+
+                Desde la perspectiva de los servicios externos,
+                las conexiones originadas a través del túnel aparecen
+                asociadas a la dirección IP pública del nodo VPN en
+                lugar de utilizar directamente la IP pública asignada
+                por el proveedor de Internet local.
+
+            </p>
+
+
+            <p>
+
+                Esto puede resultar útil para proteger el tráfico
+                sobre redes no confiables, reducir la exposición de
+                la IP pública original y disponer de una capa adicional
+                de privacidad durante determinados flujos de navegación.
+
+            </p>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🔒
+                    </div>
+
+                    <h3>
+                        Túnel cifrado
+                    </h3>
+
+                    <p>
+                        Protege el tráfico entre el cliente VPN
+                        y el servidor remoto frente a observadores
+                        situados en la red local.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🌐
+                    </div>
+
+                    <h3>
+                        IP de salida
+                    </h3>
+
+                    <p>
+                        Los servicios externos observan la IP pública
+                        del servidor VPN utilizado como punto de salida.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🛡
+                    </div>
+
+                    <h3>
+                        Privacidad
+                    </h3>
+
+                    <p>
+                        Añade una capa de protección, aunque no elimina
+                        otros mecanismos de identificación o tracking.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ELECCIÓN DEL PROVEEDOR
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔎 Selección de un proveedor VPN
+            </h2>
+
+
+            <p>
+
+                Al seleccionar una VPN conviene evaluar aspectos como
+                la reputación del proveedor, jurisdicción, política
+                de registros, auditorías independientes, protocolos
+                soportados, mecanismos de cifrado, protección frente
+                a fugas DNS y modelo de negocio.
+
+            </p>
+
+
+            <p>
+
+                Los servicios gratuitos no deben considerarse
+                automáticamente inseguros, pero es especialmente
+                importante revisar cómo monetizan la plataforma y qué
+                información recopilan o comparten.
+
+            </p>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    [ PRIVACY CHECK ]
+                </strong>
+
+                Antes de utilizar cualquier servicio VPN, revise
+                sus términos de privacidad, política de retención,
+                auditorías disponibles y documentación técnica.
+
+            </div>
+
+
+            <p>
+
+                Para este laboratorio se utiliza
+                <strong>NordVPN</strong> sobre Kali Linux.
+
+            </p>
+
+
+            <div class="pt-link-box">
+
+                <strong>DESCARGA OFICIAL //</strong>
+
+                <br><br>
+
+                <a
+                    href="https://nordvpn.com/es/download/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    https://nordvpn.com/es/download/
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DESCARGA
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📦 Descarga del cliente
+            </h2>
+
+
+            <p>
+
+                El procedimiento documentado originalmente utiliza
+                el paquete correspondiente a una distribución basada
+                en Debian, por lo que se descarga el paquete
+                <span class="pt-code">.deb</span>.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/06-inicio.png"
+                    alt="Página de descarga de NordVPN">
+
+                <div class="pt-caption">
+                    [ DOWNLOAD ] Selección del cliente para Linux
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Si desea consultar una introducción a GNU/Linux y
+                comandos básicos, puede revisar también el artículo
+                relacionado del blog:
+
+            </p>
+
+
+            <div class="pt-link-box">
+
+                <a
+                    href="https://cyb3rgh0stsecurity.blogspot.com/2021/05/aprendiendo-utilizar-comandos-en-el.html#more"
+                    target="_blank"
+                    rel="noopener">
+
+                    Aprendiendo a utilizar comandos en GNU/Linux
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/07-1.png"
+                    alt="Descarga del paquete NordVPN">
+
+                <div class="pt-caption">
+                    [ PACKAGE ] Paquete correspondiente al entorno Debian
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             IP BASELINE
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🌐 Establecer una línea base de la IP pública
+            </h2>
+
+
+            <p>
+
+                Antes de conectar la VPN resulta útil registrar la
+                dirección IP pública actual. De esta manera podremos
+                comparar el resultado antes y después de establecer
+                el túnel VPN.
+
+            </p>
+
+
+            <div class="pt-link-box">
+
+                <strong>VALIDACIÓN WEB //</strong>
+
+                <br><br>
+
+                <a
+                    href="https://www.cual-es-mi-ip.net/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    https://www.cual-es-mi-ip.net/
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/14-2.png"
+                    alt="Consulta de IP pública">
+
+                <div class="pt-caption">
+                    [ BASELINE ] Dirección IP pública antes de establecer la VPN
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    [ VALIDATION ]
+                </strong>
+
+                Existen múltiples servicios para consultar la IP
+                pública. El objetivo es comparar la IP visible antes
+                y después de la conexión VPN.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INSTALACIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🚀 Instalación en Kali Linux
+            </h2>
+
+
+            <p>
+
+                Una vez descargado el paquete se procede con su
+                instalación desde una terminal.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/08-3.png"
+                    alt="Instalación de paquete NordVPN">
+
+                <div class="pt-caption">
+                    [ INSTALL ] Preparación e instalación del paquete descargado
+                </div>
+
+            </div>
+
+
+            <h3>
+                Instalación mediante dpkg
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · package-install
+                    </span>
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+<pre><span class="pt-comment"># Instalar el paquete descargado</span>
+<span class="pt-prompt">root@kali:~#</span> <span class="pt-command">dpkg -i "PaqueteDescargado"</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/05-4.png"
+                    alt="Instalación con dpkg">
+
+                <div class="pt-caption">
+                    [ DPKG ] Instalación manual del paquete
+                </div>
+
+            </div>
+
+
+            <h3>
+                Actualización de repositorios
+            </h3>
+
+
+            <p>
+
+                Después de registrar el paquete o repositorio requerido,
+                se actualiza la información de paquetes para que el
+                sistema pueda resolver correctamente las dependencias.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/01-5.png"
+                    alt="Actualización de repositorios">
+
+                <div class="pt-caption">
+                    [ UPDATE ] Sincronización de paquetes
+                </div>
+
+            </div>
+
+
+            <h3>
+                Instalación del cliente NordVPN
+            </h3>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/17-6.png"
+                    alt="Instalación del cliente NordVPN">
+
+                <div class="pt-caption">
+                    [ INSTALL ] Instalación del cliente NordVPN
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/09-7.png"
+                    alt="NordVPN instalado">
+
+                <div class="pt-caption">
+                    [ STATUS ] Cliente instalado correctamente
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CLIENTE
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔑 Inicialización y autenticación
+            </h2>
+
+
+            <p>
+
+                Una vez completada la instalación se inicia el cliente
+                de NordVPN. El programa presenta las opciones disponibles
+                para gestionar la cuenta y las conexiones.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/11-8.png"
+                    alt="Opciones cliente NordVPN">
+
+                <div class="pt-caption">
+                    [ CLIENT ] Opciones disponibles desde el cliente
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Antes de establecer una conexión es necesario
+                autenticarse utilizando la cuenta asociada al
+                servicio VPN.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/19-hola.png"
+                    alt="Login NordVPN">
+
+                <div class="pt-caption">
+                    [ AUTH ] Autenticación de la cuenta VPN
+                </div>
+
+            </div>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    [ + ] AUTHENTICATED
+                </strong>
+
+                <br>
+
+                Una vez autenticado el cliente, el sistema queda
+                preparado para seleccionar y establecer conexiones
+                con los nodos disponibles.
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/12-11.png"
+                    alt="NordVPN autenticado">
+
+                <div class="pt-caption">
+                    [ STATUS ] Cliente autenticado y operativo
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SERVIDORES
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🌎 Selección del nodo VPN
+            </h2>
+
+
+            <p>
+
+                El siguiente paso consiste en seleccionar la ubicación
+                del servidor que actuará como punto de salida para
+                el tráfico.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/18-vpns.png"
+                    alt="Servidores NordVPN">
+
+                <div class="pt-caption">
+                    [ NODES ] Selección de la ubicación del servidor VPN
+                </div>
+
+            </div>
+
+
+            <p>
+
+                En el ejemplo documentado se selecciona un nodo
+                ubicado en <strong>Chicago</strong>.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/03-vpn3.png"
+                    alt="Conexión NordVPN Chicago">
+
+                <div class="pt-caption">
+                    [ CONNECT ] Solicitud de conexión al nodo seleccionado
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/04-233.png"
+                    alt="NordVPN conectado a Chicago">
+
+                <div class="pt-caption">
+                    [ VPN STATUS ] Túnel establecido con un nodo de Chicago
+                </div>
+
+            </div>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    [ + ] VPN CONNECTED
+                </strong>
+
+                <br>
+
+                El túnel VPN se encuentra activo y el tráfico de salida
+                se enruta a través del servidor seleccionado.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             VALIDACIÓN IP
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                ✅ Validación del cambio de IP pública
+            </h2>
+
+
+            <p>
+
+                Después de establecer la VPN se vuelve a consultar
+                la dirección IP pública desde el navegador.
+
+            </p>
+
+
+            <p>
+
+                Si el túnel se encuentra correctamente establecido,
+                la dirección IP visible deberá corresponder al nodo
+                VPN utilizado como salida y no a la IP pública
+                original de la conexión local.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/02-0202.png"
+                    alt="IP pública después de conectar VPN">
+
+                <div class="pt-caption">
+                    [ VALIDATION ] IP pública observada después de establecer el túnel
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    [ RESULT ]
+                </strong>
+
+                La geolocalización asociada a una IP es aproximada
+                y depende de bases de datos externas. El indicador
+                relevante es verificar que la IP pública de salida
+                haya cambiado respecto a la línea base.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DESCONEXIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔌 Finalización de la conexión VPN
+            </h2>
+
+
+            <p>
+
+                Cuando ya no sea necesario utilizar el túnel,
+                puede desconectarse el cliente. Después de finalizar
+                la sesión VPN, el tráfico volverá a utilizar la ruta
+                de salida configurada originalmente por el sistema.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/15-83.png"
+                    alt="Desconexión de NordVPN">
+
+                <div class="pt-caption">
+                    [ DISCONNECT ] Finalización de la sesión VPN
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Para validar la desconexión puede repetirse la consulta
+                de IP pública y comprobar que el tráfico vuelve a
+                utilizar la salida habitual de la conexión.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             WINDOWS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🖥 Uso en otros sistemas operativos
+            </h2>
+
+
+            <p>
+
+                En sistemas Windows el procedimiento suele realizarse
+                mediante el instalador gráfico proporcionado por el
+                proveedor. Posteriormente la conexión puede gestionarse
+                desde la aplicación de escritorio.
+
+            </p>
+
+
+            <p>
+
+                También existen extensiones para navegadores, aunque
+                debe tenerse en cuenta que una extensión de navegador
+                no necesariamente protege todo el tráfico generado
+                por el sistema operativo.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             OTROS PROVEEDORES
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🌐 Otras soluciones VPN mencionadas
+            </h2>
+
+
+            <p>
+
+                La versión original de este artículo mencionaba
+                distintos proveedores VPN disponibles en el mercado.
+                La disponibilidad, características y políticas de
+                estos servicios pueden cambiar con el tiempo, por lo
+                que conviene evaluar cada opción antes de utilizarla.
+
+            </p>
+
+
+            <div class="pt-provider-grid">
+
+                <div class="pt-provider">
+                    ExpressVPN
+                </div>
+
+                <div class="pt-provider">
+                    CyberGhost
+                </div>
+
+                <div class="pt-provider">
+                    Surfshark
+                </div>
+
+                <div class="pt-provider">
+                    Private Internet Access
+                </div>
+
+                <div class="pt-provider">
+                    VyprVPN
+                </div>
+
+                <div class="pt-provider">
+                    PrivateVPN
+                </div>
+
+                <div class="pt-provider">
+                    NordVPN
+                </div>
+
+                <div class="pt-provider">
+                    ProtonVPN
+                </div>
+
+                <div class="pt-provider">
+                    AtlasVPN
+                </div>
+
+                <div class="pt-provider">
+                    HMA
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/10-vpnss.jpg"
+                    alt="Servicios VPN">
+
+                <div class="pt-caption">
+                    Diferentes alternativas disponibles
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SECURITY
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛡 Consideraciones de seguridad
+            </h2>
+
+
+            <div class="pt-flow">
+
+                <div class="pt-step">
+
+                    Utilizar proveedores con políticas de privacidad
+                    claras y documentación técnica verificable.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Mantener actualizado tanto el cliente VPN como
+                    el sistema operativo.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Verificar posibles fugas de DNS, IPv6 o WebRTC
+                    cuando la privacidad sea un requisito importante.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    No asumir que una VPN elimina cookies,
+                    fingerprinting del navegador o seguimiento
+                    asociado a cuentas autenticadas.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Evitar utilizar una VPN como sustituto de controles
+                    de hardening, firewall, segmentación y actualización.
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/vpn-mantener-el-anonimato-en-internet-202106/13-secure.png"
+                    alt="Seguridad VPN">
+
+                <div class="pt-caption">
+                    [ SECURITY ] La VPN representa una capa adicional, no un control único
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONCLUSIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛠 Conclusión técnica
+            </h2>
+
+
+            <p>
+
+                Una VPN permite establecer un túnel protegido entre
+                el dispositivo y un servidor remoto, modificando el
+                punto de salida del tráfico y reduciendo la exposición
+                directa de la dirección IP pública original frente a
+                los servicios externos.
+
+            </p>
+
+
+            <p>
+
+                En este laboratorio se documentó el proceso de descarga,
+                instalación y autenticación de NordVPN sobre Kali Linux,
+                seguido de la selección de un nodo remoto y la posterior
+                validación del cambio de IP pública.
+
+            </p>
+
+
+            <p>
+
+                Desde una perspectiva de ciberseguridad, la VPN debe
+                utilizarse como una capa adicional dentro de una
+                arquitectura de defensa y privacidad, no como un
+                mecanismo capaz de proporcionar anonimato absoluto.
+
+            </p>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    Security Note:
+                </strong>
+
+                una VPN no sustituye controles como cifrado extremo
+                a extremo, autenticación multifactor, hardening,
+                actualización de software, protección del navegador,
+                firewall o una política adecuada de gestión de datos.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <section class="pt-footer">
+
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Cybersecurity · Privacy · Linux · Network Security
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div
+                class="pt-actions"
+                style="justify-content:center;">
+
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+
+            </div>
+
+
+            <p style="margin-top:20px;">
+
+                Desarrollado por
+
+                <strong style="
+                    color:#00f5ff;
+                    text-shadow:
+                        0 0 9px rgba(0,245,255,.55);
+                ">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}

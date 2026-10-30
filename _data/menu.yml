@@ -1,0 +1,30 @@
+# Menu principal. "label" es la etiqueta de los posts que muestra cada seccion.
+- title: Inicio
+  url: /
+- title: Certificaciones
+  label: Certificaciones
+- title: Labs
+  label: labs
+  children:
+    - title: HackTheBox
+      label: hackthebox
+    - title: TryHackMe
+      label: tryhackme
+    - title: Otros
+      label: otros
+- title: Workspace
+  label: workspace
+  children:
+    - title: Red Team
+      label: red team
+    - title: Blue Team
+      label: blue team
+- title: Downloads
+  label: descargas
+  children:
+    - title: Repositorios
+      label: repositorios
+    - title: Libros
+      label: libros
+- title: Articulos
+  label: articulos

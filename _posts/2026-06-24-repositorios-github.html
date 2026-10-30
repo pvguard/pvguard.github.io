@@ -1,0 +1,1448 @@
+---
+title: "PVGUARD - Checker Clickjacking"
+date: 2026-06-24 17:17:06 -0500
+tags: ["repositorios"]
+description: "[+] Inicializando módulo Pentesting Web... [+] Cargando PVGUARD Checker Clickjacking v2.0... [+] Analizando headers: X-Frame-Options / CSP…"
+image: "/assets/img/posts/repositorios-github-202606/02-clickjacking.png"
+permalink: "/2026/06/repositorios-github.html"
+blogger_url: "https://pvguard.blogspot.com/2026/06/repositorios-github.html"
+---
+{% raw %}<h1 style="text-align: center;">
+  <span style="color: red;">
+    PVGUARD Checker Clickjacking: Herramienta para detectar vulnerabilidades de Clickjacking
+  </span>
+</h1>
+
+<div class="separator" style="clear: both;">
+  <a href="/assets/img/posts/repositorios-github-202606/02-clickjacking.png" style="display: block; padding: 1em 0; text-align: center;">
+    <img alt="PVGUARD Checker Clickjacking" border="0" width="600" data-original-height="1024" data-original-width="1536" src="/assets/img/posts/repositorios-github-202606/02-clickjacking.png"/>
+  </a>
+</div>
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+<style>
+/* =========================================================
+   BLOGGER POST - PVGUARD CHECKER CLICKJACKING
+   Style Blogger / Terminal Hacker / by Gh0s7m4n
+   ========================================================= */
+
+.pvguard-post {
+  --bg: #05070b;
+  --bg2: #07111b;
+  --card: rgba(9, 18, 30, .92);
+  --card2: rgba(5, 12, 22, .96);
+  --green: #00ff88;
+  --green2: #00c46f;
+  --cyan: #00d9ff;
+  --blue: #2b7cff;
+  --yellow: #ffd166;
+  --red: #ff4d6d;
+  --text: #e9fff5;
+  --muted: #a8b8c6;
+  --line: rgba(0, 255, 136, .28);
+  --shadow: 0 0 28px rgba(0,255,136,.18);
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0,255,136,.14), transparent 32%),
+    radial-gradient(circle at 80% 20%, rgba(0,217,255,.11), transparent 28%),
+    linear-gradient(135deg, #020409 0%, #07111c 48%, #020409 100%);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,136,.25);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.pvguard-post * {
+  box-sizing: border-box;
+}
+
+.pvguard-post a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pvguard-post code {
+  color: #dfffee;
+  background: rgba(0,0,0,.34);
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,255,136,.12);
+}
+
+.pvguard-post::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,136,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,.055) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: .45;
+  pointer-events: none;
+}
+
+.pvguard-post::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 50%, rgba(0,0,0,.18) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  opacity: .28;
+}
+
+.pv-inner {
+  position: relative;
+  z-index: 2;
+  padding: 26px;
+}
+
+/* ================= LOADER ================= */
+
+.pv-loader {
+  background: rgba(0, 0, 0, .62);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 22px;
+  box-shadow: inset 0 0 25px rgba(0,255,136,.06);
+  overflow: hidden;
+  animation: pvLoaderExit .65s ease 2.8s forwards;
+}
+
+.pv-loader-top {
+  display: flex;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.pv-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 14px var(--green);
+}
+
+.pv-dot:nth-child(2) {
+  background: var(--yellow);
+  box-shadow: 0 0 14px var(--yellow);
+}
+
+.pv-dot:nth-child(3) {
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red);
+}
+
+.pv-loader-code {
+  font-family: Consolas, Monaco, monospace;
+  color: var(--green);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.pv-loader-code span {
+  color: var(--cyan);
+}
+
+.pv-main {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: pvMainShow .7s ease 3s forwards;
+}
+
+@keyframes pvLoaderExit {
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-width: 0;
+  }
+}
+
+@keyframes pvMainShow {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= HERO ================= */
+
+.pv-hero {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 24px;
+  align-items: center;
+  padding: 28px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(0,255,136,.08), rgba(0,217,255,.05)),
+    rgba(0,0,0,.36);
+  box-shadow: inset 0 0 45px rgba(0,255,136,.05);
+}
+
+.pv-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,.35);
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(0,255,136,.06);
+  margin-bottom: 16px;
+}
+
+.pv-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 14px var(--green);
+}
+
+.pv-title {
+  font-size: clamp(32px, 6vw, 64px);
+  line-height: .94;
+  margin: 0 0 16px;
+  letter-spacing: -1.8px;
+  color: #ffffff;
+  text-shadow: 0 0 22px rgba(0,255,136,.28);
+}
+
+.pv-title span {
+  display: block;
+  color: var(--green);
+}
+
+.pv-desc {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+  margin: 0 0 20px;
+}
+
+.pv-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.pv-badge {
+  border: 1px solid rgba(0,255,136,.28);
+  background: rgba(0,0,0,.34);
+  color: #dfffee;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(0,255,136,.06);
+}
+
+.pv-badge.blue {
+  border-color: rgba(0,217,255,.35);
+  color: var(--cyan);
+}
+
+.pv-badge.yellow {
+  border-color: rgba(255,209,102,.45);
+  color: var(--yellow);
+}
+
+.pv-badge.red {
+  border-color: rgba(255,77,109,.45);
+  color: var(--red);
+}
+
+.pv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.pv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 17px;
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.pv-btn.primary {
+  color: #00150b;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  box-shadow: 0 0 22px rgba(0,255,136,.28);
+}
+
+.pv-btn.secondary {
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,.42);
+  background: rgba(0,0,0,.35);
+}
+
+.pv-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(0,255,136,.28);
+}
+
+/* ================= TERMINAL ================= */
+
+.pv-terminal {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(0,0,0,.74);
+  border: 1px solid rgba(0,255,136,.25);
+  box-shadow: 0 0 35px rgba(0,0,0,.45);
+}
+
+.pv-terminal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 14px;
+  background: rgba(255,255,255,.05);
+  border-bottom: 1px solid rgba(0,255,136,.18);
+}
+
+.pv-term-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.pv-term-dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: block;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+
+.pv-term-dots i:nth-child(2) {
+  background: var(--yellow);
+  box-shadow: 0 0 10px var(--yellow);
+}
+
+.pv-term-dots i:nth-child(3) {
+  background: var(--red);
+  box-shadow: 0 0 10px var(--red);
+}
+
+.pv-terminal-title {
+  color: var(--muted);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+}
+
+.pv-terminal-body {
+  padding: 18px;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #dfffee;
+  overflow-x: auto;
+}
+
+.pv-prompt {
+  color: var(--green);
+}
+
+.pv-cyan {
+  color: var(--cyan);
+}
+
+.pv-yellow {
+  color: var(--yellow);
+}
+
+.pv-red {
+  color: var(--red);
+}
+
+.pv-green {
+  color: var(--green);
+}
+
+.pv-comment {
+  color: #7d8fa1;
+}
+
+/* ================= SECTIONS ================= */
+
+.pv-section {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--card);
+  border: 1px solid rgba(0,255,136,.18);
+  box-shadow: 0 0 28px rgba(0,0,0,.24);
+}
+
+.pv-section h2 {
+  margin: 0 0 14px;
+  font-size: 26px;
+  color: #ffffff;
+  letter-spacing: -.6px;
+}
+
+.pv-section h2 span {
+  color: var(--green);
+}
+
+.pv-section p {
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0 0 14px;
+  font-size: 15.5px;
+}
+
+.pv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.pv-card {
+  background:
+    linear-gradient(135deg, rgba(0,255,136,.055), rgba(0,217,255,.035)),
+    rgba(0,0,0,.28);
+  border: 1px solid rgba(0,255,136,.18);
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 140px;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.pv-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0,255,136,.5);
+  box-shadow: 0 0 24px rgba(0,255,136,.13);
+}
+
+.pv-card-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(0,255,136,.09);
+  border: 1px solid rgba(0,255,136,.24);
+  color: var(--green);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.pv-card h3 {
+  margin: 0 0 9px;
+  color: #ffffff;
+  font-size: 17px;
+}
+
+.pv-card p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ================= VERSION BOX ================= */
+
+.pv-versions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.pv-version-box {
+  border-radius: 18px;
+  padding: 20px;
+  background: rgba(0,0,0,.32);
+  border: 1px solid rgba(0,255,136,.2);
+}
+
+.pv-version-box strong {
+  display: inline-flex;
+  color: #00150b;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  padding: 7px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.pv-version-box h3 {
+  color: #fff;
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.pv-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+}
+
+.pv-list li {
+  position: relative;
+  color: var(--muted);
+  line-height: 1.65;
+  padding-left: 25px;
+  margin: 8px 0;
+}
+
+.pv-list li::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 900;
+}
+
+/* ================= CODE BLOCKS ================= */
+
+.pv-code {
+  position: relative;
+  margin: 14px 0;
+  border-radius: 15px;
+  border: 1px solid rgba(0,255,136,.22);
+  background: #02060a;
+  overflow: hidden;
+}
+
+.pv-code-title {
+  padding: 10px 14px;
+  color: var(--muted);
+  background: rgba(255,255,255,.045);
+  border-bottom: 1px solid rgba(0,255,136,.15);
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+}
+
+.pv-code pre {
+  margin: 0;
+  padding: 15px;
+  overflow-x: auto;
+  color: #dfffee;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13.5px;
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.pv-code .cmd {
+  color: var(--green);
+}
+
+.pv-code .arg {
+  color: var(--cyan);
+}
+
+/* ================= TABLES ================= */
+
+.pv-mini-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 14px;
+  margin-top: 15px;
+  border: 1px solid rgba(0,255,136,.2);
+}
+
+.pv-mini-table th,
+.pv-mini-table td {
+  padding: 13px;
+  border-bottom: 1px solid rgba(0,255,136,.12);
+  text-align: left;
+  color: var(--muted);
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.pv-mini-table th {
+  color: var(--green);
+  background: rgba(0,255,136,.07);
+}
+
+.pv-mini-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.pv-mini-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ================= TEMPLATES ================= */
+
+.pv-templates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.pv-template {
+  font-family: Consolas, Monaco, monospace;
+  font-size: 13px;
+  color: #eafff4;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,255,136,.22);
+  background: rgba(0,0,0,.32);
+  transition: transform .18s ease, background .18s ease;
+}
+
+.pv-template:hover {
+  transform: translateY(-2px);
+  background: rgba(0,255,136,.09);
+}
+
+/* ================= ALERTS ================= */
+
+.pv-alert {
+  margin-top: 18px;
+  padding: 17px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,209,102,.35);
+  background: rgba(255,209,102,.08);
+  color: #fff6d8;
+  line-height: 1.7;
+}
+
+.pv-alert strong {
+  color: var(--yellow);
+}
+
+.pv-danger-box {
+  margin-top: 18px;
+  padding: 17px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,77,109,.35);
+  background: rgba(255,77,109,.08);
+  color: #ffe3e9;
+  line-height: 1.7;
+}
+
+.pv-danger-box strong {
+  color: var(--red);
+}
+
+/* ================= STATUS ================= */
+
+.pv-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.pv-status.ok {
+  color: #00150b;
+  background: var(--green);
+}
+
+.pv-status.medium {
+  color: #160e00;
+  background: var(--yellow);
+}
+
+.pv-status.high {
+  color: #fff;
+  background: var(--red);
+}
+
+.pv-status.info {
+  color: #001217;
+  background: var(--cyan);
+}
+
+/* ================= VIDEO / GIF DEMO CORREGIDO ================= */
+
+.pv-demo-box {
+  border-radius: 20px;
+  padding: 22px;
+  margin-top: 18px;
+  background:
+    linear-gradient(135deg, rgba(0,217,255,.08), rgba(0,255,136,.05)),
+    rgba(0,0,0,.34);
+  border: 1px solid rgba(0,217,255,.28);
+  box-shadow: 0 0 28px rgba(0,217,255,.08);
+}
+
+.pv-video-frame {
+  position: relative;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  aspect-ratio: 960 / 679;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,136,.35);
+  background:
+    radial-gradient(circle at center, rgba(0,255,136,.10), transparent 48%),
+    #02060a;
+  box-shadow:
+    0 0 35px rgba(0,255,136,.16),
+    inset 0 0 40px rgba(0,255,136,.04);
+}
+
+.pv-video-frame::before {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 4;
+  font-family: Consolas, Monaco, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--green);
+  background: rgba(0,0,0,.72);
+  border: 1px solid rgba(0,255,136,.30);
+  padding: 8px 11px;
+  border-radius: 999px;
+  box-shadow: 0 0 16px rgba(0,255,136,.18);
+}
+
+.pv-video-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(transparent 50%, rgba(0,0,0,.12) 50%),
+    radial-gradient(circle at center, transparent 55%, rgba(0,0,0,.16) 100%);
+  background-size: 100% 4px, auto;
+  opacity: .22;
+}
+
+.pv-video-frame a.pv-gif-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pv-video-frame img.pv-demo-gif {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background: #02060a;
+  border: 0;
+}
+
+.pv-demo-caption {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 15px;
+  background: rgba(0,0,0,.30);
+  border: 1px solid rgba(0,255,136,.18);
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.pv-demo-caption strong {
+  color: var(--green);
+}
+
+/* ================= FOOTER ================= */
+
+.pv-footer {
+  margin-top: 24px;
+  padding: 24px;
+  border-radius: 20px;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(0,255,136,.14), transparent 55%),
+    rgba(0,0,0,.48);
+  border: 1px solid rgba(0,255,136,.22);
+}
+
+.pv-footer h2 {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: 28px;
+}
+
+.pv-footer p {
+  margin: 0 auto 18px;
+  max-width: 760px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.pv-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,.28);
+  background: rgba(0,0,0,.32);
+  font-family: Consolas, Monaco, monospace;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .pv-hero,
+  .pv-versions {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pv-inner {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-hero,
+  .pv-section,
+  .pv-footer {
+    padding: 18px;
+  }
+
+  .pv-title {
+    font-size: 38px;
+  }
+
+  .pv-actions {
+    flex-direction: column;
+  }
+
+  .pv-btn {
+    width: 100%;
+  }
+
+  .pv-code pre {
+    font-size: 12.5px;
+  }
+
+  .pv-video-frame::before {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+}
+</style>
+
+<div class="pvguard-post">
+  <div class="pv-inner">
+
+    <!-- LOADING TERMINAL -->
+    <div class="pv-loader">
+      <div class="pv-loader-top">
+        <div class="pv-dot"></div>
+        <div class="pv-dot"></div>
+        <div class="pv-dot"></div>
+      </div>
+
+      <div class="pv-loader-code">
+        <div><span>[+]</span> Inicializando módulo Pentesting Web...</div>
+        <div><span>[+]</span> Cargando PVGUARD Checker Clickjacking v2.0...</div>
+        <div><span>[+]</span> Analizando headers: X-Frame-Options / CSP frame-ancestors...</div>
+        <div><span>[OK]</span> Generando entorno visual para Blogger...</div>
+      </div>
+    </div>
+
+    <div class="pv-main">
+
+      <!-- HERO -->
+      <section class="pv-hero">
+        <div>
+          <div class="pv-kicker">Security Tool / Python / Web Pentesting</div>
+
+          <h1 class="pv-title">
+            PVGUARD
+            <span>Checker Clickjacking</span>
+          </h1>
+
+          <p class="pv-desc">
+            Herramienta creada para validar si una aplicación web cuenta con protecciones contra ataques de
+            <strong>Clickjacking</strong>. Permite revisar headers defensivos, generar una Prueba de Concepto en HTML
+            y presentar evidencia visual para reportes técnicos de pentesting web.
+          </p>
+
+          <div class="pv-badges">
+            <span class="pv-badge">Version 2.0</span>
+            <span class="pv-badge blue">Python 3</span>
+            <span class="pv-badge yellow">PoC HTML</span>
+            <span class="pv-badge">20 Templates</span>
+            <span class="pv-badge blue">X-Frame-Options</span>
+          </div>
+
+          <div class="pv-actions">
+            <a class="pv-btn primary" href="https://github.com/joepm21/Checker-Clickjacking" rel="noopener noreferrer" target="_blank">
+              Ver proyecto en GitHub
+            </a>
+            <a class="pv-btn secondary" href="#demo-clickjacking">
+              Ver video demo
+            </a>
+          </div>
+        </div>
+
+        <div class="pv-terminal">
+          <div class="pv-terminal-head">
+            <div class="pv-term-dots">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="pv-terminal-title">root💀gh0s7m4n:~/</div>
+          </div>
+
+          <div class="pv-terminal-body">
+            <div><span class="pv-prompt">┌──(root💀gh0s7m4n)-[~/Checker-Clickjacking]</span></div>
+            <div><span class="pv-prompt">└─$</span> ./checker_clickjacking <span class="pv-cyan">-u https://example.com --template banca</span></div>
+            <br />
+            <div><span class="pv-yellow">[INFO]</span> Verificando protección anti-iframe...</div>
+            <div><span class="pv-yellow">[CHECK]</span> X-Frame-Options</div>
+            <div><span class="pv-yellow">[CHECK]</span> Content-Security-Policy: frame-ancestors</div>
+            <div><span class="pv-yellow">[CHECK]</span> Generando PoC HTML controlada</div>
+            <div><span class="pv-green">[OK]</span> Evidencia generada correctamente</div>
+            <div><span class="pv-comment"># Uso únicamente en entornos autorizados</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESCRIPCION -->
+      <section class="pv-section">
+        <h2><span>01.</span> ¿Qué es PVGUARD Checker Clickjacking?</h2>
+
+        <p>
+          <strong>PVGUARD Checker Clickjacking</strong> es una herramienta en Python diseñada para comprobar si una
+          aplicación web puede ser cargada dentro de un <code>iframe</code> sin restricciones adecuadas.
+        </p>
+
+        <p>
+          Su objetivo es ayudar a pentesters, auditores y equipos DevSecOps a validar controles de seguridad contra
+          Clickjacking, generar evidencia visual y documentar hallazgos de forma clara dentro de reportes profesionales.
+        </p>
+
+        <div class="pv-grid">
+          <div class="pv-card">
+            <div class="pv-card-icon">🖼️</div>
+            <h3>Prueba de iframe</h3>
+            <p>Verifica si una URL objetivo puede ser embebida dentro de un iframe.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🛡️</div>
+            <h3>Validación de Headers</h3>
+            <p>Evalúa X-Frame-Options y CSP frame-ancestors como controles principales.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">📄</div>
+            <h3>PoC HTML</h3>
+            <p>Genera una prueba visual para evidenciar el comportamiento de la aplicación.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🎭</div>
+            <h3>Templates</h3>
+            <p>Incluye plantillas para demostraciones controladas en laboratorios autorizados.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">⚙️</div>
+            <h3>Uso por CLI</h3>
+            <p>Permite ejecutar análisis rápidos desde terminal con parámetros simples.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">💀</div>
+            <h3>Estilo Pentesting</h3>
+            <p>Diseñada para auditorías web, Bug Bounty y generación de evidencia técnica.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFORMACION TECNICA -->
+      <section class="pv-section">
+        <h2><span>02.</span> Información técnica</h2>
+
+        <p>
+          El proyecto está enfocado en el análisis de Clickjacking y generación de evidencia HTML. La versión mejorada
+          permite validar headers, seleccionar plantillas, controlar la opacidad del iframe y abrir la PoC generada.
+        </p>
+
+        <div class="pv-mini-table-wrap">
+          <table class="pv-mini-table">
+            <thead>
+              <tr>
+                <th>Propiedad</th>
+                <th>Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Nombre</td>
+                <td><code>PVGUARD - Checker Clickjacking</code></td>
+              </tr>
+              <tr>
+                <td>Versiones</td>
+                <td>v1.0 - v2.0</td>
+              </tr>
+              <tr>
+                <td>Lenguaje</td>
+                <td>Python 3</td>
+              </tr>
+              <tr>
+                <td>Tipo</td>
+                <td>Herramienta de análisis de Clickjacking</td>
+              </tr>
+              <tr>
+                <td>Salida principal</td>
+                <td>PoC HTML / Reporte visual</td>
+              </tr>
+              <tr>
+                <td>Autor</td>
+                <td>Gh0s7m4n</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VERSIONES -->
+      <section class="pv-section">
+        <h2><span>03.</span> Versiones disponibles</h2>
+
+        <p>
+          El repositorio incluye dos versiones principales: una versión inicial para pruebas rápidas y una versión mejorada
+          con más opciones visuales y funcionales.
+        </p>
+
+        <div class="pv-versions">
+          <div class="pv-version-box">
+            <strong>v1.0</strong>
+            <h3>Checker Clickjacking Inicial</h3>
+            <ul class="pv-list">
+              <li>Ejecución desde línea de comandos.</li>
+              <li>Generación directa de PoC HTML.</li>
+              <li>Verificación básica de headers de seguridad.</li>
+              <li>Herramienta ligera para pruebas rápidas.</li>
+              <li>Uso sencillo indicando una URL objetivo.</li>
+            </ul>
+
+            <div class="pv-code">
+              <div class="pv-code-title">Ejemplo v1.0</div>
+              <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">https://example.com</span></pre>
+            </div>
+          </div>
+
+          <div class="pv-version-box">
+            <strong>v2.0</strong>
+            <h3>Checker Clickjacking Mejorado</h3>
+            <ul class="pv-list">
+              <li>Análisis de encabezados de seguridad.</li>
+              <li>Detección de <code>X-Frame-Options</code>.</li>
+              <li>Detección de <code>Content-Security-Policy: frame-ancestors</code>.</li>
+              <li>Generación de reporte HTML interactivo.</li>
+              <li>Apertura automática de la PoC en navegador.</li>
+              <li>Control de opacidad del iframe víctima.</li>
+              <li>Selector de plantillas dentro del HTML generado.</li>
+              <li>20 templates para demostraciones controladas.</li>
+            </ul>
+
+            <div class="pv-code">
+              <div class="pv-code-title">Ejemplo v2.0</div>
+              <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com</span></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INSTALACION -->
+      <section class="pv-section">
+        <h2><span>04.</span> Instalación</h2>
+
+        <p>
+          Clona el repositorio desde GitHub y entra al directorio del proyecto.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Clonar repositorio y dar permisos de ejecución</div>
+          <pre><span class="cmd">git clone</span> <span class="arg">https://github.com/joepm21/Checker-Clickjacking.git</span>
+<span class="cmd">cd</span> <span class="arg">Checker-Clickjacking</span>
+<span class="cmd">chmod +x</span> <span class="arg">Checker-Clickjacking</span></pre>
+        </div>
+
+        <p>
+          Luego puedes ejecutar la ayuda para visualizar las opciones disponibles.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Ver ayuda</div>
+          <pre><span class="cmd">python3</span> <span class="arg">checker_clickjacking -h</span>
+
+<span class="cmd">./checker_clickjacking</span> <span class="arg">-h</span></pre>
+        </div>
+      </section>
+
+      <!-- USO GENERAL -->
+      <section class="pv-section">
+        <h2><span>05.</span> Uso general</h2>
+
+        <p>
+          Puedes analizar una URL objetivo, generar una PoC HTML, guardar el resultado con un nombre personalizado
+          o validar únicamente los headers defensivos.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Analizar una URL y generar PoC</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Guardar el resultado con nombre personalizado</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com -o reporte_clickjacking.html</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Usar una plantilla específica</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com --template banca</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Controlar opacidad del iframe víctima</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com --template alerta --opacity 0.5</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">No abrir automáticamente el navegador</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com --no-open</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Verificar solo headers sin generar PoC</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com --check-only</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Generar PoC sin validar headers</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">-u https://example.com --no-check</span></pre>
+        </div>
+      </section>
+
+      <!-- VIDEO DEMO CORREGIDO -->
+      <section class="pv-section" id="demo-clickjacking">
+        <h2><span>06.</span> Video demo de uso</h2>
+
+        <p>
+          En este apartado se presentará una demostración práctica de la herramienta, ejecutando el análisis sobre una URL objetivo, validando los encabezados de seguridad anti-iframe como X-Frame-Options y Content-Security-Policy: frame-ancestors, y generando una Prueba de Concepto en HTML para evidenciar si la aplicación puede ser embebida dentro de un iframe.
+        </p>
+
+        <div class="pv-demo-box">
+          <div class="pv-video-frame">
+
+            <a class="pv-gif-link" href="/assets/img/posts/repositorios-github-202606/01-clickjacking_1.5x_HD.gif" target="_blank" rel="noopener noreferrer">
+              <img
+                class="pv-demo-gif"
+                src="/assets/img/posts/repositorios-github-202606/01-clickjacking_1.5x_HD.gif"
+                alt="Demo de uso de PVGUARD Checker Clickjacking"
+                loading="eager"
+              />
+            </a>
+
+          </div>
+       </div>
+      </section>
+
+      <!-- TEMPLATES -->
+      <section class="pv-section">
+        <h2><span>07.</span> Templates disponibles</h2>
+
+        <p>
+          La versión 2.0 incluye 20 plantillas distintas para simular escenarios visuales durante una prueba autorizada
+          o una demostración controlada.
+        </p>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Listar templates disponibles</div>
+          <pre><span class="cmd">./checker_clickjacking</span> <span class="arg">--list-templates</span></pre>
+        </div>
+
+        <div class="pv-templates">
+          <span class="pv-template">premio</span>
+          <span class="pv-template">login</span>
+          <span class="pv-template">pago</span>
+          <span class="pv-template">actualizacion</span>
+          <span class="pv-template">newsletter</span>
+          <span class="pv-template">encuesta</span>
+          <span class="pv-template">cupon</span>
+          <span class="pv-template">cloud</span>
+          <span class="pv-template">soporte</span>
+          <span class="pv-template">documento</span>
+          <span class="pv-template">delivery</span>
+          <span class="pv-template">calendario</span>
+          <span class="pv-template">wifi</span>
+          <span class="pv-template">banca</span>
+          <span class="pv-template">mfa</span>
+          <span class="pv-template">vpn</span>
+          <span class="pv-template">capacitacion</span>
+          <span class="pv-template">inventario</span>
+          <span class="pv-template">alerta</span>
+          <span class="pv-template">recompensa</span>
+        </div>
+
+        <div class="pv-alert">
+          <strong>Importante:</strong> los templates deben utilizarse únicamente en laboratorios, auditorías autorizadas
+          o demostraciones controladas donde exista permiso explícito.
+        </div>
+      </section>
+
+      <!-- HEADERS EVALUADOS -->
+      <section class="pv-section">
+        <h2><span>08.</span> Headers evaluados</h2>
+
+        <p>
+          La herramienta revisa principalmente controles que impiden o restringen que una aplicación sea cargada dentro
+          de un iframe por sitios externos.
+        </p>
+
+        <div class="pv-mini-table-wrap">
+          <table class="pv-mini-table">
+            <thead>
+              <tr>
+                <th>Header</th>
+                <th>Objetivo</th>
+                <th>Valor recomendado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>X-Frame-Options</code></td>
+                <td>Define si el sitio puede ser cargado dentro de un iframe.</td>
+                <td><code>DENY</code> o <code>SAMEORIGIN</code></td>
+              </tr>
+              <tr>
+                <td><code>Content-Security-Policy</code></td>
+                <td>Control moderno para restringir qué orígenes pueden embeber el sitio.</td>
+                <td><code>frame-ancestors 'none'</code> o <code>frame-ancestors 'self'</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Bloqueo total recomendado</div>
+          <pre><span class="arg">X-Frame-Options: DENY</span>
+<span class="arg">Content-Security-Policy: frame-ancestors 'none';</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Permitir solo mismo origen</div>
+          <pre><span class="arg">X-Frame-Options: SAMEORIGIN</span>
+<span class="arg">Content-Security-Policy: frame-ancestors 'self';</span></pre>
+        </div>
+
+        <div class="pv-code">
+          <div class="pv-code-title">Permitir dominio autorizado específico</div>
+          <pre><span class="arg">Content-Security-Policy: frame-ancestors 'self' https://dominio-autorizado.com;</span></pre>
+        </div>
+      </section>
+
+      <!-- INTERPRETACION -->
+      <section class="pv-section">
+        <h2><span>09.</span> Interpretación de resultados</h2>
+
+        <p>
+          La ausencia de controles anti-iframe puede permitir que una página sea embebida dentro de otra interfaz,
+          facilitando ataques de engaño visual si no existen medidas compensatorias.
+        </p>
+
+        <div class="pv-mini-table-wrap">
+          <table class="pv-mini-table">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Significado</th>
+                <th>Ejemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="pv-status ok">OK</span></td>
+                <td>Existe una protección adecuada contra iframe.</td>
+                <td><code>X-Frame-Options: DENY</code></td>
+              </tr>
+              <tr>
+                <td><span class="pv-status medium">WARNING</span></td>
+                <td>Existe una política, pero debe revisarse su alcance.</td>
+                <td><code>frame-ancestors</code> con dominios demasiado amplios.</td>
+              </tr>
+              <tr>
+                <td><span class="pv-status high">HIGH</span></td>
+                <td>No se identifican controles anti-iframe efectivos.</td>
+                <td>Ausencia de <code>X-Frame-Options</code> y <code>frame-ancestors</code>.</td>
+              </tr>
+              <tr>
+                <td><span class="pv-status info">INFO</span></td>
+                <td>Resultado informativo dependiente del contexto de la aplicación.</td>
+                <td>Aplicación que requiere iframe por una integración legítima.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pv-danger-box">
+          <strong>Importante:</strong> si una aplicación necesita ser embebida por terceros, la política debe ser explícita,
+          restrictiva y limitada únicamente a dominios autorizados.
+        </div>
+      </section>
+
+      <!-- REMEDIACION -->
+      <section class="pv-section">
+        <h2><span>10.</span> Recomendaciones de remediación</h2>
+
+        <p>
+          Para mitigar Clickjacking, se recomienda implementar controles a nivel de cabeceras HTTP y validar que los
+          navegadores modernos apliquen correctamente la restricción.
+        </p>
+
+        <div class="pv-grid">
+          <div class="pv-card">
+            <div class="pv-card-icon">🛡️</div>
+            <h3>X-Frame-Options</h3>
+            <p>Configurar <code>DENY</code> para bloqueo total o <code>SAMEORIGIN</code> si solo se permite el mismo origen.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🧱</div>
+            <h3>CSP frame-ancestors</h3>
+            <p>Usar <code>frame-ancestors</code> como control moderno para restringir dominios autorizados.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🔍</div>
+            <h3>Validación continua</h3>
+            <p>Revisar los headers después de cambios en servidores, balanceadores, CDN o WAF.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🌐</div>
+            <h3>Dominios permitidos</h3>
+            <p>Evitar políticas amplias y permitir únicamente dominios realmente necesarios.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">📄</div>
+            <h3>Evidencia técnica</h3>
+            <p>Adjuntar capturas, PoC HTML y salida de headers dentro del reporte de seguridad.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">⚙️</div>
+            <h3>Hardening web</h3>
+            <p>Combinar esta protección con CSP robusta, cookies seguras y validación de sesiones.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CASOS DE USO -->
+      <section class="pv-section">
+        <h2><span>11.</span> Casos de uso</h2>
+
+        <p>
+          PVGUARD Checker Clickjacking está pensado para escenarios donde existe autorización previa y el objetivo
+          es validar controles de seguridad web de forma responsable.
+        </p>
+
+        <div class="pv-grid">
+          <div class="pv-card">
+            <div class="pv-card-icon">🔍</div>
+            <h3>Pentesting Web</h3>
+            <p>Validación rápida de exposición a Clickjacking durante pruebas autorizadas.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🏆</div>
+            <h3>Bug Bounty</h3>
+            <p>Útil cuando el programa permite pruebas de iframe y evidencia visual.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🧬</div>
+            <h3>Laboratorios</h3>
+            <p>Perfecto para practicar detección, explotación controlada y remediación.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">📊</div>
+            <h3>Reportes Técnicos</h3>
+            <p>Permite documentar impacto con PoC visual y recomendaciones claras.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🧱</div>
+            <h3>Hardening</h3>
+            <p>Ayuda a comprobar si los headers fueron configurados correctamente.</p>
+          </div>
+
+          <div class="pv-card">
+            <div class="pv-card-icon">🎓</div>
+            <h3>Capacitación</h3>
+            <p>Sirve para explicar Clickjacking de manera visual y entendible.</p>
+          </div>
+        </div>
+
+        <div class="pv-alert">
+          <strong>Aviso legal:</strong> utiliza esta herramienta únicamente en sistemas propios,
+          laboratorios, auditorías con permiso o programas donde este tipo de validación esté permitido.
+        </div>
+      </section>
+
+      <!-- FOOTER CTA -->
+      <section class="pv-footer">
+        <h2>Descarga PVGUARD Checker Clickjacking</h2>
+
+        <p>
+          Proyecto creado para apoyar pruebas de seguridad web, validación de headers anti-iframe,
+          generación de PoC HTML y documentación de evidencia técnica contra Clickjacking.
+        </p>
+
+        <div class="pv-actions" style="justify-content: center;">
+          <a class="pv-btn primary" href="https://github.com/joepm21/Checker-Clickjacking" rel="noopener noreferrer" target="_blank">
+            Abrir repositorio
+          </a>
+          <a class="pv-btn secondary" href="#demo-clickjacking">
+            Ver video demo
+          </a>
+        </div>
+
+     </section>
+
+    </div>
+  </div>
+</div>{% endraw %}

@@ -1,0 +1,1014 @@
+---
+title: "GhostInject"
+date: 2026-07-02 00:48:41 -0500
+tags: ["repositorios"]
+description: "☠️ GhostInject · SQL Injection GUI GhostInject: Interfaz gráfica profesional para pruebas controladas de SQL Injection con sqlmap GhostInject es una…"
+image: "/assets/img/posts/ghostinject-202607/01-ghostinject.png"
+permalink: "/2026/07/ghostinject.html"
+blogger_url: "https://pvguard.blogspot.com/2026/07/ghostinject.html"
+---
+{% raw %}<h1 style="text-align: center;">
+  <span style="color: red;">
+    GhostInject: Interfaz gráfica profesional para pruebas controladas de SQL Injection con sqlmap
+  </span>
+</h1>
+
+<div class="separator" style="clear: both;"><a href="/assets/img/posts/ghostinject-202607/01-ghostinject.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600" data-original-height="724" data-original-width="2172" src="/assets/img/posts/ghostinject-202607/01-ghostinject.png"/></a></div>
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+<style>
+/* ==============================
+   GHOSTINJECT BLOGGER TEMPLATE
+   by Gh0s7m4n
+   ============================== */
+
+.ghostinject-post {
+  --bg: #020706;
+  --panel: rgba(4, 18, 17, 0.94);
+  --panel2: rgba(0, 255, 204, 0.06);
+  --cyan: #00ffd5;
+  --green: #00ff88;
+  --lime: #b8ff4d;
+  --red: #ff375f;
+  --text: #d9fff8;
+  --muted: #8ab7ad;
+  --line: rgba(0, 255, 213, 0.28);
+  --shadow: 0 0 28px rgba(0, 255, 213, 0.22);
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(0, 255, 213, 0.16), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(0, 255, 136, 0.12), transparent 35%),
+    linear-gradient(135deg, #020706 0%, #020f0e 45%, #000 100%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.ghostinject-post * {
+  box-sizing: border-box;
+}
+
+.ghostinject-post a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+
+.ghostinject-post a:hover {
+  color: var(--lime);
+  text-shadow: 0 0 10px var(--cyan);
+}
+
+.gi-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.025) 0,
+    rgba(255,255,255,0.025) 1px,
+    transparent 2px,
+    transparent 5px
+  );
+  opacity: 0.32;
+  z-index: 1;
+}
+
+.gi-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,255,213,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,213,0.07) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, black, transparent 80%);
+  z-index: 0;
+}
+
+.gi-content {
+  position: relative;
+  z-index: 2;
+  padding: 28px;
+}
+
+.gi-hero {
+  border: 1px solid rgba(0, 255, 213, 0.35);
+  border-radius: 22px;
+  padding: 26px;
+  background:
+    linear-gradient(135deg, rgba(0,255,213,0.10), rgba(0,255,136,0.04)),
+    rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 0 28px rgba(0,255,213,0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.gi-hero::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(0,255,213,0.28), transparent 70%);
+  filter: blur(5px);
+}
+
+.gi-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid rgba(0,255,213,0.40);
+  border-radius: 999px;
+  color: var(--cyan);
+  background: rgba(0,255,213,0.08);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.gi-title {
+  margin: 18px 0 10px;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1.02;
+  color: #ffffff;
+  text-shadow:
+    0 0 10px rgba(0,255,213,0.75),
+    0 0 24px rgba(0,255,136,0.30);
+}
+
+.gi-title span {
+  color: var(--cyan);
+}
+
+.gi-subtitle {
+  max-width: 900px;
+  color: #bfffee;
+  font-size: 17px;
+  line-height: 1.75;
+  margin: 0 0 20px;
+}
+
+.gi-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.gi-badge {
+  border: 1px solid rgba(0,255,213,0.32);
+  background: rgba(0,255,213,0.07);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(0,255,213,0.08);
+}
+
+.gi-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.gi-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(0,255,213,0.45);
+  background: linear-gradient(135deg, rgba(0,255,213,0.25), rgba(0,255,136,0.10));
+  box-shadow: 0 0 20px rgba(0,255,213,0.18);
+}
+
+.gi-btn:hover {
+  transform: translateY(-2px);
+}
+
+.gi-btn-secondary {
+  color: var(--text);
+  background: rgba(0,0,0,0.35);
+}
+
+.gi-section {
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid rgba(0,255,213,0.24);
+  border-radius: 20px;
+  background: rgba(0, 10, 9, 0.70);
+  box-shadow: inset 0 0 24px rgba(0,255,213,0.045);
+}
+
+.gi-section h2 {
+  margin: 0 0 14px;
+  color: var(--cyan);
+  font-size: 25px;
+  text-shadow: 0 0 12px rgba(0,255,213,0.45);
+}
+
+.gi-section h3 {
+  color: var(--green);
+  margin: 18px 0 10px;
+}
+
+.gi-section p {
+  color: #c8fff4;
+  line-height: 1.75;
+  font-size: 16px;
+}
+
+.gi-highlight {
+  color: var(--lime);
+  font-weight: 800;
+}
+
+.gi-warning {
+  margin-top: 18px;
+  padding: 16px;
+  border-left: 4px solid var(--red);
+  border-radius: 14px;
+  background: rgba(255, 55, 95, 0.09);
+  color: #ffd7df;
+  line-height: 1.7;
+}
+
+.gi-warning strong {
+  color: #ff8aa0;
+}
+
+.gi-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 18px;
+}
+
+.gi-card {
+  border: 1px solid rgba(0,255,213,0.22);
+  border-radius: 18px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(0,255,213,0.07), rgba(0,255,136,0.025)),
+    rgba(0,0,0,0.25);
+  min-height: 150px;
+  transition: 0.25s ease;
+}
+
+.gi-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,255,213,0.55);
+  box-shadow: 0 0 22px rgba(0,255,213,0.13);
+}
+
+.gi-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #00110e;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  font-size: 21px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  box-shadow: 0 0 18px rgba(0,255,213,0.33);
+}
+
+.gi-card h3 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.gi-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.gi-terminal {
+  margin-top: 18px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0,255,213,0.34);
+  background: #020706;
+  box-shadow: 0 0 24px rgba(0,255,213,0.14);
+}
+
+.gi-terminal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(0,255,213,0.15), rgba(0,255,136,0.05));
+  border-bottom: 1px solid rgba(0,255,213,0.22);
+  padding: 11px 14px;
+  color: var(--cyan);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.gi-dots {
+  display: flex;
+  gap: 7px;
+}
+
+.gi-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+.gi-terminal pre {
+  margin: 0;
+  padding: 18px;
+  overflow-x: auto;
+  color: #d7fff7;
+  font-size: 14px;
+  line-height: 1.65;
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  white-space: pre-wrap;
+}
+
+.gi-prompt {
+  color: var(--green);
+}
+
+.gi-command {
+  color: var(--cyan);
+}
+
+.gi-comment {
+  color: #7eaaa0;
+}
+
+.gi-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(0,255,213,0.24);
+}
+
+.gi-table th,
+.gi-table td {
+  padding: 13px;
+  border-bottom: 1px solid rgba(0,255,213,0.14);
+  text-align: left;
+  line-height: 1.55;
+}
+
+.gi-table th {
+  background: rgba(0,255,213,0.12);
+  color: var(--cyan);
+  font-size: 14px;
+}
+
+.gi-table td {
+  color: #d4fff6;
+  font-size: 14px;
+}
+
+.gi-table tr:last-child td {
+  border-bottom: none;
+}
+
+.gi-demo {
+  margin-top: 18px;
+  border: 1px dashed rgba(0,255,213,0.45);
+  border-radius: 20px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(0,255,213,0.08), rgba(0,0,0,0.35));
+  text-align: center;
+}
+
+.gi-demo-title {
+  color: var(--cyan);
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.gi-demo-box {
+  border-radius: 18px;
+  border: 1px solid rgba(0,255,213,0.24);
+  min-height: 260px;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background:
+    radial-gradient(circle, rgba(0,255,213,0.12), transparent 55%),
+    rgba(0,0,0,0.45);
+  color: var(--muted);
+}
+
+.gi-demo-box img,
+.gi-demo-box video {
+  max-width: 100%;
+  border-radius: 16px;
+  border: 1px solid rgba(0,255,213,0.35);
+  box-shadow: 0 0 22px rgba(0,255,213,0.16);
+}
+
+.gi-flow {
+  counter-reset: step;
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.gi-step {
+  position: relative;
+  padding: 16px 16px 16px 58px;
+  border: 1px solid rgba(0,255,213,0.20);
+  border-radius: 16px;
+  background: rgba(0,255,213,0.05);
+  color: #d8fff8;
+  line-height: 1.6;
+}
+
+.gi-step::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  width: 29px;
+  height: 29px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #00110e;
+  background: linear-gradient(135deg, var(--cyan), var(--green));
+  font-weight: 900;
+  box-shadow: 0 0 14px rgba(0,255,213,0.30);
+}
+
+.gi-footer {
+  margin-top: 24px;
+  text-align: center;
+  padding: 24px;
+  border: 1px solid rgba(0,255,213,0.22);
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, rgba(0,255,213,0.10), rgba(0,255,136,0.04)),
+    rgba(0,0,0,0.45);
+}
+
+.gi-footer h2 {
+  color: #ffffff;
+  margin: 0 0 8px;
+  text-shadow: 0 0 14px rgba(0,255,213,0.48);
+}
+
+.gi-footer p {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.gi-separator {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,255,213,0.6), transparent);
+  margin: 22px 0;
+}
+
+.gi-code-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 9px;
+  color: var(--cyan);
+  background: rgba(0,255,213,0.09);
+  border: 1px solid rgba(0,255,213,0.20);
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .gi-grid-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gi-content {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gi-grid-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .gi-hero,
+  .gi-section,
+  .gi-footer {
+    padding: 18px;
+  }
+
+  .gi-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .gi-title {
+    font-size: 32px;
+  }
+}
+</style>
+
+<div class="ghostinject-post">
+  <div class="gi-grid"></div>
+  <div class="gi-scanlines"></div>
+
+  <div class="gi-content">
+
+    <!-- HERO -->
+    <section class="gi-hero">
+      <div class="gi-kicker">☠️ GhostInject · SQL Injection GUI</div>
+
+      <h1 class="gi-title">
+        GhostInject: <span>Interfaz gráfica profesional para pruebas controladas de SQL Injection con sqlmap</span>
+      </h1>
+
+      <p class="gi-subtitle">
+        <strong>GhostInject</strong> es una herramienta gráfica orientada a Linux que facilita el flujo de trabajo de un pentester durante pruebas autorizadas de
+        <span class="gi-highlight">SQL Injection</span>. Permite configurar objetivos, cookies, headers, proxy, tamper scripts, nivel de prueba, riesgo,
+        técnicas de inyección y acciones rápidas desde una interfaz visual basada en una consola en vivo.
+      </p>
+
+      <div class="gi-badges">
+        <span class="gi-badge">🐧 Linux x86_64</span>
+        <span class="gi-badge">⚡ Powered by sqlmap</span>
+        <span class="gi-badge">🧩 Burp Request Support</span>
+        <span class="gi-badge">🛡️ Pentesting Autorizado</span>
+      </div>
+
+      <div class="gi-actions">
+        <a class="gi-btn" href="https://github.com/joepm21/GhostInject" target="_blank" rel="noopener">
+          Ver repositorio en GitHub
+        </a>
+        <a class="gi-btn gi-btn-secondary" href="#gi-instalacion">
+          Instalación rápida
+        </a>
+      </div>
+
+      <div class="gi-warning">
+        <strong>⚠️ Uso responsable:</strong> esta herramienta debe utilizarse únicamente en laboratorios, CTFs, entornos propios o sistemas donde exista autorización explícita para realizar pruebas de seguridad.
+      </div>
+    </section>
+
+    <!-- BANNER / IMAGE -->
+
+
+    <!-- RESUMEN -->
+    <section class="gi-section">
+      <h2>👻 ¿Qué es GhostInject?</h2>
+
+      <p>
+        <strong>GhostInject</strong> nace como una utilidad para centralizar y agilizar tareas comunes de validación SQLi usando
+        <span class="gi-code-pill">sqlmap</span>, pero con una interfaz gráfica más ordenada para el trabajo diario de un pentester.
+      </p>
+
+      <p>
+        En lugar de construir manualmente cada comando desde terminal, la herramienta permite configurar parámetros esenciales desde la GUI,
+        visualizar el comando generado antes de ejecutarlo y revisar la salida en una consola integrada.
+      </p>
+
+      <div class="gi-grid-cards">
+        <div class="gi-card">
+          <div class="gi-icon">1</div>
+          <h3>Objetivos controlados</h3>
+          <p>Permite trabajar con una URL directa o con un request HTTP exportado desde Burp Suite.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">2</div>
+          <h3>Configuración avanzada</h3>
+          <p>Soporta cookies, headers, User-Agent, proxy, DBMS, técnicas, level, risk y threads.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">3</div>
+          <h3>Evidencia técnica</h3>
+          <p>Incluye consola en vivo, preview del comando y opción para guardar la salida en archivo de evidencia.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARACTERISTICAS -->
+    <section class="gi-section">
+      <h2>✨ Características principales</h2>
+
+      <div class="gi-grid-cards">
+        <div class="gi-card">
+          <div class="gi-icon">⚙️</div>
+          <h3>GUI tipo pentester</h3>
+          <p>Interfaz gráfica basada en PyQt5 con estilo profesional para pruebas técnicas.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">🧪</div>
+          <h3>Motor sqlmap</h3>
+          <p>Utiliza sqlmap como motor principal para pruebas controladas de SQL Injection.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">📄</div>
+          <h3>Request de Burp</h3>
+          <p>Permite cargar archivos de request HTTP para trabajar con cookies, tokens y peticiones completas.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">🌐</div>
+          <h3>Proxy HTTP/S</h3>
+          <p>Compatible con proxies como Burp Suite o OWASP ZAP para revisar el tráfico generado.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">🧬</div>
+          <h3>Tamper scripts</h3>
+          <p>Soporta tamper scripts para escenarios donde se requiera ajustar payloads de prueba.</p>
+        </div>
+
+        <div class="gi-card">
+          <div class="gi-icon">💾</div>
+          <h3>Guardar salida</h3>
+          <p>Permite exportar la salida como evidencia técnica para documentación o reportes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALACION -->
+    <section class="gi-section" id="gi-instalacion">
+      <h2>🚀 Instalación rápida</h2>
+
+      <p>
+        GhostInject se distribuye como binario para Linux. El requisito principal es contar con
+        <span class="gi-code-pill">sqlmap</span> instalado y disponible en el <span class="gi-code-pill">PATH</span>.
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>terminal · instalación</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre><span class="gi-comment"># Instalar sqlmap</span>
+<span class="gi-prompt">ghost@kali:~$</span> <span class="gi-command">sudo apt update</span>
+<span class="gi-prompt">ghost@kali:~$</span> <span class="gi-command">sudo apt install -y sqlmap</span>
+
+<span class="gi-comment"># Clonar el repositorio</span>
+<span class="gi-prompt">ghost@kali:~$</span> <span class="gi-command">git clone https://github.com/joepm21/GhostInject.git</span>
+<span class="gi-prompt">ghost@kali:~$</span> <span class="gi-command">cd GhostInject</span>
+
+<span class="gi-comment"># Dar permisos de ejecución</span>
+<span class="gi-prompt">ghost@kali:~/GhostInject$</span> <span class="gi-command">chmod +x GhostInject</span>
+
+<span class="gi-comment"># Ejecutar la herramienta</span>
+<span class="gi-prompt">ghost@kali:~/GhostInject$</span> <span class="gi-command">./GhostInject</span></pre>
+      </div>
+
+      <h3>Instalación opcional como comando global</h3>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>terminal · comando global</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre><span class="gi-prompt">ghost@kali:~/GhostInject$</span> <span class="gi-command">sudo cp GhostInject /usr/local/bin/ghostinject</span>
+<span class="gi-prompt">ghost@kali:~/GhostInject$</span> <span class="gi-command">sudo chmod +x /usr/local/bin/ghostinject</span>
+
+<span class="gi-comment"># Luego podrás ejecutarlo desde cualquier ruta</span>
+<span class="gi-prompt">ghost@kali:~$</span> <span class="gi-command">ghostinject</span></pre>
+      </div>
+    </section>
+
+    <!-- FLUJO -->
+    <section class="gi-section">
+      <h2>🧭 Flujo de uso recomendado</h2>
+
+      <div class="gi-flow">
+        <div class="gi-step">
+          Ejecuta <strong>GhostInject</strong> desde un entorno gráfico Linux como Kali, Debian, Ubuntu o derivados.
+        </div>
+
+        <div class="gi-step">
+          Confirma que el objetivo forma parte de un laboratorio, CTF, auditoría autorizada o entorno propio.
+        </div>
+
+        <div class="gi-step">
+          Ingresa una URL objetivo o carga un archivo de request HTTP exportado desde Burp Suite.
+        </div>
+
+        <div class="gi-step">
+          Configura cookies, headers, User-Agent, proxy, parámetro vulnerable, DBMS, nivel, riesgo, threads y técnica.
+        </div>
+
+        <div class="gi-step">
+          Usa <strong>Preview Command</strong> para revisar el comando antes de ejecutarlo.
+        </div>
+
+        <div class="gi-step">
+          Ejecuta una acción rápida como Test Injection, Enumerate DBs, DB Banner, Tables, Columns o Dump Table.
+        </div>
+
+        <div class="gi-step">
+          Guarda la salida como evidencia técnica usando la opción <strong>Save Output</strong>.
+        </div>
+      </div>
+    </section>
+
+    <!-- OPCIONES -->
+    <section class="gi-section">
+      <h2>⚙️ Opciones soportadas</h2>
+
+      <p>
+        GhostInject construye comandos de sqlmap utilizando las opciones seleccionadas desde la interfaz.
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>sqlmap · opciones integradas</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre>-u &lt;URL&gt;
+-r &lt;REQUEST_FILE&gt;
+-p &lt;PARAMETER&gt;
+--cookie &lt;COOKIE&gt;
+--user-agent &lt;USER_AGENT&gt;
+--headers &lt;HEADERS&gt;
+--level &lt;1-5&gt;
+--risk &lt;1-3&gt;
+--threads &lt;N&gt;
+--dbms &lt;DBMS&gt;
+--technique &lt;B|E|U|S|T|Q&gt;
+--batch
+--random-agent
+--forms
+--crawl=2
+--fresh-queries
+--proxy &lt;PROXY&gt;
+--tamper &lt;TAMPER_SCRIPT&gt;
+--output-dir &lt;DIRECTORY&gt;</pre>
+      </div>
+
+      <p>
+        También incluye un campo para argumentos extra en casos avanzados, por ejemplo:
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>extra args</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre>--delay=1 --timeout=20 --retries=2</pre>
+      </div>
+    </section>
+
+    <!-- ACCIONES -->
+    <section class="gi-section">
+      <h2>⚡ Acciones rápidas disponibles</h2>
+
+      <table class="gi-table">
+        <thead>
+          <tr>
+            <th>Acción</th>
+            <th>Descripción técnica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Test Injection</strong></td>
+            <td>Ejecuta una prueba base contra el objetivo configurado.</td>
+          </tr>
+          <tr>
+            <td><strong>Enumerate DBs</strong></td>
+            <td>Enumera bases de datos disponibles usando la opción <span class="gi-code-pill">--dbs</span>.</td>
+          </tr>
+          <tr>
+            <td><strong>DB Banner</strong></td>
+            <td>Obtiene el banner del motor de base de datos mediante <span class="gi-code-pill">--banner</span>.</td>
+          </tr>
+          <tr>
+            <td><strong>Tables</strong></td>
+            <td>Enumera tablas de una base de datos específica.</td>
+          </tr>
+          <tr>
+            <td><strong>Columns</strong></td>
+            <td>Enumera columnas de una tabla específica.</td>
+          </tr>
+          <tr>
+            <td><strong>Dump Table</strong></td>
+            <td>Extrae información de una tabla dentro de un entorno autorizado.</td>
+          </tr>
+          <tr>
+            <td><strong>Preview Command</strong></td>
+            <td>Muestra el comando completo antes de ejecutarlo.</td>
+          </tr>
+          <tr>
+            <td><strong>Save Output</strong></td>
+            <td>Guarda la salida de consola como evidencia.</td>
+          </tr>
+          <tr>
+            <td><strong>Clear All</strong></td>
+            <td>Limpia campos, consola, preview y notas.</td>
+          </tr>
+          <tr>
+            <td><strong>Stop</strong></td>
+            <td>Detiene el proceso de sqlmap en ejecución.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- BURP -->
+    <section class="gi-section">
+      <h2>🧩 Uso con request de Burp Suite</h2>
+
+      <p>
+        Una de las funciones más útiles de GhostInject es la posibilidad de trabajar con un request HTTP capturado desde Burp Suite.
+        Esto ayuda cuando la prueba requiere cookies, tokens, headers personalizados o una petición POST completa.
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>flujo · Burp Suite</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre>Burp Suite → Intercept → Send to Repeater → Save item/request → cargar en GhostInject</pre>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section class="gi-section">
+      <h2>🎬 Ejecución de Herramienta GhostInject</h2>
+
+<div class="cg-demo-box">
+        <img src="/assets/img/posts/ghostinject-202607/02-ghostinject_2x_HD.gif" alt="Demo GhostInject ejecutándose en terminal">     
+        </div>
+
+    <!-- REQUISITOS -->
+    <section class="gi-section">
+      <h2>📌 Requisitos recomendados</h2>
+
+      <table class="gi-table">
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th>Recomendación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sistema operativo</td>
+            <td>Linux x86_64: Kali Linux, Debian, Ubuntu o derivados.</td>
+          </tr>
+          <tr>
+            <td>Entorno gráfico</td>
+            <td>X11 o Wayland activo para ejecutar la interfaz gráfica.</td>
+          </tr>
+          <tr>
+            <td>Dependencia principal</td>
+            <td>sqlmap instalado y disponible en el PATH.</td>
+          </tr>
+          <tr>
+            <td>Proxy opcional</td>
+            <td>Burp Suite u OWASP ZAP para inspeccionar tráfico durante pruebas autorizadas.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section class="gi-section">
+      <h2>🛠️ Solución de problemas comunes</h2>
+
+      <h3>sqlmap was not found</h3>
+      <p>
+        Instala sqlmap y valida que esté disponible en el sistema:
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>fix · sqlmap</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre>sudo apt install -y sqlmap
+which sqlmap
+sqlmap --version</pre>
+      </div>
+
+      <h3>Permission denied</h3>
+      <p>
+        Otorga permisos de ejecución al binario:
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>fix · permisos</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre>chmod +x GhostInject</pre>
+      </div>
+
+      <h3>Error gráfico o Qt</h3>
+      <p>
+        Ejecuta la herramienta desde un entorno de escritorio Linux. Si usas SSH, habilita forwarding gráfico:
+      </p>
+
+      <div class="gi-terminal">
+        <div class="gi-terminal-top">
+          <span>fix · entorno gráfico</span>
+          <div class="gi-dots">
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+            <span class="gi-dot"></span>
+          </div>
+        </div>
+<pre>ssh -X usuario@host
+./GhostInject</pre>
+      </div>
+    </section>
+
+    <!-- RESPONSABLE -->
+    <section class="gi-section">
+      <h2>🛡️ Uso profesional y responsable</h2>
+
+      <p>
+        GhostInject fue creado con fines educativos y profesionales para laboratorios de pentesting, CTFs,
+        auditorías autorizadas, validación de controles de seguridad y demostraciones técnicas en entornos controlados.
+      </p>
+
+      <div class="gi-warning">
+        <strong>Nota importante:</strong> no utilices esta herramienta contra sistemas de terceros sin autorización.
+        El uso indebido de pruebas de inyección SQL puede afectar la disponibilidad, integridad o confidencialidad de un sistema.
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <section class="gi-footer">
+      <h2>GhostInject · SQLi Testing GUI</h2>
+      <p>
+        Una herramienta visual para optimizar pruebas controladas de SQL Injection con sqlmap.
+      </p>
+
+      <div class="gi-separator"></div>
+
+      <div class="gi-actions" style="justify-content:center;">
+        <a class="gi-btn" href="https://github.com/joepm21/GhostInject" target="_blank" rel="noopener">
+          ⭐ Apoyar en GitHub
+        </a>
+      </div>
+
+      <p style="margin-top:18px;">
+        Desarrollado por <strong style="color:#00ffd5;">Gh0s7m4n</strong>
+      </p>
+    </section>
+
+  </div>
+</div>{% endraw %}

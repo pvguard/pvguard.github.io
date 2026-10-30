@@ -1,0 +1,22 @@
+<nav class="tabs-outer" aria-label="Principal">
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-menu">
+    <span class="nav-toggle-bars" aria-hidden="true"></span> MENÚ
+  </button>
+  <ul class="menu" id="main-menu">
+    {% for item in site.data.menu %}
+      {% if item.label %}{% capture item_url %}/search/label/{{ item.label | slugify }}/{% endcapture %}{% else %}{% assign item_url = item.url %}{% endif %}
+      <li{% if item.children %} class="has-sub"{% endif %}>
+        <a href="{{ item_url | relative_url }}">{{ item.title }}</a>
+        {% if item.children %}
+          <button class="sub-toggle" type="button" aria-label="Abrir {{ item.title }}" aria-expanded="false">▾</button>
+          <ul class="sub-menu">
+            {% for child in item.children %}
+              {% capture child_url %}/search/label/{{ child.label | slugify }}/{% endcapture %}
+              <li><a href="{{ child_url | relative_url }}">{{ child.title }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

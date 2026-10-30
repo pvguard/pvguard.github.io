@@ -1,0 +1,11 @@
+{% assign page_share = page.url | absolute_url | url_encode %}
+<footer class="footer-outer">
+  <div class="share-bar">
+    <span class="share-title">Compartir</span>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ page_share }}" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page_share }}" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://wa.me/?text={{ page_share }}" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://t.me/share/url?url={{ page_share }}" target="_blank" rel="noopener">Telegram</a>
+  </div>
+  <p class="copyright">Copyright © {{ site.time | date: "%Y" }} | {{ site.title }} | Todos los derechos reservados | {{ site.author }}.</p>
+</footer>

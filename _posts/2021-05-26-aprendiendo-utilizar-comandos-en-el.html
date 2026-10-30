@@ -1,0 +1,4211 @@
+---
+title: "APRENDIENDO A UTILIZAR COMANDOS EN EL SISTEMA OPERATIVO GNU/LINUX"
+date: 2021-05-26 22:38:00 -0500
+tags: ["red team"]
+description: "🐧 GNU/LINUX · TERMINAL · CYBERSECURITY Fundamentos de GNU/Linux Historia, arquitectura y comandos esenciales para comenzar a dominar uno de los sistemas…"
+image: "/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/02-GNU-Linux.jpg"
+permalink: "/2021/05/aprendiendo-utilizar-comandos-en-el.html"
+blogger_url: "https://pvguard.blogspot.com/2021/05/aprendiendo-utilizar-comandos-en-el.html"
+---
+{% raw %}<!-- =========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     ========================================================= -->
+
+<h1 style="
+    text-align:center;
+    margin:0 0 22px 0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:30px;
+    line-height:1.25;
+    font-weight:800;
+    color:#00f5ff;
+    text-shadow:
+        0 0 8px rgba(0,245,255,.55),
+        0 0 18px rgba(0,245,255,.20);
+">
+    GNU/Linux: fundamentos y comandos esenciales
+</h1>
+
+
+<div class="separator"
+     style="
+        clear:both;
+        text-align:center;
+        margin:0 0 24px 0;
+     ">
+
+    <a
+        href="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/02-GNU-Linux.jpg"
+        style="display:block;text-align:center;"
+        target="_blank"
+        rel="noopener">
+
+        <img
+            src="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/02-GNU-Linux.jpg"
+            alt="GNU Linux"
+            style="
+                width:100%;
+                max-width:760px;
+                height:auto;
+                border-radius:16px;
+                border:1px solid rgba(0,245,255,.38);
+                box-shadow:
+                    0 0 24px rgba(0,245,255,.18),
+                    0 14px 38px rgba(0,0,0,.60);
+            ">
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CORTE DE PORTADA BLOGGER
+     ========================================================= -->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   GNU/LINUX FUNDAMENTALS
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+    margin:0 auto;
+
+    position:relative;
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   CYBER GRID
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+}
+
+
+/* =========================================================
+   SCANLINES
+   ========================================================= */
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+        rgba(0,0,0,.45);
+
+    box-shadow:
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+    height:340px;
+
+    right:-140px;
+    top:-160px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.55),
+        0 0 25px rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px
+        rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+.pt-section h4 {
+
+    color:#ffffff;
+
+    margin-top:22px;
+}
+
+
+/* =========================================================
+   TABLE OF CONTENTS
+   ========================================================= */
+
+.pt-toc {
+
+    margin-top:25px;
+
+    padding:24px;
+
+    background:
+        rgba(0,8,10,.80);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:17px;
+}
+
+
+.pt-toc-title {
+
+    margin-bottom:15px;
+
+    color:var(--cyan);
+
+    font-size:20px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.25);
+}
+
+
+.pt-toc ul {
+
+    margin:0;
+
+    padding-left:24px;
+}
+
+
+.pt-toc li {
+
+    margin:8px 0;
+
+    color:#d8f8fa;
+}
+
+
+.pt-toc a {
+
+    color:#d8f8fa !important;
+}
+
+
+.pt-toc a:hover {
+
+    color:var(--cyan) !important;
+}
+
+
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+.pt-terminal {
+
+    margin-top:19px;
+
+    overflow:hidden;
+
+    background:#000405;
+
+    border:
+        1px solid rgba(0,245,255,.28);
+
+    border-radius:15px;
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.07),
+        0 15px 35px rgba(0,0,0,.60);
+}
+
+
+.pt-terminal-top {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:
+        10px 14px;
+
+    color:var(--cyan);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.12),
+            rgba(0,245,255,.025)
+        );
+
+    border-bottom:
+        1px solid rgba(0,245,255,.18);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+.pt-dots {
+
+    display:flex;
+
+    gap:6px;
+}
+
+
+.pt-dot {
+
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 8px var(--cyan);
+}
+
+
+.pt-terminal pre {
+
+    margin:0;
+
+    padding:18px;
+
+    overflow-x:auto;
+
+    color:#d8feff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    white-space:pre-wrap;
+}
+
+
+.pt-prompt {
+    color:var(--green);
+}
+
+
+.pt-command {
+    color:var(--cyan);
+}
+
+
+.pt-comment {
+    color:#5d898e;
+}
+
+
+/* =========================================================
+   INLINE CODE
+   ========================================================= */
+
+.pt-code,
+.pentest-post code {
+
+    display:inline-block;
+
+    padding:
+        3px 7px;
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.06);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:7px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   INFO / WARNING / SUCCESS
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success,
+.pt-note {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#fff4cf;
+
+    background:
+        rgba(255,216,74,.06);
+
+    border-left:
+        3px solid var(--yellow);
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+.pt-note {
+
+    color:#d7fafd;
+
+    background:
+        rgba(0,245,255,.04);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+/* =========================================================
+   QUOTE
+   ========================================================= */
+
+.pt-quote {
+
+    margin-top:20px;
+
+    padding:
+        18px 20px;
+
+    color:#d7fafd;
+
+    background:
+        rgba(0,245,255,.035);
+
+    border-left:
+        3px solid var(--cyan);
+
+    border-radius:10px;
+
+    font-style:italic;
+}
+
+
+/* =========================================================
+   TAGS
+   ========================================================= */
+
+.pt-tags {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:10px;
+
+    margin-top:20px;
+}
+
+
+.pt-tag {
+
+    padding:
+        7px 11px;
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:9px;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.pt-table-wrap {
+
+    width:100%;
+
+    overflow-x:auto;
+
+    margin-top:20px;
+}
+
+
+.pt-table {
+
+    width:100%;
+
+    min-width:600px;
+
+    border-collapse:collapse;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(0,245,255,.20);
+}
+
+
+.pt-table th,
+.pt-table td {
+
+    padding:
+        12px 13px;
+
+    text-align:left;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.11);
+
+    border-right:
+        1px solid rgba(0,245,255,.08);
+}
+
+
+.pt-table th {
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.085);
+
+    font-size:13px;
+}
+
+
+.pt-table td {
+
+    color:#cef6f8;
+
+    background:
+        rgba(0,5,6,.40);
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   EVIDENCE / IMAGES
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:
+        12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px
+        rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.pt-separator {
+
+    height:1px;
+
+    margin:22px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px
+        rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-content {
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+        padding:18px;
+    }
+
+    .pt-title {
+        font-size:31px;
+    }
+
+    .pt-btn {
+        width:100%;
+    }
+
+    .pt-terminal pre {
+        font-size:13px;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+    <div class="pt-scanlines"></div>
+
+
+    <div class="pt-content">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="pt-hero">
+
+            <div class="pt-kicker">
+                🐧 GNU/LINUX · TERMINAL · CYBERSECURITY
+            </div>
+
+
+            <h1 class="pt-title">
+
+                Fundamentos de
+
+                <span>
+                    GNU/Linux
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Historia, arquitectura y comandos esenciales para
+                comenzar a dominar uno de los sistemas más importantes
+                dentro de la administración de infraestructura,
+                servidores y ciberseguridad.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    🐧 GNU/Linux
+                </span>
+
+                <span class="pt-badge">
+                    🐉 Kali Linux
+                </span>
+
+                <span class="pt-badge">
+                    ⌨ Terminal
+                </span>
+
+                <span class="pt-badge">
+                    🌐 Networking
+                </span>
+
+                <span class="pt-badge">
+                    🛡 Cybersecurity
+                </span>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                Esta guía está orientada a comprender los fundamentos
+                de GNU/Linux y adquirir una base sólida para trabajar
+                posteriormente con sistemas, redes y herramientas
+                de ciberseguridad.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRODUCCIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📘 Introducción
+            </h2>
+
+
+            <p>
+
+                <strong>GNU/Linux</strong> constituye una de las
+                plataformas más importantes dentro de la administración
+                de sistemas, infraestructura, desarrollo y,
+                especialmente, la <strong>ciberseguridad</strong>.
+
+            </p>
+
+
+            <p>
+
+                Su flexibilidad, estabilidad y amplio ecosistema
+                de herramientas hacen que comprender su funcionamiento
+                sea una habilidad fundamental para cualquier profesional
+                relacionado con tecnologías de información y seguridad
+                informática.
+
+            </p>
+
+
+            <p>
+
+                Aprender GNU/Linux puede parecer complejo al principio.
+                La terminal, la estructura del sistema de archivos,
+                los permisos y la gran cantidad de comandos disponibles
+                pueden resultar poco familiares para quienes provienen
+                de otros sistemas operativos.
+
+            </p>
+
+
+            <p>
+
+                Sin embargo, con práctica constante estos conceptos
+                comienzan a formar parte natural del trabajo diario.
+
+            </p>
+
+
+            <p>
+
+                Después de varios años utilizando sistemas GNU/Linux,
+                una de las lecciones más importantes que he aprendido
+                es que <strong>siempre existe algo nuevo por descubrir</strong>.
+
+            </p>
+
+
+            <p>
+
+                Esto resulta especialmente evidente dentro de la
+                ciberseguridad, donde aparecen constantemente nuevas
+                tecnologías, técnicas, herramientas y metodologías.
+
+            </p>
+
+
+            <div class="pt-note">
+
+                <strong>💡 Consejo:</strong>
+
+                no intentes memorizar todos los comandos de Linux.
+                Aprende primero qué hacen, comprende su funcionamiento,
+                consulta la documentación y utilízalos constantemente
+                dentro de laboratorios controlados.
+
+            </div>
+
+
+            <p>
+
+                En esta guía veremos desde los
+                <strong>orígenes de GNU/Linux</strong>
+                hasta algunos de los
+                <strong>comandos fundamentales que todo usuario debería conocer</strong>,
+                utilizando principalmente
+                <strong>Kali Linux</strong>
+                como entorno para nuestros ejemplos.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             ÍNDICE
+             ===================================================== -->
+
+        <section class="pt-toc">
+
+            <div class="pt-toc-title">
+                📑 Contenido
+            </div>
+
+
+            <ul>
+
+                <li>
+                    <a href="#historia">
+                        01. Historia de GNU/Linux
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#gnu">
+                        02. ¿Qué es GNU?
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#linux">
+                        03. ¿Qué es Linux?
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#kernel">
+                        04. ¿Qué es un Kernel?
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#libertades">
+                        05. Las cuatro libertades del Software Libre
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#distribuciones">
+                        06. Distribuciones GNU/Linux
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#kali">
+                        07. Kali Linux
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#terminal">
+                        08. Introducción a la terminal
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#navegacion">
+                        09. Navegación por directorios
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#archivos">
+                        10. Gestión de archivos y directorios
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#usuarios">
+                        11. Usuarios y privilegios
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#permisos">
+                        12. Permisos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#procesos">
+                        13. Procesos
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#redes">
+                        14. Redes y conectividad
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#servicios">
+                        15. Gestión de servicios
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#actualizacion">
+                        16. Actualizar Kali Linux
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#comandos">
+                        17. Comandos esenciales
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#conclusion">
+                        18. Conclusiones
+                    </a>
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =====================================================
+             HISTORIA
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="historia">
+                📜 01. Historia de GNU/Linux
+            </h2>
+
+
+            <p>
+
+                Para comprender GNU/Linux debemos remontarnos a
+                <strong>UNIX</strong>, un sistema operativo desarrollado
+                originalmente a finales de la década de 1960 en
+                los laboratorios Bell.
+
+            </p>
+
+
+            <p>
+
+                UNIX introdujo numerosos conceptos que posteriormente
+                influirían profundamente en el diseño de otros
+                sistemas operativos.
+
+            </p>
+
+
+            <p>
+
+                Años después, en <strong>1983</strong>,
+                Richard Stallman anunció el
+                <strong>Proyecto GNU</strong>,
+                cuyo objetivo era desarrollar un sistema operativo
+                compatible con Unix compuesto completamente por
+                software libre.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             GNU
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="gnu">
+                🦬 02. ¿Qué es GNU?
+            </h2>
+
+
+            <p>
+                <strong>GNU</strong> significa:
+            </p>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    GNU = GNU's Not Unix
+                </strong>
+
+                <br><br>
+
+                Es un acrónimo recursivo utilizado para identificar
+                el proyecto iniciado por Richard Stallman.
+
+            </div>
+
+
+            <p>
+
+                El Proyecto GNU desarrolló numerosos componentes
+                esenciales para un sistema operativo, incluyendo
+                compiladores, bibliotecas, shells, herramientas de
+                línea de comandos y diferentes utilidades.
+
+            </p>
+
+
+            <p>
+
+                Sin embargo, todavía faltaba una pieza fundamental
+                para completar el sistema:
+
+                <strong>
+                    un kernel plenamente funcional.
+                </strong>
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             LINUX
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="linux">
+                🐧 03. ¿Qué es Linux?
+            </h2>
+
+
+            <p>
+
+                En <strong>1991</strong>, Linus Torvalds comenzó
+                el desarrollo de <strong>Linux</strong>.
+
+            </p>
+
+
+            <p>
+
+                Uno de los conceptos que debemos comprender es que
+                <strong>Linux técnicamente hace referencia al kernel</strong>
+                y no necesariamente a todo el sistema operativo que
+                utilizamos habitualmente.
+
+            </p>
+
+
+            <p>
+
+                Al combinar el kernel Linux con diferentes herramientas
+                y componentes del ecosistema GNU obtenemos lo que
+                normalmente denominamos:
+
+            </p>
+
+
+            <div class="pt-quote">
+
+                <strong>
+                    GNU + Linux = GNU/Linux
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             KERNEL
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="kernel">
+                ⚙ 04. ¿Qué es un Kernel?
+            </h2>
+
+
+            <p>
+
+                El <strong>kernel o núcleo</strong> es uno de los
+                componentes centrales de un sistema operativo.
+
+            </p>
+
+
+            <p>
+
+                Su función principal consiste en actuar como intermediario
+                entre el software y los recursos físicos disponibles
+                en el equipo.
+
+            </p>
+
+
+            <h3>
+                Entre sus principales responsabilidades encontramos:
+            </h3>
+
+
+            <ul>
+
+                <li>Administración de memoria.</li>
+
+                <li>Gestión de procesos.</li>
+
+                <li>Comunicación con dispositivos.</li>
+
+                <li>Control de recursos del sistema.</li>
+
+                <li>Gestión de sistemas de archivos.</li>
+
+                <li>Interacción entre software y hardware.</li>
+
+            </ul>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    🔎 Concepto simplificado
+                </strong>
+
+                <br><br>
+
+                <strong>
+                    Aplicaciones → Sistema Operativo → Kernel → Hardware
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SOFTWARE LIBRE
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="libertades">
+                🕊 05. Las cuatro libertades del Software Libre
+            </h2>
+
+
+            <p>
+
+                El concepto de Software Libre se fundamenta
+                tradicionalmente en cuatro libertades esenciales.
+
+            </p>
+
+
+            <div class="pt-table-wrap">
+
+                <table class="pt-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Libertad
+                            </th>
+
+                            <th>
+                                Descripción
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                <strong>Libertad 0</strong>
+                            </td>
+
+                            <td>
+                                Ejecutar el programa para cualquier propósito.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Libertad 1</strong>
+                            </td>
+
+                            <td>
+
+                                Estudiar cómo funciona el programa y
+                                modificarlo según las necesidades
+                                del usuario.
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Libertad 2</strong>
+                            </td>
+
+                            <td>
+                                Redistribuir copias del programa.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Libertad 3</strong>
+                            </td>
+
+                            <td>
+
+                                Distribuir versiones modificadas para
+                                que otras personas puedan beneficiarse
+                                de las mejoras.
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="pt-note">
+
+                <strong>
+                    💡 Importante
+                </strong>
+
+                <br><br>
+
+                El acceso al código fuente es necesario para poder
+                estudiar y modificar un programa de acuerdo con
+                los principios del Software Libre.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             DISTRIBUCIONES
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="distribuciones">
+                📦 06. Distribuciones GNU/Linux
+            </h2>
+
+
+            <p>
+
+                Actualmente existen numerosas distribuciones GNU/Linux
+                diseñadas para diferentes tipos de usuarios y necesidades.
+
+            </p>
+
+
+            <div class="pt-tags">
+
+                <span class="pt-tag">
+                    Debian
+                </span>
+
+                <span class="pt-tag">
+                    Ubuntu
+                </span>
+
+                <span class="pt-tag">
+                    Fedora
+                </span>
+
+                <span class="pt-tag">
+                    Arch Linux
+                </span>
+
+                <span class="pt-tag">
+                    Linux Mint
+                </span>
+
+                <span class="pt-tag">
+                    Kali Linux
+                </span>
+
+            </div>
+
+
+            <p>
+
+                Una distribución normalmente integra el kernel Linux
+                junto con herramientas, gestores de paquetes,
+                interfaces gráficas, bibliotecas y aplicaciones.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             KALI
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="kali">
+                🐉 07. Kali Linux
+            </h2>
+
+
+            <p>
+
+                Para los ejemplos de esta guía utilizaremos principalmente
+                <strong>Kali Linux</strong>, una distribución basada
+                en Debian ampliamente utilizada dentro del campo
+                de la seguridad informática.
+
+            </p>
+
+
+            <h3>
+                Algunas de sus áreas de aplicación son:
+            </h3>
+
+
+            <ul>
+
+                <li>Evaluaciones de seguridad.</li>
+
+                <li>Pentesting.</li>
+
+                <li>Análisis de redes.</li>
+
+                <li>Auditoría de aplicaciones.</li>
+
+                <li>Análisis forense.</li>
+
+                <li>Ingeniería inversa.</li>
+
+                <li>Investigación en seguridad.</li>
+
+            </ul>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    🛡 Uso responsable
+                </strong>
+
+                <br><br>
+
+                Las herramientas de seguridad deben utilizarse
+                únicamente sobre sistemas propios, entornos de
+                laboratorio o infraestructuras para las cuales
+                exista autorización explícita.
+
+            </div>
+
+
+            <div class="pt-actions">
+
+                <a
+                    class="pt-btn"
+                    href="https://www.kali.org/get-kali/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    🐉 Descargar Kali Linux
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TERMINAL
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="terminal">
+                💻 08. Introducción a la terminal
+            </h2>
+
+
+            <p>
+
+                La terminal constituye una de las herramientas más
+                importantes dentro de GNU/Linux.
+
+            </p>
+
+
+            <p>
+
+                Mediante ella podemos administrar archivos, procesos,
+                usuarios, servicios, interfaces de red y prácticamente
+                cualquier componente del sistema operativo.
+
+            </p>
+
+
+            <div class="pt-note">
+
+                <strong>
+                    💡 Recuerda
+                </strong>
+
+                <br><br>
+
+                No necesitas memorizar todas las opciones de un comando.
+                Linux incorpora documentación que podemos consultar
+                directamente desde la terminal.
+
+            </div>
+
+
+            <h3>
+                Consultar el manual de un comando
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · manual
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">man ls</span></pre>
+
+            </div>
+
+
+            <p>
+
+                También podemos consultar rápidamente las opciones
+                disponibles:
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · help
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">ls --help</span></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             NAVEGACIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="navegacion">
+                📂 09. Navegación por directorios
+            </h2>
+
+
+            <h3>
+                pwd
+            </h3>
+
+
+            <p>
+
+                Muestra la ruta absoluta del directorio donde nos
+                encontramos actualmente.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · pwd
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">pwd</span>
+
+<span class="pt-comment">/home/kali</span></pre>
+
+            </div>
+
+
+            <h3>
+                ls
+            </h3>
+
+
+            <p>
+                Permite listar archivos y directorios.
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · ls
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ls</span></pre>
+
+            </div>
+
+
+            <p>
+                Mostrar información detallada:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · ls
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ls -l</span></pre>
+
+            </div>
+
+
+            <p>
+                Mostrar también archivos ocultos:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · ls
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ls -la</span></pre>
+
+            </div>
+
+
+            <h3>
+                cd
+            </h3>
+
+
+            <p>
+                Permite desplazarnos entre directorios.
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · cd
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cd directorio</span></pre>
+
+            </div>
+
+
+            <p>
+                Regresar al directorio superior:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · cd
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cd ..</span></pre>
+
+            </div>
+
+
+            <p>
+                Volver al directorio anterior:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · cd
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cd -</span></pre>
+
+            </div>
+
+
+            <p>
+                Ir al directorio personal:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · home
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cd ~</span></pre>
+
+            </div>
+
+
+            <p>
+                Ir directamente a la raíz:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · root
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cd /</span></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ARCHIVOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="archivos">
+                📁 10. Gestión de archivos y directorios
+            </h2>
+
+
+            <h3>
+                Crear un directorio
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · mkdir
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">mkdir laboratorio</span></pre>
+
+            </div>
+
+
+            <h3>
+                Crear un archivo vacío
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · touch
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">touch notas.txt</span></pre>
+
+            </div>
+
+
+            <h3>
+                Visualizar un archivo
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · cat
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cat notas.txt</span></pre>
+
+            </div>
+
+
+            <h3>
+                Copiar archivos
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · cp
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">cp archivo.txt copia.txt</span></pre>
+
+            </div>
+
+
+            <h3>
+                Mover un archivo
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · mv
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">mv archivo.txt /home/kali/Documentos/</span></pre>
+
+            </div>
+
+
+            <h3>
+                Renombrar un archivo
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · mv
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">mv archivo.txt nuevo_nombre.txt</span></pre>
+
+            </div>
+
+
+            <h3>
+                Eliminar un archivo
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · rm
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">rm archivo.txt</span></pre>
+
+            </div>
+
+
+            <h3>
+                Eliminar un directorio vacío
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · rmdir
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">rmdir directorio</span></pre>
+
+            </div>
+
+
+            <h3>
+                Eliminar recursivamente un directorio
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · rm
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">rm -r directorio</span></pre>
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    ⚠ Precaución
+                </strong>
+
+                <br><br>
+
+                El comando <code>rm</code> elimina información
+                directamente. Antes de utilizar opciones recursivas
+                o forzadas verifica siempre que la ruta especificada
+                sea correcta.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             USUARIOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="usuarios">
+                👤 11. Usuarios y privilegios
+            </h2>
+
+
+            <h3>
+                Consultar el usuario actual
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · identity
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">whoami</span></pre>
+
+            </div>
+
+
+            <h3>
+                Ejecutar comandos con privilegios administrativos
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · sudo
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo &lt;comando&gt;</span></pre>
+
+            </div>
+
+
+            <p>
+                Ejemplo:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · apt
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo apt update</span></pre>
+
+            </div>
+
+
+            <h3>
+                Abrir una shell como root
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · root shell
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo -i</span></pre>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    🔐 Principio de mínimo privilegio
+                </strong>
+
+                <br><br>
+
+                No es necesario trabajar permanentemente como
+                <strong>root</strong>. Para tareas administrativas
+                específicas puede utilizarse <code>sudo</code>.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PERMISOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="permisos">
+                🔐 12. Permisos en Linux
+            </h2>
+
+
+            <p>
+
+                GNU/Linux utiliza permisos para determinar qué usuarios
+                pueden leer, modificar o ejecutar determinados archivos.
+
+            </p>
+
+
+            <p>
+                Los principales permisos son:
+            </p>
+
+
+            <div class="pt-table-wrap">
+
+                <table class="pt-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Permiso
+                            </th>
+
+                            <th>
+                                Significado
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                <strong>r</strong>
+                            </td>
+
+                            <td>
+                                Read / Lectura
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>w</strong>
+                            </td>
+
+                            <td>
+                                Write / Escritura
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>x</strong>
+                            </td>
+
+                            <td>
+                                Execute / Ejecución
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <h3>
+                Visualizar permisos
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · permissions
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ls -la</span></pre>
+
+            </div>
+
+
+            <h3>
+                Modificar permisos
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · chmod
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">chmod +x script.sh</span></pre>
+
+            </div>
+
+
+            <p>
+
+                El ejemplo anterior añade permiso de ejecución al
+                archivo <code>script.sh</code>.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROCESOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="procesos">
+                ⚙ 13. Procesos del sistema
+            </h2>
+
+
+            <h3>
+                Mostrar procesos en tiempo real
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · process monitor
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">top</span></pre>
+
+            </div>
+
+
+            <h3>
+                Listar procesos
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · ps
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ps aux</span></pre>
+
+            </div>
+
+
+            <h3>
+                Mostrar trabajos de la shell
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · jobs
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">jobs</span></pre>
+
+            </div>
+
+
+            <h3>
+                Finalizar un proceso
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · kill
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">kill &lt;PID&gt;</span></pre>
+
+            </div>
+
+
+            <p>
+
+                Donde <code>PID</code> corresponde al identificador
+                del proceso.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             REDES
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="redes">
+                🌐 14. Redes y conectividad
+            </h2>
+
+
+            <h3>
+                Mostrar interfaces de red
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · network interfaces
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ip addr</span></pre>
+
+            </div>
+
+
+            <p>
+                También puede utilizarse:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · network interfaces
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ip a</span></pre>
+
+            </div>
+
+
+            <h3>
+                Mostrar tabla de rutas
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · routing
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ip route</span></pre>
+
+            </div>
+
+
+            <h3>
+                Consultar interfaces
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · links
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ip link</span></pre>
+
+            </div>
+
+
+            <h3>
+                Comprobar conectividad
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · connectivity
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ping 8.8.8.8</span></pre>
+
+            </div>
+
+
+            <p>
+
+                También podemos verificar conectividad utilizando
+                un nombre DNS:
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · dns connectivity
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ping google.com</span></pre>
+
+            </div>
+
+
+            <h3>
+                Consultar el hostname
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · hostname
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">hostname</span></pre>
+
+            </div>
+
+
+            <h3>
+                Consultar información del sistema
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · system info
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">uname -a</span></pre>
+
+            </div>
+
+
+            <h3>
+                Buscar contenido con grep
+            </h3>
+
+
+            <p>
+
+                <code>grep</code> permite buscar patrones o cadenas
+                dentro de archivos.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · grep
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">grep "root" /etc/passwd</span></pre>
+
+            </div>
+
+
+            <h3>
+                Buscar archivos con find
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · find
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">find /home/kali -name "*.txt"</span></pre>
+
+            </div>
+
+
+            <h3>
+                Descargar archivos con wget
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · wget
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">wget https://example.com/archivo.zip</span></pre>
+
+            </div>
+
+
+            <h3>
+                Consultar espacio disponible
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · disk
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">df -h</span></pre>
+
+            </div>
+
+
+            <p>
+
+                La opción <code>-h</code> muestra los valores utilizando
+                unidades más fáciles de interpretar.
+
+            </p>
+
+
+            <h3>
+                Consultar historial
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · history
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">history</span></pre>
+
+            </div>
+
+
+            <h3>
+                Limpiar la terminal
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · clear
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">clear</span></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SERVICIOS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="servicios">
+                🔧 15. Gestión de servicios
+            </h2>
+
+
+            <p>
+
+                En distribuciones modernas que utilizan
+                <strong>systemd</strong> podemos administrar servicios
+                mediante el comando <code>systemctl</code>.
+
+            </p>
+
+
+            <h3>
+                Consultar Apache
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · apache2
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo systemctl status apache2</span></pre>
+
+            </div>
+
+
+            <h3>
+                Iniciar Apache
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · apache2
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo systemctl start apache2</span></pre>
+
+            </div>
+
+
+            <h3>
+                Detener Apache
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · apache2
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo systemctl stop apache2</span></pre>
+
+            </div>
+
+
+            <h3>
+                Reiniciar Apache
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · apache2
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo systemctl restart apache2</span></pre>
+
+            </div>
+
+
+            <h3>
+                Consultar nuevamente su estado
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · apache2
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo systemctl status apache2</span></pre>
+
+            </div>
+
+
+            <h3>
+                PostgreSQL
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · postgresql
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo systemctl start postgresql</span></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ACTUALIZACIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="actualizacion">
+                🔄 16. Actualizar Kali Linux
+            </h2>
+
+
+            <p>
+
+                Mantener nuestro sistema operativo actualizado permite
+                disponer de nuevas versiones de herramientas,
+                correcciones de errores y actualizaciones de seguridad.
+
+            </p>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    ⚠ Importante
+                </strong>
+
+                <br><br>
+
+                Los siguientes comandos requieren privilegios
+                administrativos. Utilizaremos <code>sudo</code>
+                cuando sea necesario.
+
+            </div>
+
+
+            <h3>
+                Actualizar repositorios
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · update
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo apt update</span></pre>
+
+            </div>
+
+
+            <h3>
+                Actualizar paquetes
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · upgrade
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo apt full-upgrade -y</span></pre>
+
+            </div>
+
+
+            <h3>
+                Eliminar dependencias innecesarias
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · cleanup
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">sudo apt autoremove</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/04-1.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/04-1.png"
+                        alt="Actualización de Kali Linux">
+
+                </a>
+
+
+                <div class="pt-caption">
+                    Actualización del sistema Kali Linux desde terminal
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMANDOS ESENCIALES
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="comandos">
+                🧠 17. Comandos esenciales que deberías conocer
+            </h2>
+
+
+            <div class="pt-table-wrap">
+
+                <table class="pt-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Comando
+                            </th>
+
+                            <th>
+                                Función
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+                            <td><code>pwd</code></td>
+                            <td>Mostrar el directorio actual.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>ls</code></td>
+                            <td>Listar archivos y directorios.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>cd</code></td>
+                            <td>Cambiar de directorio.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>mkdir</code></td>
+                            <td>Crear directorios.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>touch</code></td>
+                            <td>Crear archivos vacíos o actualizar su timestamp.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>cp</code></td>
+                            <td>Copiar archivos o directorios.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>mv</code></td>
+                            <td>Mover o renombrar archivos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>rm</code></td>
+                            <td>Eliminar archivos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>cat</code></td>
+                            <td>Mostrar contenido de archivos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>grep</code></td>
+                            <td>Buscar patrones dentro de texto.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>find</code></td>
+                            <td>Buscar archivos y directorios.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>chmod</code></td>
+                            <td>Modificar permisos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>sudo</code></td>
+                            <td>Ejecutar comandos con privilegios elevados.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>ps</code></td>
+                            <td>Mostrar procesos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>top</code></td>
+                            <td>Monitorizar procesos en tiempo real.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>kill</code></td>
+                            <td>Enviar señales a procesos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>ip</code></td>
+                            <td>Administrar y consultar configuración de red.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>ping</code></td>
+                            <td>Comprobar conectividad.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>wget</code></td>
+                            <td>Descargar recursos mediante HTTP/HTTPS.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>uname</code></td>
+                            <td>Mostrar información del sistema.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>history</code></td>
+                            <td>Mostrar historial de comandos.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>man</code></td>
+                            <td>Consultar manuales.</td>
+                        </tr>
+
+                        <tr>
+                            <td><code>systemctl</code></td>
+                            <td>Administrar servicios de systemd.</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <h3>
+                💻 Ejemplo de flujo básico
+            </h3>
+
+
+            <p>
+
+                Podemos combinar varios de los comandos aprendidos
+                para crear un pequeño directorio de laboratorio.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · basic workflow
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">mkdir laboratorio-linux
+
+cd laboratorio-linux
+
+touch notas.txt
+
+echo "Aprendiendo GNU/Linux" &gt; notas.txt
+
+cat notas.txt
+
+ls -la
+
+pwd</span></pre>
+
+            </div>
+
+
+            <p>
+
+                La salida de <code>cat notas.txt</code> sería:
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · output
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-comment">Aprendiendo GNU/Linux</span></pre>
+
+            </div>
+
+
+            <h3>
+                📚 Utiliza siempre la documentación
+            </h3>
+
+
+            <p>
+
+                Cuando tengamos dudas sobre cualquier comando
+                podemos recurrir a:
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · manual
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">man &lt;comando&gt;</span></pre>
+
+            </div>
+
+
+            <p>
+                Por ejemplo:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · chmod manual
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">man chmod</span></pre>
+
+            </div>
+
+
+            <p>
+                También podemos utilizar:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · help
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">&lt;comando&gt; --help</span></pre>
+
+            </div>
+
+
+            <p>
+                Ejemplo:
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · ip help
+                    </span>
+
+                    <div class="pt-dots">
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                    </div>
+
+                </div>
+
+<pre><span class="pt-command">ip --help</span></pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CAPTURAS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🖥 Comandos ejecutados desde Kali Linux
+            </h2>
+
+
+            <p>
+
+                A continuación se muestran algunas capturas
+                correspondientes a la ejecución de comandos básicos
+                dentro de Kali Linux.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/03-1.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/03-1.png"
+                        alt="Comandos Linux en Kali">
+
+                </a>
+
+
+                <div class="pt-caption">
+                    Ejecución de comandos básicos desde la terminal de Kali Linux
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/01-2.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        src="/assets/img/posts/aprendiendo-utilizar-comandos-en-el-202105/01-2.png"
+                        alt="Terminal Kali Linux">
+
+                </a>
+
+
+                <div class="pt-caption">
+                    Ejemplos adicionales de comandos GNU/Linux
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONCLUSIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2 id="conclusion">
+                🏁 18. Conclusiones
+            </h2>
+
+
+            <p>
+
+                Aprender GNU/Linux no consiste únicamente en memorizar
+                comandos.
+
+            </p>
+
+
+            <p>
+
+                Lo realmente importante es comprender
+                <strong>cómo está organizado el sistema</strong>,
+                cómo interactúan sus componentes y cómo podemos
+                utilizar la terminal para administrar nuestro entorno
+                de manera eficiente.
+
+            </p>
+
+
+            <p>
+
+                Para quienes nos desenvolvemos dentro del área de
+                <strong>ciberseguridad</strong>, estos conocimientos
+                constituyen una base fundamental.
+
+            </p>
+
+
+            <p>
+
+                Muchas herramientas, servidores, laboratorios,
+                servicios cloud y plataformas utilizadas diariamente
+                dentro de seguridad informática funcionan sobre
+                tecnologías Linux.
+
+            </p>
+
+
+            <p>
+
+                Por este motivo, comprender el sistema y dominar
+                progresivamente la terminal facilitará considerablemente
+                el aprendizaje de conceptos más avanzados.
+
+            </p>
+
+
+            <div class="pt-note">
+
+                <strong>
+                    💡 Mi recomendación
+                </strong>
+
+                <br><br>
+
+                Practica constantemente. Crea máquinas virtuales,
+                monta laboratorios, consulta la documentación,
+                analiza cada comando y experimenta en entornos
+                controlados.
+
+            </div>
+
+
+            <p>
+
+                Con el tiempo, trabajar desde una terminal dejará
+                de parecer complicado y se convertirá en una herramienta
+                natural dentro de tu flujo de trabajo.
+
+            </p>
+
+
+            <div class="pt-quote">
+
+                “La práctica constante transforma los comandos en
+                conocimiento y el conocimiento en experiencia.”
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <section class="pt-footer">
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Cybersecurity · Ethical Hacking · GNU/Linux · Pentesting
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div
+                class="pt-actions"
+                style="justify-content:center;">
+
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+
+            </div>
+
+
+            <p style="margin-top:20px;">
+
+                Desarrollado por
+
+                <strong style="
+                    color:#00f5ff;
+                    text-shadow:
+                        0 0 9px rgba(0,245,255,.55);
+                ">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}

@@ -1,0 +1,754 @@
+---
+title: "Descargas"
+date: 2026-06-23 17:18:57 -0500
+tags: ["libros"]
+description: "root@ghost:~/Downloads D0wn LoAds Bienvenido a esta sección de recursos. Aquí encontrarás libros, cursos, apuntes, scripts y material complementario…"
+image: "/assets/img/posts/descargas-202606/01-zona-de-descargas.png"
+permalink: "/2026/06/descargas.html"
+blogger_url: "https://pvguard.blogspot.com/2026/06/descargas.html"
+---
+{% raw %}<div class="ghost-download-page">
+
+  <h1 class="ghost-main-title">
+    Zona de Descargas: <span>Recursos, Scripts y Herramientas Esenciales para Pentesting</span>
+  </h1>
+
+  <a class="ghost-banner" href="/assets/img/posts/descargas-202606/01-zona-de-descargas.png" target="_blank">
+    <img alt="Zona de Descargas - Recursos para Pentesting" src="/assets/img/posts/descargas-202606/01-zona-de-descargas.png" />
+  </a>
+<style>
+  .ghost-download-page {
+    max-width: 1150px;
+    margin: 25px auto;
+    padding: 0 15px;
+    font-family: "Courier New", monospace;
+    color: #eafff1;
+  }
+
+  .ghost-download-page * {
+    box-sizing: border-box;
+  }
+
+  .ghost-main-title {
+    text-align: center;
+    margin: 20px auto 25px;
+    color: #ff1d1d;
+    font-size: clamp(26px, 4vw, 42px);
+    line-height: 1.25;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-shadow: 0 0 18px rgba(255, 0, 0, 0.7);
+  }
+
+  .ghost-main-title span {
+    color: #ffffff;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.4);
+  }
+
+  .ghost-banner {
+    display: block;
+    text-align: center;
+    margin: 0 auto 35px;
+  }
+
+  .ghost-banner img {
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 255, 128, 0.35);
+    box-shadow: 0 0 35px rgba(0, 255, 128, 0.22);
+  }
+
+  .ghost-download-box {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top left, rgba(0, 255, 128, 0.18), transparent 35%),
+      radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.13), transparent 35%),
+      #030504;
+    border: 1px solid rgba(0, 255, 128, 0.28);
+    border-radius: 18px;
+    box-shadow: 0 0 45px rgba(0, 255, 128, 0.16);
+  }
+
+  .ghost-download-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 255, 128, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 128, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .ghost-download-box::after {
+    content: "010101 110010 001101 101010 010101 111000 010010";
+    position: absolute;
+    left: 12px;
+    top: 70px;
+    bottom: 20px;
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    color: rgba(0, 255, 128, 0.22);
+    letter-spacing: 4px;
+    pointer-events: none;
+  }
+
+  .ghost-terminal-header {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(90deg, #07110b, #102318, #07110b);
+    border-bottom: 1px solid rgba(0, 255, 128, 0.32);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ghost-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ghost-dots span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .ghost-dots span:nth-child(1) {
+    background: #ff5f56;
+  }
+
+  .ghost-dots span:nth-child(2) {
+    background: #ffbd2e;
+  }
+
+  .ghost-dots span:nth-child(3) {
+    background: #27c93f;
+  }
+
+  .ghost-terminal-title {
+    color: #7cff9f;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(0, 255, 128, 0.7);
+  }
+
+  .ghost-download-content {
+    position: relative;
+    z-index: 2;
+    padding: 35px 35px 30px;
+  }
+
+  .ghost-hero {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .ghost-small-path {
+    color: #7cff9f;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .ghost-hero h1 {
+    margin: 0 0 15px;
+    font-size: clamp(35px, 6vw, 70px);
+    line-height: 1;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow:
+      0 0 12px rgba(255, 255, 255, 0.45),
+      0 0 22px rgba(0, 255, 128, 0.55);
+  }
+
+  .ghost-hero h1 span {
+    color: #00ff88;
+  }
+
+  .ghost-hero p {
+    max-width: 850px;
+    margin: 0 auto;
+    color: #c7ffd8;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .ghost-command {
+    max-width: 780px;
+    margin: 25px auto 0;
+    background: rgba(0, 0, 0, 0.68);
+    border: 1px solid rgba(0, 255, 128, 0.35);
+    border-radius: 12px;
+    padding: 15px 18px;
+    color: #ffffff;
+    text-align: left;
+    overflow-x: auto;
+    box-shadow: inset 0 0 20px rgba(0, 255, 128, 0.08);
+  }
+
+  .ghost-command .green {
+    color: #00ff88;
+  }
+
+  .ghost-cursor {
+    display: inline-block;
+    width: 9px;
+    height: 17px;
+    background: #00ff88;
+    margin-left: 5px;
+    vertical-align: middle;
+    animation: ghostBlink 0.8s infinite;
+  }
+
+  @keyframes ghostBlink {
+    0%, 45% {
+      opacity: 1;
+    }
+
+    46%, 100% {
+      opacity: 0;
+    }
+  }
+
+  .ghost-toolbar {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 28px 0 35px;
+  }
+
+  .ghost-toolbar input,
+  .ghost-toolbar select {
+    width: 280px;
+    max-width: 100%;
+    background: #020403;
+    color: #eafff1;
+    border: 1px solid rgba(0, 255, 128, 0.4);
+    border-radius: 12px;
+    padding: 14px 15px;
+    font-family: "Courier New", monospace;
+    outline: none;
+    box-shadow: inset 0 0 12px rgba(0, 255, 128, 0.05);
+  }
+
+  .ghost-toolbar input::placeholder {
+    color: rgba(234, 255, 241, 0.55);
+  }
+
+  .ghost-toolbar input:focus,
+  .ghost-toolbar select:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 18px rgba(0, 255, 128, 0.3);
+  }
+
+  .ghost-section-title {
+    color: #00ff88;
+    font-size: 25px;
+    margin: 15px 0 22px;
+    padding-left: 14px;
+    border-left: 4px solid #00ff88;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(0, 255, 128, 0.45);
+  }
+
+  .ghost-download-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .ghost-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 315px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgba(0, 255, 128, 0.08), rgba(0, 0, 0, 0.75));
+    border: 1px solid rgba(0, 255, 128, 0.28);
+    border-radius: 18px;
+    padding: 22px;
+    transition: 0.25s ease;
+  }
+
+  .ghost-card::before {
+    content: "";
+    position: absolute;
+    top: -65px;
+    right: -65px;
+    width: 145px;
+    height: 145px;
+    border-radius: 50%;
+    background: rgba(0, 255, 128, 0.14);
+    filter: blur(10px);
+  }
+
+  .ghost-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(0, 255, 128, 0.7);
+    box-shadow: 0 0 30px rgba(0, 255, 128, 0.25);
+  }
+
+  .ghost-tag {
+    position: relative;
+    z-index: 2;
+    width: fit-content;
+    display: inline-block;
+    background: rgba(0, 255, 128, 0.12);
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 128, 0.42);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-bottom: 14px;
+    font-weight: bold;
+  }
+
+  .ghost-card h3 {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    font-size: 20px;
+    line-height: 1.35;
+    margin: 0 0 12px;
+  }
+
+  .ghost-card p {
+    position: relative;
+    z-index: 2;
+    color: #c7ffd8;
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0 0 16px;
+  }
+
+  .ghost-meta {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: auto 0 18px;
+  }
+
+  .ghost-meta span {
+    background: rgba(255, 255, 255, 0.06);
+    color: #eafff1;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .ghost-actions {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .ghost-btn,
+  .ghost-copy-btn {
+    display: inline-block;
+    text-decoration: none !important;
+    border-radius: 11px;
+    padding: 11px 13px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s ease;
+  }
+
+  .ghost-btn {
+    background: linear-gradient(135deg, #00ff88, #00b35f);
+    color: #001d10 !important;
+    border: 1px solid rgba(0, 255, 128, 0.65);
+    box-shadow: 0 0 18px rgba(0, 255, 128, 0.28);
+  }
+
+  .ghost-copy-btn {
+    background: transparent;
+    color: #00ff88 !important;
+    border: 1px solid rgba(0, 255, 128, 0.45);
+  }
+
+  .ghost-btn:hover,
+  .ghost-copy-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 24px rgba(0, 255, 128, 0.45);
+  }
+
+  .ghost-alert {
+    margin-top: 35px;
+    padding: 17px 18px;
+    background: rgba(255, 189, 46, 0.08);
+    border: 1px solid rgba(255, 189, 46, 0.35);
+    border-radius: 14px;
+    color: #ffe6a3;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .ghost-footer {
+    margin-top: 25px;
+    text-align: center;
+    color: #8dffb6;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  .ghost-no-results {
+    display: none;
+    text-align: center;
+    color: #ff7777;
+    border: 1px dashed rgba(255, 0, 0, 0.45);
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 20px;
+    background: rgba(255, 0, 0, 0.06);
+  }
+
+  @media (max-width: 950px) {
+    .ghost-download-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 650px) {
+    .ghost-download-content {
+      padding: 28px 18px;
+    }
+
+    .ghost-download-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ghost-toolbar input,
+    .ghost-toolbar select {
+      width: 100%;
+    }
+
+    .ghost-terminal-title {
+      font-size: 11px;
+    }
+
+    .ghost-main-title {
+      font-size: 25px;
+    }
+
+    .ghost-download-box::after {
+      display: none;
+    }
+  }
+</style>
+
+
+
+  {% endraw %}
+<!--more-->
+{% raw %}
+
+  <div class="ghost-download-box" id="ghostDownloads">
+
+    <div class="ghost-terminal-header">
+      <div class="ghost-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="ghost-terminal-title">root@ghost:~/Downloads</div>
+    </div>
+
+    <div class="ghost-download-content">
+
+      <div class="ghost-hero">
+        <div class="ghost-small-path"><br /></div>
+
+        <h1>D0wn<span>LoAds</span></h1>
+
+        <p>
+          Bienvenido a esta sección de recursos. Aquí encontrarás libros, cursos,
+          apuntes, scripts y material complementario organizado para descargar
+          de forma rápida desde MediaFire.
+        </p>
+
+        <div class="ghost-command">
+          <span class="green">root@ghost:</span>~$ ls -la<span class="ghost-cursor"></span>
+        </div>
+      </div>
+
+      <div class="ghost-toolbar">
+        <input class="ghost-search" type="text" />
+
+        <select class="ghost-filter">
+          <option value="all">Mostrar todo</option>
+          <option value="libro">Libros</option>
+          <option value="curso">Cursos</option>
+          <option value="apunte">Apuntes</option>
+          <option value="herramienta">Herramientas</option>
+        </select>
+      </div>
+
+      <h2 class="ghost-section-title">Recursos disponibles</h2>
+
+      <div class="ghost-download-grid">
+
+        <div class="ghost-card" data-category="libro" data-title="biblioteca hacker libro hacking etico seguridad informatica">
+          <span class="ghost-tag">Libro</span>
+
+          <h3>Biblioteca Hacker</h3>
+
+          <p>
+            Material introductorio para aprender conceptos básicos de seguridad,
+            redes, reconocimiento y buenas prácticas.
+          </p>
+
+          <div class="ghost-meta">
+            <span>PDF</span>
+            <span>Español</span>
+            <span>MediaFire</span>
+          </div>
+
+          <div class="ghost-actions">
+            <a class="ghost-btn" href="https://www.mediafire.com/folder/dkspazfwjbdn9/Biblioteca+Hacker" rel="nofollow noopener" target="_blank">
+              Descargar
+            </a>
+
+            <button class="ghost-copy-btn" data-link="https://www.mediafire.com/folder/dkspazfwjbdn9/Biblioteca+Hacker" type="button">
+              Copiar link
+            </button>
+          </div>
+        </div>
+
+        <div class="ghost-card" data-category="curso" data-title="cursos de pentesting web infraestructura ciberseguridad oscp">
+          <span class="ghost-tag">Curso</span>
+
+          <h3>Cursos de Pentesting Web / Infra</h3>
+
+          <p>
+            Curso organizado por módulos para practicar fundamentos, laboratorio,
+            explotación web, infraestructura y metodología de pentesting.
+          </p>
+
+          <div class="ghost-meta">
+            <span>Video/ZIP</span>
+            <span>Curso</span>
+            <span>MediaFire</span>
+          </div>
+
+          <div class="ghost-actions">
+            <a class="ghost-btn" href="https://www.mediafire.com/folder/rhswt3mh3yvqo/Cursos+de+Pentesting+Web-Infra" rel="nofollow noopener" target="_blank">
+              Descargar
+            </a>
+
+            <button class="ghost-copy-btn" data-link="https://www.mediafire.com/folder/rhswt3mh3yvqo/Cursos+de+Pentesting+Web-Infra" type="button">
+              Copiar link
+            </button>
+          </div>
+        </div>
+
+        <div class="ghost-card" data-category="apunte" data-title="comandos para terminal linux kali ubuntu redes">
+          <span class="ghost-tag">Apuntes</span>
+
+          <h3>Comandos para Terminal Linux</h3>
+
+          <p>
+            Comandos útiles para Kali Linux, Ubuntu, redes, archivos, permisos,
+            procesos y administración básica del sistema.
+          </p>
+
+          <div class="ghost-meta">
+            <span>PDF/TXT</span>
+            <span>Linux</span>
+            <span>MediaFire</span>
+          </div>
+
+          <div class="ghost-actions">
+            <a class="ghost-btn" href="https://www.mediafire.com/folder/upw1cz1h70yns/Comandos+Para+Terminal+Linux" rel="nofollow noopener" target="_blank">
+              Descargar
+            </a>
+
+            <button class="ghost-copy-btn" data-link="https://www.mediafire.com/folder/upw1cz1h70yns/Comandos+Para+Terminal+Linux" type="button">
+              Copiar link
+            </button>
+          </div>
+        </div>
+
+        <div class="ghost-card" data-category="herramienta" data-title="pack de scripts custom herramientas pentesting seguridad">
+          <span class="ghost-tag">Herramientas</span>
+
+          <h3>Pack de Scripts Custom</h3>
+
+          <p>
+            Colección de scripts, listas y utilidades para laboratorios de práctica,
+            pruebas controladas y aprendizaje.
+          </p>
+
+          <div class="ghost-meta">
+            <span>ZIP</span>
+            <span>Scripts</span>
+            <span>MediaFire</span>
+          </div>
+
+          <div class="ghost-actions">
+            <a class="ghost-btn" href="https://www.mediafire.com/folder/hwkdwm4wjvui4/Pack+de+Scripts+Custom" rel="nofollow noopener" target="_blank">
+              Descargar
+            </a>
+
+            <button class="ghost-copy-btn" data-link="https://www.mediafire.com/folder/hwkdwm4wjvui4/Pack+de+Scripts+Custom" type="button">
+              Copiar link
+            </button>
+          </div>
+        </div>
+
+        <div class="ghost-card" data-category="curso" data-title="cursos de pentesting mobile android ios analisis estatico dinamico ingenieria inversa">
+          <span class="ghost-tag">Curso</span>
+
+          <h3>Cursos de Pentesting Mobile</h3>
+
+          <p>
+            Recurso para estudiar pentesting mobile, fundamentos, análisis dinámico,
+            análisis estático e ingeniería inversa.
+          </p>
+
+          <div class="ghost-meta">
+            <span>Android/iOS</span>
+            <span>Mobile</span>
+            <span>MediaFire</span>
+          </div>
+
+          <div class="ghost-actions">
+            <a class="ghost-btn" href="https://www.mediafire.com/folder/9x3rvregjf10q/Cursos+de+Pentesting+mobile" rel="nofollow noopener" target="_blank">
+              Descargar
+            </a>
+
+            <button class="ghost-copy-btn" data-link="https://www.mediafire.com/folder/9x3rvregjf10q/Cursos+de+Pentesting+mobile" type="button">
+              Copiar link
+            </button>
+          </div>
+        </div>
+
+        <div class="ghost-card" data-category="curso" data-title="cursos especializados hacking seguridad laboratorios modulos">
+          <span class="ghost-tag">Curso</span>
+
+          <h3>Cursos Especializados</h3>
+
+          <p>
+            Material organizado por áreas para estudiar temas específicos y mejorar
+            tus habilidades paso a paso.
+          </p>
+
+          <div class="ghost-meta">
+            <span>Curso</span>
+            <span>Módulos</span>
+            <span>MediaFire</span>
+          </div>
+
+          <div class="ghost-actions">
+            <a class="ghost-btn" href="https://www.mediafire.com/folder/setv0n4er234s/Cursos+Especializados" rel="nofollow noopener" target="_blank">
+              Descargar
+            </a>
+
+            <button class="ghost-copy-btn" data-link="https://www.mediafire.com/folder/setv0n4er234s/Cursos+Especializados" type="button">
+              Copiar link
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ghost-no-results">
+        No se encontraron recursos con ese filtro o búsqueda.
+      </div>
+
+      <div class="ghost-alert">
+        <strong>Nota:</strong> los enlaces publicados en esta sección deben corresponder
+        a material propio, libre, autorizado o con permiso para su distribución.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const root = document.getElementById("ghostDownloads");
+    if (!root) return;
+
+    const searchInput = root.querySelector(".ghost-search");
+    const filterSelect = root.querySelector(".ghost-filter");
+    const cards = root.querySelectorAll(".ghost-card");
+    const noResults = root.querySelector(".ghost-no-results");
+    const copyButtons = root.querySelectorAll(".ghost-copy-btn");
+
+    function filterCards() {
+      const searchValue = searchInput.value.toLowerCase().trim();
+      const filterValue = filterSelect.value;
+      let visibleCards = 0;
+
+      cards.forEach(function (card) {
+        const title = card.getAttribute("data-title").toLowerCase();
+        const category = card.getAttribute("data-category");
+
+        const matchesSearch = title.includes(searchValue);
+        const matchesFilter = filterValue === "all" || category === filterValue;
+
+        if (matchesSearch && matchesFilter) {
+          card.style.display = "flex";
+          visibleCards++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      noResults.style.display = visibleCards === 0 ? "block" : "none";
+    }
+
+    function copyFallback(text) {
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+
+      try {
+        document.execCommand("copy");
+        alert("Link copiado correctamente.");
+      } catch (err) {
+        alert("No se pudo copiar el enlace.");
+      }
+
+      document.body.removeChild(tempInput);
+    }
+
+    copyButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        const link = button.getAttribute("data-link");
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(link).then(function () {
+            alert("Link copiado correctamente.");
+          }).catch(function () {
+            copyFallback(link);
+          });
+        } else {
+          copyFallback(link);
+        }
+      });
+    });
+
+    searchInput.addEventListener("input", filterCards);
+    filterSelect.addEventListener("change", filterCards);
+  })();
+</script>{% endraw %}

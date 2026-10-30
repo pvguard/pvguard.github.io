@@ -1,0 +1,2138 @@
+---
+title: "ECPPTv3 Review"
+date: 2024-09-10 15:35:00 -0500
+tags: ["Certificaciones"]
+description: "🎯 CERTIFICATION REVIEW · PENTESTING · ACTIVE DIRECTORY Certified Professional Penetration Tester eCPPTv3 Review Mi experiencia personal preparando y…"
+image: "/assets/img/posts/ecpptv3-review-202409/05-eCPPT.png"
+permalink: "/2024/09/ecpptv3-review.html"
+blogger_url: "https://pvguard.blogspot.com/2024/09/ecpptv3-review.html"
+---
+{% raw %}<!-- =========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     ========================================================= -->
+
+<h1 style="
+    text-align:center;
+    margin:0 0 22px 0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:30px;
+    line-height:1.25;
+    font-weight:800;
+    color:#00f5ff;
+    text-shadow:
+        0 0 8px rgba(0,245,255,.55),
+        0 0 18px rgba(0,245,255,.20);
+">
+    eCPPTv3 Review: preparación, laboratorio y experiencia personal
+</h1>
+
+
+<div class="separator"
+     style="
+        clear:both;
+        text-align:center;
+        margin:0 0 24px 0;
+     ">
+
+    <a
+        href="/assets/img/posts/ecpptv3-review-202409/05-eCPPT.png"
+        style="display:block;text-align:center;">
+
+        <img
+            alt="Certified Professional Penetration Tester eCPPTv3 Review"
+            border="0"
+            data-original-height="246"
+            data-original-width="386"
+            src="/assets/img/posts/ecpptv3-review-202409/05-eCPPT.png"
+
+            style="
+                width:100%;
+                max-width:560px;
+                height:auto;
+                border-radius:16px;
+                border:1px solid rgba(0,245,255,.38);
+                box-shadow:
+                    0 0 24px rgba(0,245,255,.18),
+                    0 14px 38px rgba(0,0,0,.60);
+            ">
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CORTE DE PORTADA BLOGGER
+     ========================================================= -->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   eCPPTv3 REVIEW
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+    margin:0 auto;
+
+    position:relative;
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+}
+
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+        rgba(0,0,0,.45);
+
+    box-shadow:
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+    height:340px;
+
+    right:-140px;
+    top:-160px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.55),
+        0 0 25px rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px
+        rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.pt-cards {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.pt-card {
+
+    position:relative;
+
+    min-height:165px;
+
+    padding:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,245,255,.055),
+            rgba(0,0,0,.14)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.17);
+
+    border-radius:16px;
+
+    transition:.22s ease;
+}
+
+
+.pt-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:22px;
+    bottom:22px;
+
+    width:2px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+}
+
+
+.pt-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.50);
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.10);
+}
+
+
+.pt-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:var(--white);
+}
+
+
+.pt-card p {
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    text-align:left;
+}
+
+
+.pt-icon {
+
+    width:42px;
+    height:42px;
+
+    margin-bottom:13px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.25);
+}
+
+
+/* =========================================================
+   INFO BOXES
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#ffdce4;
+
+    background:
+        rgba(255,59,98,.07);
+
+    border-left:
+        3px solid var(--red);
+}
+
+
+.pt-warning strong {
+    color:#ff859b;
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   LISTS
+   ========================================================= */
+
+.pt-list {
+
+    margin-top:18px;
+
+    padding:
+        18px 20px 18px 40px;
+
+    border:
+        1px solid rgba(0,245,255,.16);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,245,255,.025);
+}
+
+
+.pt-list li {
+
+    margin:
+        10px 0;
+
+    color:#d5f8fa;
+
+    line-height:1.65;
+}
+
+
+/* =========================================================
+   ROADMAP
+   ========================================================= */
+
+.pt-flow {
+
+    counter-reset:ptstep;
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:18px;
+}
+
+
+.pt-step {
+
+    position:relative;
+
+    padding:
+        16px 16px 16px 58px;
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    color:#d7fafd;
+
+    line-height:1.65;
+}
+
+
+.pt-step::before {
+
+    counter-increment:ptstep;
+
+    content:
+        counter(ptstep);
+
+    position:absolute;
+
+    left:15px;
+
+    top:15px;
+
+    width:29px;
+    height:29px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:8px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 13px
+        rgba(0,245,255,.28);
+}
+
+
+/* =========================================================
+   LINK BOX
+   ========================================================= */
+
+.pt-link-box {
+
+    margin-top:15px;
+
+    padding:14px 16px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:11px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   WORDLISTS
+   ========================================================= */
+
+.pt-wordlists {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+
+    margin-top:18px;
+}
+
+
+.pt-word {
+
+    padding:12px 14px;
+
+    color:#dffeff;
+
+    background:
+        rgba(255,216,74,.035);
+
+    border:
+        1px solid rgba(255,216,74,.20);
+
+    border-radius:10px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px
+        rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px
+        rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+.pt-separator {
+
+    height:1px;
+
+    margin:22px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-cards {
+        grid-template-columns:1fr;
+    }
+
+    .pt-wordlists {
+        grid-template-columns:1fr;
+    }
+
+    .pt-content {
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+        padding:18px;
+    }
+
+    .pt-title {
+        font-size:31px;
+    }
+
+    .pt-btn {
+        width:100%;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+    <div class="pt-scanlines"></div>
+
+    <div class="pt-content">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="pt-hero">
+
+            <div class="pt-kicker">
+                🎯 CERTIFICATION REVIEW · PENTESTING · ACTIVE DIRECTORY
+            </div>
+
+
+            <h1 class="pt-title">
+
+                Certified Professional Penetration Tester
+
+                <span>
+                    eCPPTv3 Review
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Mi experiencia personal preparando y presentando el
+                examen eCPPTv3, incluyendo los recursos que utilicé,
+                laboratorios de Active Directory, plataformas de
+                práctica, dificultades encontradas durante la evaluación
+                y recomendaciones que considero útiles para otros
+                profesionales que estén siguiendo esta certificación.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    🎓 eCPPTv3
+                </span>
+
+                <span class="pt-badge">
+                    ⚔ Pentesting
+                </span>
+
+                <span class="pt-badge">
+                    🏢 Active Directory
+                </span>
+
+                <span class="pt-badge">
+                    ↪ Pivoting
+                </span>
+
+                <span class="pt-badge">
+                    🔐 Privilege Escalation
+                </span>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                Esta publicación refleja mi experiencia personal
+                durante la preparación y presentación del examen.
+                No pretende revelar respuestas, flags ni soluciones
+                específicas de la evaluación.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRO
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📘 Introducción
+            </h2>
+
+
+            <p>
+
+                En este artículo quiero compartir mi experiencia con
+                el examen <strong>eCPPTv3</strong> y los recursos que
+                utilicé para prepararme de manera más completa.
+
+            </p>
+
+
+            <p>
+
+                Cuando comencé mi preparación, esta versión del examen
+                era relativamente reciente y existía poca información
+                detallada sobre lo que podía encontrar durante la
+                evaluación. Más allá del material oficial, resultaba
+                difícil determinar si mi preparación era suficiente.
+
+            </p>
+
+
+            <p>
+
+                Durante el proceso me encontré con diferentes desafíos,
+                especialmente relacionados con Active Directory.
+                Después de dedicar varias noches a practicar en
+                laboratorios específicos, reforzar conceptos y
+                mejorar mi metodología de enumeración, finalmente
+                conseguí aprobar el examen.
+
+            </p>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    ✓ CERTIFICATION ACHIEVED
+                </strong>
+
+                <br>
+
+                La preparación adicional en Active Directory,
+                movimiento lateral y enumeración resultó fundamental
+                para mejorar mi desempeño durante la evaluación.
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/ecpptv3-review-202409/01-AVvXsEg0C8aOHApDFWnaZb2ZjwVcmYV10OLOricF9ufjteNZNH5G3mwGpqRL.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        alt="Resultado de la certificación eCPPTv3"
+                        src="/assets/img/posts/ecpptv3-review-202409/01-AVvXsEg0C8aOHApDFWnaZb2ZjwVcmYV10OLOricF9ufjteNZNH5G3mwGpqRL.png">
+
+                </a>
+
+                <div class="pt-caption">
+                    Resultado obtenido después de completar el proceso de evaluación
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             EXAMEN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🧪 ¿Cómo fue el examen?
+            </h2>
+
+
+            <p>
+
+                En mi experiencia, la evaluación estuvo dividida
+                principalmente en dos componentes: un entorno práctico
+                de laboratorio y una serie de preguntas relacionadas
+                directamente con las actividades realizadas dentro
+                de dicho entorno.
+
+            </p>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🖥
+                    </div>
+
+                    <h3>
+                        Laboratorio
+                    </h3>
+
+                    <p>
+
+                        El acceso se realizaba mediante un servidor
+                        Guacamole que funcionaba como entorno de trabajo
+                        y máquina de pruebas.
+
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        ?
+                    </div>
+
+                    <h3>
+                        Preguntas
+                    </h3>
+
+                    <p>
+
+                        Las preguntas estaban relacionadas con la
+                        información, actividades y resultados obtenidos
+                        durante el laboratorio.
+
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        ⏱
+                    </div>
+
+                    <h3>
+                        Gestión del tiempo
+                    </h3>
+
+                    <p>
+
+                        En mi intento, la ventana operativa fue de
+                        24 horas, por lo que administrar el tiempo
+                        correctamente resultó fundamental.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                Durante mi examen no tenía acceso directo a Internet
+                desde el laboratorio, por lo que era importante
+                aprovechar correctamente las herramientas, documentación
+                y recursos proporcionados dentro del entorno.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TIME
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                ⏱ Gestión del tiempo
+            </h2>
+
+
+            <p>
+
+                Uno de los aspectos que más influyó durante la
+                evaluación fue la correcta administración del tiempo.
+
+            </p>
+
+
+            <p>
+
+                En escenarios donde es necesario trabajar con
+                enumeración de usuarios, credenciales o contraseñas,
+                elegir correctamente los diccionarios puede marcar
+                una diferencia importante.
+
+            </p>
+
+
+            <div class="pt-flow">
+
+
+                <div class="pt-step">
+
+                    Identificar primero el contexto del entorno
+                    antes de ejecutar ataques basados en diccionarios.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Utilizar listas de palabras específicas y
+                    relacionadas con el escenario siempre que estén
+                    disponibles.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Evitar dedicar demasiado tiempo a una única técnica
+                    si no está proporcionando resultados.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Documentar cada hallazgo para evitar repetir
+                    enumeraciones o pruebas ya realizadas.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PREPARATION
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📚 Mi preparación
+            </h2>
+
+
+            <p>
+
+                El primer recurso que utilicé fue el contenido
+                actualizado proporcionado por <strong>INE</strong>
+                para preparar el examen.
+
+            </p>
+
+
+            <p>
+
+                El contenido incluía diferentes áreas importantes
+                dentro de un proceso de pentesting:
+
+            </p>
+
+
+            <ul class="pt-list">
+
+                <li>
+                    Ataques del lado del cliente.
+                </li>
+
+                <li>
+                    Pruebas de penetración de red.
+                </li>
+
+                <li>
+                    Fundamentos de desarrollo de exploits.
+                </li>
+
+                <li>
+                    Escalada de privilegios.
+                </li>
+
+                <li>
+                    Movimiento lateral y pivoting.
+                </li>
+
+                <li>
+                    Pentesting de Active Directory.
+                </li>
+
+                <li>
+                    Command and Control (C2).
+                </li>
+
+            </ul>
+
+
+            <p>
+
+                Después de finalizar el contenido oficial decidí
+                continuar practicando porque todavía quería reforzar
+                especialmente la parte relacionada con
+                <strong>Active Directory</strong>.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             HTB
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🧩 Hack The Box
+            </h2>
+
+
+            <p>
+
+                Una parte importante de mi preparación adicional
+                consistió en practicar laboratorios dentro de
+                <strong>Hack The Box</strong>.
+
+            </p>
+
+
+            <p>
+
+                Adquirí el plan VIP durante un año con el objetivo
+                de disponer de más laboratorios y practicar escenarios
+                relacionados con Active Directory.
+
+            </p>
+
+
+            <p>
+
+                Este proceso me permitió profundizar en técnicas
+                de enumeración, movimiento lateral, abuso de
+                configuraciones y escalada de privilegios.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/ecpptv3-review-202409/04-AVvXsEjQIW4rAwU3StdacX96_caHNV1CjKudE36jFW1N45x9qLqEVcv-jOuW.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        alt="Laboratorios realizados durante la preparación"
+                        src="/assets/img/posts/ecpptv3-review-202409/04-AVvXsEjQIW4rAwU3StdacX96_caHNV1CjKudE36jFW1N45x9qLqEVcv-jOuW.png">
+
+                </a>
+
+                <div class="pt-caption">
+                    Registro personal de laboratorios utilizados durante la preparación
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/ecpptv3-review-202409/03-AVvXsEioR8LqoZ-EvPtzbpd6v-Et8vJdiBFzCkH_OEnMfeEdvQa1dSKpc2l_.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        alt="Seguimiento de laboratorios"
+                        src="/assets/img/posts/ecpptv3-review-202409/03-AVvXsEioR8LqoZ-EvPtzbpd6v-Et8vJdiBFzCkH_OEnMfeEdvQa1dSKpc2l_.png">
+
+                </a>
+
+                <div class="pt-caption">
+                    Seguimiento del progreso realizado durante la preparación
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TRYHACKME
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🎯 TryHackMe
+            </h2>
+
+
+            <p>
+
+                En <strong>TryHackMe</strong> también utilicé un
+                laboratorio enfocado en Active Directory llamado
+                <strong>Attacktive Directory</strong>.
+
+            </p>
+
+
+            <div class="pt-info">
+
+                Este laboratorio me resultó útil para reforzar
+                conceptos relacionados con enumeración,
+                autenticación y Active Directory antes de presentar
+                el examen.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HTB ACADEMY
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🏢 Hack The Box Academy
+            </h2>
+
+
+            <p>
+
+                Después de la práctica inicial todavía quería
+                profundizar más en Active Directory, por lo que
+                continué estudiando mediante
+                <strong>Hack The Box Academy</strong>.
+
+            </p>
+
+
+            <p>
+
+                Personalmente encontré estos módulos especialmente
+                útiles por el nivel de detalle con el que se explican
+                conceptos, herramientas y metodologías.
+
+            </p>
+
+
+            <div class="pt-link-box">
+
+                <a
+                    href="https://academy.hackthebox.com/module/details/74"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    https://academy.hackthebox.com/module/details/74
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-link-box">
+
+                <a
+                    href="https://academy.hackthebox.com/module/details/143"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    https://academy.hackthebox.com/module/details/143
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HACKMYVM
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🖥 HackMyVM
+            </h2>
+
+
+            <p>
+
+                También realicé ejercicios adicionales dentro de
+                <strong>HackMyVM</strong>.
+
+            </p>
+
+
+            <p>
+
+                Las tres máquinas que utilicé como parte de mi
+                práctica adicional fueron:
+
+            </p>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        01
+                    </div>
+
+                    <h3>
+                        DC01
+                    </h3>
+
+                    <p>
+                        Laboratorio adicional utilizado durante
+                        mi preparación de Active Directory.
+                    </p>
+
+                    <div class="pt-link-box">
+
+                        <a
+                            href="https://hackmyvm.eu/machines/machine.php?vm=DC01"
+                            target="_blank"
+                            rel="noopener">
+
+                            Abrir DC01
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        02
+                    </div>
+
+                    <h3>
+                        DC02
+                    </h3>
+
+                    <p>
+                        Segundo escenario utilizado para continuar
+                        reforzando metodología y enumeración.
+                    </p>
+
+                    <div class="pt-link-box">
+
+                        <a
+                            href="https://hackmyvm.eu/machines/machine.php?vm=DC02"
+                            target="_blank"
+                            rel="noopener">
+
+                            Abrir DC02
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        03
+                    </div>
+
+                    <h3>
+                        DC03
+                    </h3>
+
+                    <p>
+                        Tercer laboratorio utilizado como complemento
+                        de la preparación.
+                    </p>
+
+                    <div class="pt-link-box">
+
+                        <a
+                            href="https://hackmyvm.eu/machines/machine.php?vm=DC03"
+                            target="_blank"
+                            rel="noopener">
+
+                            Abrir DC03
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             EXAM LAB
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🧪 Entorno del laboratorio eCPPTv3
+            </h2>
+
+
+            <p>
+
+                Desde mi experiencia, el entorno proporcionado para
+                realizar el examen no fue el más cómodo para trabajar.
+
+            </p>
+
+
+            <p>
+
+                Personalmente habría preferido disponer de una conexión
+                VPN directa hacia el laboratorio en lugar de depender
+                únicamente de una interfaz web para interactuar con
+                la máquina de trabajo.
+
+            </p>
+
+
+            <p>
+
+                Utilicé el navegador Brave durante la evaluación
+                y experimenté problemas con la sesión de Guacamole.
+                En un momento determinado la máquina dejó de responder
+                y fue necesario reiniciarla.
+
+            </p>
+
+
+            <div class="pt-warning">
+
+                Este problema me hizo perder tiempo durante la
+                evaluación. Por ello considero importante mantener
+                todas las anotaciones y hallazgos fuera de la sesión
+                remota siempre que las reglas del examen lo permitan.
+
+            </div>
+
+
+            <p>
+
+                En mi caso utilicé
+                <strong>CherryTree</strong>
+                para organizar la información durante el proceso.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             WORDLISTS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📖 Diccionarios utilizados
+            </h2>
+
+
+            <p>
+
+                Uno de los puntos en los que inicialmente perdí más
+                tiempo fue la selección de diccionarios adecuados
+                para realizar pruebas relacionadas con usuarios
+                y contraseñas.
+
+            </p>
+
+
+            <p>
+
+                Finalmente utilicé principalmente los diccionarios
+                disponibles dentro del propio entorno del laboratorio.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <a
+                    href="/assets/img/posts/ecpptv3-review-202409/02-AVvXsEiG8mUS4WIMhKjtw0ONy_6CJlVU1df2teTk_YzgirjHuau6Eq_bwl1H.png"
+                    target="_blank"
+                    rel="noopener">
+
+                    <img
+                        alt="Diccionarios disponibles durante el examen"
+                        src="/assets/img/posts/ecpptv3-review-202409/02-AVvXsEiG8mUS4WIMhKjtw0ONy_6CJlVU1df2teTk_YzgirjHuau6Eq_bwl1H.png">
+
+                </a>
+
+                <div class="pt-caption">
+                    Diccionarios disponibles dentro del entorno de laboratorio
+                </div>
+
+            </div>
+
+
+            <div class="pt-wordlists">
+
+                <div class="pt-word">
+                    common_corporate_passwords.lst
+                </div>
+
+                <div class="pt-word">
+                    seasons.txt
+                </div>
+
+                <div class="pt-word">
+                    months.txt
+                </div>
+
+                <div class="pt-word">
+                    xato-net-10-million-passwords-10000.txt
+                </div>
+
+                <div class="pt-word">
+                    rockyou.txt
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                Mi principal recomendación es seleccionar los
+                diccionarios de acuerdo con el contexto del entorno
+                en lugar de ejecutar listas grandes de forma
+                indiscriminada.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TIPS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                💡 Consejos prácticos
+            </h2>
+
+
+            <div class="pt-flow">
+
+
+                <div class="pt-step">
+
+                    <strong>Comprender Active Directory.</strong>
+
+                    Conocer sus componentes, relaciones de confianza,
+                    autenticación y vulnerabilidades comunes facilita
+                    considerablemente la enumeración.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    <strong>Practicar en laboratorios reales.</strong>
+
+                    Hack The Box, TryHackMe, HackMyVM y HTB Academy
+                    me permitieron reforzar conocimientos mediante
+                    escenarios prácticos.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    <strong>Optimizar el tiempo.</strong>
+
+                    Evitar repetir pruebas sin resultados y utilizar
+                    recursos adecuados al contexto puede ahorrar
+                    una cantidad importante de tiempo.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    <strong>Documentar todo.</strong>
+
+                    Mantener información organizada sobre usuarios,
+                    contraseñas, hosts, servicios y hallazgos evita
+                    perder información importante durante el examen.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    <strong>Practicar movimiento lateral y pivoting.</strong>
+
+                    Son habilidades que considero importantes para
+                    comprender correctamente escenarios de redes
+                    corporativas.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    <strong>Mantener una metodología.</strong>
+
+                    Enumeración, análisis, explotación, post-explotación
+                    y documentación deben seguir un proceso ordenado.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             GITHUB
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                💻 Laboratorios y writeups
+            </h2>
+
+
+            <p>
+
+                Continuaré publicando contenido relacionado con
+                pentesting, laboratorios, herramientas y writeups
+                técnicos en mi perfil de GitHub.
+
+            </p>
+
+
+            <div class="pt-actions">
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    Visitar GitHub
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONCLUSION
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛡 Conclusión
+            </h2>
+
+
+            <p>
+
+                Mi experiencia con eCPPTv3 reforzó la importancia
+                de complementar la formación oficial con práctica
+                constante en laboratorios.
+
+            </p>
+
+
+            <p>
+
+                Active Directory fue una de las áreas en las que
+                decidí invertir más tiempo, utilizando diferentes
+                plataformas para mejorar mi capacidad de enumeración,
+                movimiento lateral, escalada de privilegios y análisis
+                de entornos corporativos.
+
+            </p>
+
+
+            <p>
+
+                También aprendí que durante un examen práctico no solo
+                importa conocer herramientas. La gestión del tiempo,
+                la elección de diccionarios, la documentación y mantener
+                una metodología clara pueden ser igualmente importantes.
+
+            </p>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    Explora · Aprende · Practica · Documenta
+                </strong>
+
+                <br>
+
+                Cada laboratorio resuelto aporta experiencia que
+                posteriormente puede aplicarse durante evaluaciones
+                y proyectos reales de seguridad.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <section class="pt-footer">
+
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Cybersecurity · Pentesting · Active Directory · Certifications
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div
+                class="pt-actions"
+                style="justify-content:center;">
+
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+
+            </div>
+
+
+            <p style="margin-top:20px;">
+
+                Desarrollado por
+
+                <strong style="
+                    color:#00f5ff;
+                    text-shadow:
+                        0 0 9px rgba(0,245,255,.55);
+                ">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}

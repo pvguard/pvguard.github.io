@@ -1,0 +1,600 @@
+---
+title: "workspace"
+date: 2025-11-24 10:07:36 -0500
+tags: ["workspace"]
+description: "kali@pvguard:~/ Pentesting Hacked by Gh0s7m4n 💀 ACCESS [ ACCESS GRANTED ] Learn, practice, and share — the combination that strengthens security. ⚡ Click…"
+image: "/assets/img/posts/workspace-202511/01-workspace.png"
+permalink: "/2025/11/workspace.html"
+blogger_url: "https://pvguard.blogspot.com/2025/11/workspace.html"
+---
+{% raw %}<!-- ============================= -->
+<!-- PVGUARD HACKER TERMINAL POST -->
+<!-- Diseño corregido para Blogger -->
+<!-- ============================= -->
+
+<div class="pv-wrapper">
+
+  <!-- Imagen principal -->
+  <div class="separator" style="clear: both;"><a href="/assets/img/posts/workspace-202511/01-workspace.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600" data-original-height="941" data-original-width="1672" src="/assets/img/posts/workspace-202511/01-workspace.png"/></a></div>
+
+  {% endraw %}
+<!--more-->
+{% raw %}
+
+  <!-- Terminal -->
+  <div class="pv-terminal-card">
+    <div class="pv-terminal-glow"></div>
+
+    <div class="pv-terminal-header">
+      <div class="pv-terminal-buttons">
+        <span class="pv-close"></span>
+        <span class="pv-minimize"></span>
+        <span class="pv-maximize"></span>
+      </div>
+
+      <div class="pv-terminal-title">
+        kali@pvguard:~/
+      </div>
+
+      <div class="pv-terminal-status">
+        Pentesting
+      </div>
+    </div>
+
+    <div class="pv-terminal-body">
+      <div class="pv-scanline"></div>
+      <div class="pv-grid"></div>
+
+      <pre id="pv-terminal-output"></pre>
+
+      <div class="pv-input-line">
+        <span class="pv-prompt">Hacked by Gh0s7m4n</span>
+        <span class="pv-skull">💀</span>
+        <span class="pv-cursor"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido desbloqueado -->
+  <div id="pv-content" class="pv-content">
+    <div class="pv-access-box">
+      <div class="pv-access-icon">ACCESS</div>
+      <h2>[ ACCESS GRANTED ]</h2>
+      <p>
+        Learn, practice, and share — the combination that strengthens security.
+      </p>
+    </div>
+
+    <div class="pv-links">
+      <a href="/search/label/red-team/" class="pv-btn">
+        <span>⚡</span>
+        Click Here Access Red Team
+      </a>
+
+      <a href="/search/label/articulos/" class="pv-btn pv-btn-alt">
+        <span>📚</span>
+        Click Here Access Articulos
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<style>
+/* ============================= */
+/* CONTENEDOR GENERAL */
+/* ============================= */
+
+.pv-wrapper {
+  width: 100%;
+  max-width: 980px;
+  margin: 30px auto;
+  padding: 0;
+  font-family: "Courier New", monospace;
+  color: #00ff66;
+}
+
+/* ============================= */
+/* IMAGEN PRINCIPAL */
+/* ============================= */
+
+.pv-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 102, 0.35);
+  box-shadow:
+    0 0 25px rgba(0, 255, 102, 0.22),
+    inset 0 0 30px rgba(0, 255, 102, 0.08);
+  background: #000;
+}
+
+.pv-hero img {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+  filter: contrast(1.08) brightness(0.9) saturate(1.15);
+  transition: transform 0.8s ease, filter 0.8s ease;
+}
+
+.pv-hero:hover img {
+  transform: scale(1.035);
+  filter: contrast(1.15) brightness(1) saturate(1.25);
+}
+
+.pv-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.78)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,255,102,0.05) 0px,
+      rgba(0,255,102,0.05) 1px,
+      transparent 2px,
+      transparent 5px
+    );
+  pointer-events: none;
+}
+
+.pv-hero-badge {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  padding: 10px 16px;
+  color: #001a0a;
+  background: linear-gradient(135deg, #00ff66, #00d9ff);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 0 18px rgba(0,255,102,0.55);
+}
+
+/* ============================= */
+/* TERMINAL */
+/* ============================= */
+
+.pv-terminal-card {
+  position: relative;
+  margin-top: 28px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #030303;
+  border: 1px solid rgba(0, 255, 102, 0.35);
+  box-shadow:
+    0 0 35px rgba(0, 255, 102, 0.18),
+    0 0 80px rgba(0, 217, 255, 0.08);
+}
+
+.pv-terminal-glow {
+  position: absolute;
+  inset: -2px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(0,255,102,0.22), transparent 35%),
+    radial-gradient(circle at 80% 100%, rgba(0,217,255,0.16), transparent 38%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pv-terminal-header {
+  position: relative;
+  z-index: 2;
+  min-height: 48px;
+  background: linear-gradient(90deg, #0a0a0a, #111, #050505);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(0,255,102,0.22);
+}
+
+.pv-terminal-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pv-terminal-buttons span {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pv-close {
+  background: #ff4b4b;
+  box-shadow: 0 0 8px rgba(255,75,75,0.7);
+}
+
+.pv-minimize {
+  background: #ffc83d;
+  box-shadow: 0 0 8px rgba(255,200,61,0.7);
+}
+
+.pv-maximize {
+  background: #00ff66;
+  box-shadow: 0 0 8px rgba(0,255,102,0.7);
+}
+
+.pv-terminal-title {
+  margin-left: 16px;
+  color: #baffd3;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 8px rgba(0,255,102,0.5);
+}
+
+.pv-terminal-status {
+  margin-left: auto;
+  color: #000;
+  background: #00ff66;
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 0 12px rgba(0,255,102,0.55);
+}
+
+.pv-terminal-body {
+  position: relative;
+  z-index: 1;
+  min-height: 440px;
+  padding: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(0,255,102,0.10), transparent 35%),
+    linear-gradient(180deg, #020202, #000);
+}
+
+.pv-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,102,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,102,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.pv-scanline {
+  position: absolute;
+  left: 0;
+  top: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0,255,102,0.09),
+    transparent
+  );
+  animation: pvScan 5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes pvScan {
+  0% { top: -100%; }
+  100% { top: 100%; }
+}
+
+#pv-terminal-output {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  color: #00ff66;
+  font-size: 14px;
+  line-height: 1.55;
+  text-shadow: 0 0 7px rgba(0,255,102,0.42);
+  border: none !important;
+  outline: none !important;
+}
+
+.pv-input-line {
+  position: relative;
+  z-index: 3;
+  margin-top: 12px;
+  font-size: 15px;
+}
+
+.pv-prompt {
+  color: #00d9ff;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(0,217,255,0.8);
+}
+
+.pv-skull {
+  color: #00d9ff;
+  text-shadow: 0 0 10px rgba(0,217,255,0.8);
+}
+
+.pv-cursor {
+  display: inline-block;
+  width: 9px;
+  height: 17px;
+  margin-left: 6px;
+  background: #00ff66;
+  box-shadow: 0 0 10px rgba(0,255,102,0.85);
+  animation: pvBlink 0.8s infinite;
+  vertical-align: middle;
+}
+
+@keyframes pvBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ============================= */
+/* CONTENIDO ACCESS GRANTED */
+/* ============================= */
+
+.pv-content {
+  display: none;
+  margin-top: 24px;
+  padding: 28px;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(0,255,102,0.10), rgba(0,217,255,0.05)),
+    #050505;
+  border: 1px solid rgba(0,255,102,0.30);
+  box-shadow:
+    0 0 30px rgba(0,255,102,0.18),
+    inset 0 0 25px rgba(0,255,102,0.06);
+  animation: pvFadeUp 0.9s ease forwards;
+}
+
+@keyframes pvFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pv-access-box {
+  text-align: center;
+}
+
+.pv-access-icon {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 16px;
+  color: #000;
+  background: #00ff66;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  box-shadow: 0 0 18px rgba(0,255,102,0.75);
+}
+
+.pv-access-box h2 {
+  margin: 0;
+  color: #00ff66;
+  font-size: 28px;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 8px rgba(0,255,102,0.9),
+    0 0 20px rgba(0,255,102,0.35);
+}
+
+.pv-access-box p {
+  margin: 14px auto 0;
+  max-width: 680px;
+  color: #cfcfcf;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.pv-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.pv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none !important;
+  color: #001a0a !important;
+  background: linear-gradient(135deg, #00ff66, #00d9ff);
+  padding: 13px 22px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 0 18px rgba(0,255,102,0.45),
+    inset 0 0 12px rgba(255,255,255,0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pv-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 0 28px rgba(0,255,102,0.75),
+    0 0 45px rgba(0,217,255,0.25);
+}
+
+.pv-btn-alt {
+  background: linear-gradient(135deg, #00ff66, #b6ff00);
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .pv-wrapper {
+    margin: 20px auto;
+  }
+
+  .pv-terminal-body {
+    min-height: 390px;
+    padding: 18px;
+  }
+
+  #pv-terminal-output {
+    font-size: 12.5px;
+  }
+
+  .pv-terminal-title {
+    font-size: 11px;
+  }
+
+  .pv-terminal-status {
+    display: none;
+  }
+
+  .pv-access-box h2 {
+    font-size: 22px;
+  }
+
+  .pv-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const output = document.getElementById("pv-terminal-output");
+  const content = document.getElementById("pv-content");
+
+  if (!output || !content) return;
+
+  const introLines = [
+    "kali@pvguard:~$ msfconsole -q",
+    "[*] Starting Metasploit Framework...",
+    "[*] Loading modules...",
+    "[*] Initializing database...",
+    "[+] Database connected",
+    ""
+  ];
+
+  const terminalLines = [
+    "",
+    "msf6 > use exploit/linux/0day_pvguard",
+    "msf6 exploit(0day_pvguard) > set RHOSTS PVGuard.corp",
+    "RHOSTS => PVGuard.corp",
+    "msf6 exploit(0day_pvguard) > set SHELLCODE '\\x83\\x37\\x08\\x93\\x2f\\x90\\x90\\xcc\\xfa\\x21\\x4b\\x81\\x33\\x5a\\x10\\x90\\xab\\xcd\\xef\\x13\\x37\\x42\\x42\\x42\\x90'",
+    "",
+    "SHELLCODE => \\x83\\x37\\x08\\x93\\x2f\\x90\\x90\\xcc\\xfa\\x21\\x4b\\x81\\x33\\x5a\\x10\\x90\\xab\\xcd\\xef\\x13\\x37\\x42\\x42\\x42\\x90",
+    "",
+    "msf6 exploit(0day_pvguard) > exploit",
+    "",
+    "[*] Connecting to the server...",
+    "[*] Checking target... Vulnerable 🐞",
+    "[*] Authenticating...",
+    "[+] Bypassing ASLR... OK",
+    "[+] Authentication successful",
+    "[*] Executing payload...",
+    "[+] Injecting payload... OK",
+    "[+] Meterpreter session 1 opened",
+    "",
+    "meterpreter > sysinfo",
+    "[+][ACCESS GRANTED]",
+    "",
+    "Computer: PVGuard Cybersecurity technology",
+    "OS: Linux",
+    "Arch: x86_64",
+    "",
+    "meterpreter > getuid",
+    "Server username : root (administrator privileges)",
+    "",
+  ];
+
+  function appendText(text) {
+    output.textContent += text;
+  }
+
+  function typeText(text, speed, callback) {
+    let i = 0;
+
+    function typing() {
+      if (i < text.length) {
+        appendText(text.charAt(i));
+        i++;
+        setTimeout(typing, speed);
+      } else if (callback) {
+        callback();
+      }
+    }
+
+    typing();
+  }
+
+  function typeIntro(index) {
+    if (index >= introLines.length) {
+      showProgress();
+      return;
+    }
+
+    typeText(introLines[index] + "\n", 18, function () {
+      setTimeout(function () {
+        typeIntro(index + 1);
+      }, 130);
+    });
+  }
+
+  function showProgress() {
+    const total = 34;
+    let current = 0;
+
+    appendText("Initializing modules\n");
+
+    function progress() {
+      const filled = "#".repeat(current);
+      const empty = "-".repeat(total - current);
+      const percent = Math.floor((current / total) * 100);
+
+      const lines = output.textContent.split("\n");
+      lines[lines.length - 1] = "[" + filled + empty + "] " + percent + "%";
+      output.textContent = lines.join("\n");
+
+      if (current < total) {
+        current++;
+        setTimeout(progress, 55);
+      } else {
+        appendText("\n\n");
+        setTimeout(function () {
+          typeTerminalLines(0);
+        }, 350);
+      }
+    }
+
+    progress();
+  }
+
+  function typeTerminalLines(index) {
+    if (index >= terminalLines.length) {
+      setTimeout(function () {
+        content.style.display = "block";
+      }, 700);
+      return;
+    }
+
+    typeText(terminalLines[index] + "\n", 16, function () {
+      setTimeout(function () {
+        typeTerminalLines(index + 1);
+      }, 120);
+    });
+  }
+
+  setTimeout(function () {
+    typeIntro(0);
+  }, 450);
+});
+</script>{% endraw %}

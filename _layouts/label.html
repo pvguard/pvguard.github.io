@@ -1,0 +1,23 @@
+---
+layout: default
+---
+{% assign found = 0 %}
+<div class="status-msg">
+  Mostrando las entradas con la etiqueta <strong>{{ page.label }}</strong>.
+  <a href="{{ '/' | relative_url }}">Mostrar todas las entradas</a>
+</div>
+
+{% for card in site.posts %}
+  {% if card.tags contains page.label %}
+    {% assign found = found | plus: 1 %}
+    {% include post-card.html %}
+  {% endif %}
+{% endfor %}
+
+{% if found == 0 %}
+  <p class="empty-msg">$ ls ./{{ page.label | slugify }}<br>Todavía no hay entradas con esta etiqueta.</p>
+{% endif %}
+
+<nav class="blog-pager" aria-label="Paginación">
+  <a class="home-link" href="{{ '/' | relative_url }}">Página Principal</a>
+</nav>

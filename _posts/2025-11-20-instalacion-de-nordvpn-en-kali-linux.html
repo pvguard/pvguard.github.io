@@ -1,0 +1,2212 @@
+---
+title: "Instalación de NORDVPN en Kali Linux"
+date: 2025-11-20 17:08:26 -0500
+tags: ["articulos"]
+description: "🛡 CYBERSECURITY · KALI LINUX · VPN Instalación y configuración de NordVPN en Kali Linux Guía técnica orientada a profesionales de ciberseguridad para…"
+image: "/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/09-AVvXsEikw4uK63guQt0Yij0StGedpstorePg6XwQYniRZkZls0GU5slZl5ex.png"
+permalink: "/2025/11/instalacion-de-nordvpn-en-kali-linux.html"
+blogger_url: "https://pvguard.blogspot.com/2025/11/instalacion-de-nordvpn-en-kali-linux.html"
+---
+{% raw %}<!--=========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     =========================================================-->
+
+<h1 data-darkreader-inline-color="" style="--darkreader-inline-color: var(--darkreader-text-00f5ff, #1af6ff); color: #00f5ff; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; font-size: 30px; font-weight: 800; line-height: 1.25; margin: 0px 0px 22px; text-align: center; text-shadow: rgba(0, 245, 255, 0.55) 0px 0px 8px, rgba(0, 245, 255, 0.2) 0px 0px 18px;">
+    Instalación de NordVPN en Kali Linux
+</h1>
+
+
+<div class="separator" style="clear: both; margin: 0px 0px 24px; text-align: center;">
+
+    <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/09-AVvXsEikw4uK63guQt0Yij0StGedpstorePg6XwQYniRZkZls0GU5slZl5ex.png" style="display: block; text-align: center;">
+
+        <img alt="Instalación y configuración de NordVPN en Kali Linux" border="0" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-border-right="" data-darkreader-inline-border-top="" data-darkreader-inline-boxshadow="" data-original-height="941" data-original-width="1672" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/09-AVvXsEikw4uK63guQt0Yij0StGedpstorePg6XwQYniRZkZls0GU5slZl5ex.png" style="--darkreader-inline-border-bottom: var(--darkreader-border-00f5ff61, rgba(0, 172, 179, 0.38)); --darkreader-inline-border-left: var(--darkreader-border-00f5ff61, rgba(0, 172, 179, 0.38)); --darkreader-inline-border-right: var(--darkreader-border-00f5ff61, rgba(0, 172, 179, 0.38)); --darkreader-inline-border-top: var(--darkreader-border-00f5ff61, rgba(0, 172, 179, 0.38)); --darkreader-inline-boxshadow: var(--darkreader-background-00f5ff2e, rgba(0, 196, 204, 0.18)) 0px 0px 24px, var(--darkreader-background-00000099, rgba(0, 0, 0, 0.6)) 0px 14px 38px; border-radius: 16px; border: 1px solid rgba(0, 245, 255, 0.38); box-shadow: rgba(0, 245, 255, 0.18) 0px 0px 24px, rgba(0, 0, 0, 0.6) 0px 14px 38px; height: auto; max-width: 760px; width: 100%;" />
+
+    </a>
+
+</div>
+
+
+<!--=========================================================
+     CORTE DE PORTADA BLOGGER
+     =========================================================-->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   Article: NordVPN + Kali Linux
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+
+    margin:0 auto;
+
+    position:relative;
+
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   CYBER GRID
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+
+    mask-image:
+
+        linear-gradient(
+            to bottom,
+            black 0%,
+            rgba(0,0,0,.85) 52%,
+            transparent 100%
+        );
+}
+
+
+/* =========================================================
+   SCANLINES
+   ========================================================= */
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+
+        rgba(0,0,0,.45);
+
+    box-shadow:
+
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+
+    height:340px;
+
+    right:-140px;
+
+    top:-160px;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+
+        0 0 10px rgba(0,245,255,.55),
+
+        0 0 25px rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    box-shadow:
+        0 0 12px rgba(0,245,255,.045);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.pt-cards {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.pt-card {
+
+    position:relative;
+
+    min-height:160px;
+
+    padding:19px;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(0,245,255,.055),
+            rgba(0,0,0,.14)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.17);
+
+    border-radius:16px;
+
+    transition:.22s ease;
+}
+
+
+.pt-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:22px;
+
+    bottom:22px;
+
+    width:2px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+}
+
+
+.pt-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.50);
+
+    box-shadow:
+        0 0 20px rgba(0,245,255,.10);
+}
+
+
+.pt-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:var(--white);
+}
+
+
+.pt-card p {
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    text-align:left;
+}
+
+
+.pt-icon {
+
+    width:42px;
+
+    height:42px;
+
+    margin-bottom:13px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.25);
+}
+
+
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+.pt-terminal {
+
+    margin-top:19px;
+
+    overflow:hidden;
+
+    background:#000405;
+
+    border:
+        1px solid rgba(0,245,255,.28);
+
+    border-radius:15px;
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.07),
+        0 15px 35px rgba(0,0,0,.60);
+}
+
+
+.pt-terminal-top {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:
+        10px 14px;
+
+    color:var(--cyan);
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.12),
+            rgba(0,245,255,.025)
+        );
+
+    border-bottom:
+        1px solid rgba(0,245,255,.18);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+.pt-dots {
+
+    display:flex;
+
+    gap:6px;
+}
+
+
+.pt-dot {
+
+    width:9px;
+
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 8px var(--cyan);
+}
+
+
+.pt-terminal pre {
+
+    margin:0;
+
+    padding:18px;
+
+    overflow-x:auto;
+
+    color:#d8feff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    white-space:pre-wrap;
+}
+
+
+.pt-prompt {
+
+    color:var(--green);
+}
+
+
+.pt-command {
+
+    color:var(--cyan);
+}
+
+
+.pt-comment {
+
+    color:#5d898e;
+}
+
+
+/* =========================================================
+   INFO / WARNING / SUCCESS
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#ffdce4;
+
+    background:
+        rgba(255,59,98,.07);
+
+    border-left:
+        3px solid var(--red);
+}
+
+
+.pt-warning strong {
+
+    color:#ff859b;
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.pt-table {
+
+    width:100%;
+
+    margin-top:18px;
+
+    border-collapse:collapse;
+
+    border:
+        1px solid rgba(0,245,255,.20);
+}
+
+
+.pt-table th,
+.pt-table td {
+
+    padding:13px;
+
+    text-align:left;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.11);
+}
+
+
+.pt-table th {
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.085);
+
+    font-size:13px;
+}
+
+
+.pt-table td {
+
+    color:#cef6f8;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   WORKFLOW
+   ========================================================= */
+
+.pt-flow {
+
+    counter-reset:ptstep;
+
+    display:grid;
+
+    gap:12px;
+
+    margin-top:18px;
+}
+
+
+.pt-step {
+
+    position:relative;
+
+    padding:
+        16px 16px 16px 58px;
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    color:#d7fafd;
+
+    line-height:1.65;
+}
+
+
+.pt-step::before {
+
+    counter-increment:ptstep;
+
+    content:
+        counter(ptstep);
+
+    position:absolute;
+
+    left:15px;
+
+    top:15px;
+
+    width:29px;
+
+    height:29px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:8px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 0 13px rgba(0,245,255,.28);
+}
+
+
+/* =========================================================
+   INLINE CODE
+   ========================================================= */
+
+.pt-code {
+
+    display:inline-block;
+
+    padding:
+        3px 7px;
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.06);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:7px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+.pt-separator {
+
+    height:1px;
+
+    margin:
+        22px 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-cards {
+
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .pt-content {
+
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-cards {
+
+        grid-template-columns:1fr;
+    }
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+
+        padding:18px;
+    }
+
+    .pt-title {
+
+        font-size:31px;
+    }
+
+    .pt-table {
+
+        display:block;
+
+        overflow-x:auto;
+    }
+
+    .pt-btn {
+
+        width:100%;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+
+    <div class="pt-scanlines"></div>
+
+
+    <div class="pt-content">
+
+
+        <!--=====================================================
+             HERO
+             =====================================================-->
+
+        <section class="pt-hero">
+
+            <div class="pt-kicker">
+                🛡 CYBERSECURITY · KALI LINUX · VPN
+            </div>
+
+
+            <h1 class="pt-title">
+
+                Instalación y configuración de
+
+                <span>
+                    NordVPN en Kali Linux
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Guía técnica orientada a profesionales de
+                ciberseguridad para desplegar, configurar y validar
+                el cliente NordVPN dentro de Kali Linux mediante
+                interfaz gráfica y línea de comandos.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    🐧 Kali Linux
+                </span>
+
+                <span class="pt-badge">
+                    🔐 VPN Client
+                </span>
+
+                <span class="pt-badge">
+                    ⌨ CLI
+                </span>
+
+                <span class="pt-badge">
+                    🖥 GUI
+                </span>
+
+                <span class="pt-badge">
+                    🛡 Security Environment
+                </span>
+
+            </div>
+
+
+            <div class="pt-actions">
+
+                <a class="pt-btn" href="#pt-install">
+
+                    Instalación
+
+                </a>
+
+
+                <a class="pt-btn" href="#pt-auth">
+
+                    Permisos y autenticación
+
+                </a>
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                <strong>⚠ Nota operativa:</strong>
+
+                una VPN debe considerarse una capa complementaria
+                dentro de una estrategia de seguridad. No sustituye
+                controles como hardening, segmentación de red,
+                actualización de paquetes o gestión adecuada de
+                privilegios.
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             INTRODUCCIÓN
+             =====================================================-->
+
+        <section class="pt-section">
+
+            <h2>
+                📡 Introducción
+            </h2>
+
+
+            <p>
+
+                Kali Linux es una distribución ampliamente utilizada
+                por profesionales de ciberseguridad, analistas y
+                pentesters para realizar actividades de evaluación
+                técnica, investigación y pruebas de seguridad
+                controladas.
+
+            </p>
+
+
+            <p>
+
+                En determinados escenarios, integrar un cliente VPN
+                como <strong>NordVPN</strong> permite proteger el
+                tráfico de red, reforzar la privacidad de la conexión
+                y disponer de una capa adicional de aislamiento durante
+                actividades de laboratorio, navegación o acceso remoto.
+
+            </p>
+
+
+            <p>
+
+                En esta guía se documenta el procedimiento de
+                instalación, configuración de permisos y validación
+                operativa del cliente NordVPN en Kali Linux.
+
+            </p>
+
+        </section>
+
+
+        <!--=====================================================
+             CARACTERÍSTICAS
+             =====================================================-->
+
+        <section class="pt-section">
+
+            <h2>
+                ⚙ Características principales
+            </h2>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🔐
+                    </div>
+
+                    <h3>
+                        Protección del tráfico
+                    </h3>
+
+                    <p>
+                        Establece un túnel VPN para proteger la
+                        información transmitida entre el sistema
+                        y la infraestructura remota.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🌍
+                    </div>
+
+                    <h3>
+                        Infraestructura distribuida
+                    </h3>
+
+                    <p>
+                        Permite seleccionar distintas ubicaciones
+                        de conexión según las necesidades
+                        operativas del usuario.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🛡
+                    </div>
+
+                    <h3>
+                        Privacidad
+                    </h3>
+
+                    <p>
+                        Permite incorporar una capa adicional
+                        de privacidad para determinados flujos
+                        de navegación o acceso remoto.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🔄
+                    </div>
+
+                    <h3>
+                        Opciones avanzadas
+                    </h3>
+
+                    <p>
+                        Incluye diferentes modalidades de conexión
+                        adaptables a los requisitos del usuario.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        ⌨
+                    </div>
+
+                    <h3>
+                        CLI
+                    </h3>
+
+                    <p>
+                        Facilita la administración del cliente
+                        directamente desde terminal.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        🖥
+                    </div>
+
+                    <h3>
+                        GUI
+                    </h3>
+
+                    <p>
+                        Proporciona una interfaz gráfica para
+                        administrar conexiones de forma visual.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             REQUISITOS
+             =====================================================-->
+
+        <section class="pt-section">
+
+            <h2>
+                📌 Requisitos previos
+            </h2>
+
+
+            <div class="pt-flow">
+
+
+                <div class="pt-step">
+
+                    Disponer de una instalación funcional de
+
+                    <strong>
+                        Kali Linux
+                    </strong>.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Contar con privilegios administrativos mediante
+
+                    <span class="pt-code">
+                        sudo
+                    </span>
+
+                    o una cuenta equivalente.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Validar conectividad estable a Internet para
+                    descargar paquetes y dependencias.
+
+                </div>
+
+
+                <div class="pt-step">
+
+                    Verificar que los repositorios del sistema
+                    sean accesibles y se encuentren correctamente
+                    configurados.
+
+                </div>
+
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    [ OPSEC ]
+                </strong>
+
+                Se recomienda utilizar una cuenta estándar y elevar
+                privilegios únicamente cuando resulte necesario.
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             INSTALACIÓN
+             =====================================================-->
+
+        <section class="pt-section" id="pt-install">
+
+
+            <h2>
+                🚀 Instalación del cliente NordVPN
+            </h2>
+
+
+            <h3>
+                Paso 1 · Ejecutar el instalador mediante curl
+            </h3>
+
+
+            <p>
+
+                Si el sistema dispone de
+
+                <span class="pt-code">
+                    curl
+                </span>,
+
+                puede ejecutarse el instalador mediante el siguiente
+                comando:
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · installer
+                    </span>
+
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+
+<pre><span class="pt-comment"># Ejecutar el instalador de NordVPN</span>
+<span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">sh &lt;(curl -sSf https://downloads.nordcdn.com/apps/linux/install.sh)</span></pre>
+
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/06-AVvXsEiRefQBDeolvGdhnWmY28uFTZirrdWmFoJH56KT-oW0Dp2cL0tg4X0L.png" rel="noopener" target="_blank">
+
+                    <img alt="Instalación de NordVPN mediante curl" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/06-AVvXsEiRefQBDeolvGdhnWmY28uFTZirrdWmFoJH56KT-oW0Dp2cL0tg4X0L.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Ejecución del instalador mediante curl
+                </div>
+
+            </div>
+
+
+            <h3>
+                Paso 2 · Método alternativo mediante wget
+            </h3>
+
+
+            <p>
+
+                Si
+
+                <span class="pt-code">
+                    curl
+                </span>
+
+                no está disponible, puede utilizarse
+
+                <span class="pt-code">
+                    wget
+                </span>
+
+                como alternativa.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · installer-alt
+                    </span>
+
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+
+<pre><span class="pt-comment"># Instalación alternativa mediante wget</span>
+<span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">sh &lt;(wget -qO - https://downloads.nordcdn.com/apps/linux/install.sh)</span></pre>
+
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/03-AVvXsEhMeMjVoILwl7uuF49YSrlCgPWsrt8xYUw5Rwe1U1KoITfmQDwVCsP4.png" rel="noopener" target="_blank">
+
+                    <img alt="Instalación de NordVPN mediante wget" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/03-AVvXsEhMeMjVoILwl7uuF49YSrlCgPWsrt8xYUw5Rwe1U1KoITfmQDwVCsP4.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Ejecución alternativa mediante wget
+                </div>
+
+            </div>
+
+
+            <h3>
+                Paso 3 · Actualizar Kali Linux
+            </h3>
+
+
+            <p>
+
+                Antes de continuar con la instalación de los paquetes,
+                es recomendable sincronizar los repositorios y verificar
+                que las dependencias del sistema se encuentren
+                actualizadas.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/05-AVvXsEhlItdu4AKuJF_CGI2e25-a4KaDq-8IrBPPy9Frkqmo5lhJdKHI3ypT.png" rel="noopener" target="_blank">
+
+                    <img alt="Actualización de Kali Linux" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/05-AVvXsEhlItdu4AKuJF_CGI2e25-a4KaDq-8IrBPPy9Frkqmo5lhJdKHI3ypT.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Actualización de repositorios y dependencias
+                </div>
+
+            </div>
+
+
+            <h3>
+                Paso 4 · Instalar componentes CLI y GUI
+            </h3>
+
+
+            <p>
+
+                Una vez preparado el sistema, se procede con la
+                instalación de
+
+                <span class="pt-code">
+                    nordvpn
+                </span>
+
+                y
+
+                <span class="pt-code">
+                    nordvpn-gui
+                </span>.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · package-install
+                    </span>
+
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+
+<pre><span class="pt-comment"># Instalar cliente CLI + interfaz gráfica</span>
+<span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">sudo apt install nordvpn nordvpn-gui</span></pre>
+
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/08-AVvXsEiiYxPPStRu5CtAPmrgyi-ShbFXJ1lEYNOH81B8mbqtNl_jj_vN0ai-.png" rel="noopener" target="_blank">
+
+                    <img alt="Instalación de NordVPN y NordVPN GUI" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/08-AVvXsEiiYxPPStRu5CtAPmrgyi-ShbFXJ1lEYNOH81B8mbqtNl_jj_vN0ai-.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Instalación de componentes NordVPN
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/01-AVvXsEgAF5TVARJGNRGAT6eOeRhJshbI8cgpUkJPckA73nZk38dtSuYd8pax.png" rel="noopener" target="_blank">
+
+                    <img alt="Paquetes NordVPN instalados" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/01-AVvXsEgAF5TVARJGNRGAT6eOeRhJshbI8cgpUkJPckA73nZk38dtSuYd8pax.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Componentes instalados correctamente
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             PERMISOS
+             =====================================================-->
+
+        <section class="pt-section" id="pt-auth">
+
+
+            <h2>
+                🔑 Configuración de permisos y autenticación
+            </h2>
+
+
+            <p>
+
+                Después de instalar el cliente es necesario validar
+                que el usuario actual disponga de los permisos requeridos
+                para interactuar correctamente con los componentes
+                del servicio.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · permissions
+                    </span>
+
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+
+<pre><span class="pt-comment"># Crear grupo si todavía no existe</span>
+<span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">sudo groupadd nordvpn</span>
+
+<span class="pt-comment"># Añadir usuario actual al grupo</span>
+<span class="pt-prompt">┌──(kali㉿kali)-[~]</span>
+<span class="pt-prompt">└─$</span> <span class="pt-command">sudo usermod -aG nordvpn $USER</span></pre>
+
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    [ PERMISSIONS ]
+                </strong>
+
+                Si el grupo
+
+                <span class="pt-code">
+                    nordvpn
+                </span>
+
+                ya existe, no es necesario volver a crearlo.
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/11-AVvXsEjwFvfsK5gwyryAcAhR1b0DQm16cX6WwUCIZJ1Bc9hD4nS5xDqPGLoK.png" rel="noopener" target="_blank">
+
+                    <img alt="Configuración de permisos de NordVPN" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/11-AVvXsEjwFvfsK5gwyryAcAhR1b0DQm16cX6WwUCIZJ1Bc9hD4nS5xDqPGLoK.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Configuración de privilegios del usuario
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Después de añadir el usuario al grupo se recomienda
+                cerrar la sesión o reiniciar el sistema para garantizar
+                que los nuevos permisos se apliquen correctamente.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/02-AVvXsEhJW0WKlET8HC3ghFg6OM5nUsVSYshKqS9_x9_S5Ib1BKlcOiOW1myP.png" rel="noopener" target="_blank">
+
+                    <img alt="Proceso de autenticación NordVPN" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/02-AVvXsEhJW0WKlET8HC3ghFg6OM5nUsVSYshKqS9_x9_S5Ib1BKlcOiOW1myP.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Inicio del proceso de autenticación
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             VALIDACIÓN
+             =====================================================-->
+
+        <section class="pt-section">
+
+
+            <h2>
+                ✅ Validación de la implementación
+            </h2>
+
+
+            <p>
+
+                Una vez completado el proceso de autenticación,
+                el cliente debe quedar operativo y preparado para
+                establecer conexiones VPN desde Kali Linux.
+
+            </p>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    [ + ] AUTHENTICATION SUCCESSFUL
+                </strong>
+
+                <br />
+
+                El cliente se encuentra autenticado y disponible
+                para su utilización mediante interfaz gráfica
+                o línea de comandos.
+
+            </div>
+
+
+            <table class="pt-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Control
+                        </th>
+
+                        <th>
+                            Resultado esperado
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                Instalación
+                            </strong>
+                        </td>
+
+                        <td>
+                            Los componentes del cliente se encuentran
+                            instalados correctamente.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                Permisos
+                            </strong>
+                        </td>
+
+                        <td>
+                            El usuario dispone de los permisos requeridos.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                Autenticación
+                            </strong>
+                        </td>
+
+                        <td>
+                            La cuenta ha sido autenticada correctamente.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                Estado operativo
+                            </strong>
+                        </td>
+
+                        <td>
+                            El cliente puede utilizarse mediante GUI o CLI.
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/10-AVvXsEion9RcFSXHUJT_2einKTwIWGuHKVEmqC8EtD3YVigEaHYNb39bUoNj.png" rel="noopener" target="_blank">
+
+                    <img alt="Autenticación exitosa de NordVPN" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/10-AVvXsEion9RcFSXHUJT_2einKTwIWGuHKVEmqC8EtD3YVigEaHYNb39bUoNj.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                    Autenticación completada correctamente
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/04-AVvXsEhQl9q1az91W9-6suTJ56qEqPEiJKss_67mzS2rp2QHK-7M0lfJ7vPy.png" rel="noopener" target="_blank">
+
+                    <img alt="Interfaz gráfica de NordVPN" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/04-AVvXsEhQl9q1az91W9-6suTJ56qEqPEiJKss_67mzS2rp2QHK-7M0lfJ7vPy.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                  Cliente gráfico disponible
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <a href="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/07-AVvXsEiYpeGqRnP5sBZqGmSMPWgAmds6oC_IFBXdwkebGQqpPcyWBSJRlXlq.png" rel="noopener" target="_blank">
+
+                    <img alt="NordVPN operativo en Kali Linux" src="/assets/img/posts/instalacion-de-nordvpn-en-kali-linux-202511/07-AVvXsEiYpeGqRnP5sBZqGmSMPWgAmds6oC_IFBXdwkebGQqpPcyWBSJRlXlq.png" />
+
+                </a>
+
+
+                <div class="pt-caption">
+                     Cliente NordVPN operativo
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             FLUJO
+             =====================================================-->
+
+        <section class="pt-section">
+
+            <h2>
+                🧭 Flujo técnico recomendado
+            </h2>
+
+
+            <div class="pt-flow">
+
+                <div class="pt-step">
+                    Validar conectividad y repositorios del sistema.
+                </div>
+
+                <div class="pt-step">
+                    Ejecutar el instalador mediante curl o wget.
+                </div>
+
+                <div class="pt-step">
+                    Instalar el cliente CLI y la interfaz gráfica.
+                </div>
+
+                <div class="pt-step">
+                    Configurar permisos del usuario.
+                </div>
+
+                <div class="pt-step">
+                    Reiniciar la sesión para aplicar los cambios.
+                </div>
+
+                <div class="pt-step">
+                    Autenticarse y validar el estado operativo.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!--=====================================================
+             CONCLUSIÓN
+             =====================================================-->
+
+        <section class="pt-section">
+
+            <h2>
+                🛠 Conclusión técnica
+            </h2>
+
+
+            <p>
+
+                La integración de NordVPN en Kali Linux permite
+                incorporar una capa adicional de protección al tráfico
+                de red en escenarios donde se requiera privacidad,
+                navegación segura o separación de determinados flujos
+                de trabajo.
+
+            </p>
+
+
+            <p>
+
+                El procedimiento consiste en desplegar el cliente,
+                instalar los componentes requeridos, configurar
+                correctamente los permisos y completar el proceso de
+                autenticación. Una vez finalizada la configuración,
+                el servicio puede administrarse mediante GUI o CLI.
+
+            </p>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    Security Note:
+                </strong>
+
+                una VPN no sustituye controles de seguridad como
+                hardening, actualización del sistema, segmentación,
+                monitorización, mínimo privilegio o una configuración
+                segura del sistema operativo.</div></section>
+
+
+        <!--=====================================================
+             FOOTER
+             =====================================================-->
+
+        <section class="pt-footer">
+
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Cybersecurity · Pentesting · Linux · Offensive Security
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div class="pt-actions" style="justify-content: center;">
+
+
+                <a class="pt-btn" href="https://github.com/joepm21/GhostInject" rel="noopener noreferrer" target="_blank">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+
+            </div>
+
+
+            <p style="margin-top: 20px;">
+
+                Desarrollado por
+
+                <strong data-darkreader-inline-color="" style="--darkreader-inline-color: var(--darkreader-text-00f5ff, #1af6ff); color: #00f5ff; text-shadow: rgba(0, 245, 255, 0.55) 0px 0px 9px;">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+
+            <p data-darkreader-inline-color="" style="--darkreader-inline-color: var(--darkreader-text-5d898e, #9e9589); color: #5d898e; font-size: 12px; margin-top: 8px;">
+
+                Última actualización:
+                24 de septiembre de 2026
+
+            </p>
+
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}

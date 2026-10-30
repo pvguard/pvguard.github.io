@@ -1,0 +1,615 @@
+---
+title: "Laboratories"
+date: 2025-11-21 13:49:00 -0500
+tags: ["labs"]
+description: "root@pvguard:~# ☠ PVGUARD CYBER LAB Ejemplos, writeups, laboratorios y aprendizaje en ciberseguridad. Executing exploit..🐞 0% root@pvguard:~# Hacked by…"
+image: "/assets/img/posts/laboratorios-202511/01-Labs.png"
+permalink: "/2025/11/laboratorios.html"
+blogger_url: "https://pvguard.blogspot.com/2025/11/laboratorios.html"
+---
+{% raw %}<div class="pvguard-blogger">
+
+  <!-- IMAGEN PRINCIPAL -->
+<div class="separator" style="clear: both;"><a href="/assets/img/posts/laboratorios-202511/01-Labs.png" style="display: block; padding: 1em 0; text-align: center; "><img alt="" border="0" width="600" data-original-height="1086" data-original-width="1449" src="/assets/img/posts/laboratorios-202511/01-Labs.png"/></a></div>
+
+  {% endraw %}
+<!--more-->
+{% raw %}
+
+  <!-- TERMINAL -->
+  <div class="pv-terminal-container">
+
+    <div class="pv-terminal-glow"></div>
+
+    <div class="pv-terminal-header">
+      <div class="pv-terminal-buttons">
+        <span class="pv-close"></span>
+        <span class="pv-minimize"></span>
+        <span class="pv-maximize"></span>
+      </div>
+
+      <div class="pv-terminal-title">
+        root@pvguard:~#
+      </div>
+    </div>
+
+    <div class="pv-terminal-body">
+
+      <div class="pv-terminal-top">
+        <div class="pv-logo-box">☠</div>
+        <div>
+          <h2>PVGUARD CYBER LAB</h2>
+          <p>Ejemplos, writeups, laboratorios y aprendizaje en ciberseguridad.</p>
+        </div>
+      </div>
+
+      <!-- PRIMERAS LÍNEAS DEL TERMINAL -->
+      <pre id="pv-terminal-intro"></pre>
+
+      <!-- LOADING EN LA POSICIÓN CORRECTA -->
+      <div id="pv-progress-area" class="pv-progress-area">
+        <div class="pv-progress-label">
+          <span>Executing exploit..🐞 </span>
+          <span id="pv-progress-percent">0%</span>
+        </div>
+        <div class="pv-progress-box">
+          <div id="pv-progress-bar" class="pv-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- LÍNEAS QUE SALEN DESPUÉS DEL LOADING -->
+      <pre id="pv-terminal-output"></pre>
+
+      <div class="pv-input-line">
+        <span class="pv-prompt">root@pvguard:~#</span>
+        <span class="pv-command"> Hacked by Gh0s7m4n</span>
+        <span class="pv-cursor"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTENIDO DESBLOQUEADO -->
+  <div id="pv-content" class="pv-content">
+
+    <div class="pv-access-box">
+      <h2>🏁 [ACCESS GRANTED] 🏁</h2>
+      <p>
+        “Aprende, practica y comparte. Cada laboratorio es una oportunidad para mejorar tus habilidades.”
+      </p>
+    </div>
+
+    <div class="pv-card-grid">
+
+      <a class="pv-card" href="/search/label/hackthebox/">
+        <span class="pv-card-icon">⚡</span>
+        <h3>HackTheBox</h3>
+        <p>Máquinas, retos, notas y ejemplos prácticos.</p>
+        <strong>Entrar →</strong>
+      </a>
+
+      <a class="pv-card" href="/search/label/tryhackme/">
+        <span class="pv-card-icon">🧠</span>
+        <h3>TryHackMe</h3>
+        <p>Rutas de aprendizaje, rooms y writeups educativos.</p>
+        <strong>Entrar →</strong>
+      </a>
+
+      <a class="pv-card" href="/search/label/otros/">
+        <span class="pv-card-icon">💻</span>
+        <h3>Otros Labs</h3>
+        <p>Notas, herramientas, ejemplos y prácticas variadas.</p>
+        <strong>Entrar →</strong>
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+.pvguard-blogger {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  font-family: "Courier New", monospace;
+  color: #d7ffd7;
+}
+
+/* IMAGEN */
+.pvguard-hero {
+  position: relative;
+  margin: 25px auto;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 255, 120, 0.35);
+  box-shadow:
+    0 0 25px rgba(0, 255, 120, 0.20),
+    0 0 60px rgba(0, 255, 120, 0.08);
+  background: #020202;
+}
+
+.pvguard-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform .6s ease, filter .6s ease;
+}
+
+.pvguard-hero:hover img {
+  transform: scale(1.035);
+  filter: contrast(1.08) brightness(1.05);
+}
+
+/* TERMINAL */
+.pv-terminal-container {
+  position: relative;
+  background: #020202;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 30px 0;
+  border: 1px solid rgba(0, 255, 90, 0.32);
+  box-shadow:
+    0 0 30px rgba(0, 255, 90, 0.18),
+    inset 0 0 25px rgba(0, 255, 90, 0.04);
+}
+
+.pv-terminal-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(0,255,120,.18), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(0,120,255,.13), transparent 40%);
+  pointer-events: none;
+}
+
+.pv-terminal-header {
+  position: relative;
+  background: linear-gradient(90deg, #111, #050505);
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 255, 90, 0.25);
+}
+
+.pv-terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.pv-terminal-buttons span {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.pv-close { background: #ff5f57; }
+.pv-minimize { background: #ffbd2e; }
+.pv-maximize { background: #28ca42; }
+
+.pv-terminal-title {
+  color: #00ff77;
+  font-size: 13px;
+  margin-left: 18px;
+  letter-spacing: .5px;
+  text-shadow: 0 0 8px rgba(0,255,120,.7);
+}
+
+.pv-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #00ff77;
+  border-radius: 50%;
+  margin-right: 6px;
+  box-shadow: 0 0 10px #00ff77;
+}
+
+.pv-terminal-body {
+  position: relative;
+  padding: 24px;
+  background:
+    linear-gradient(rgba(0,255,90,.035) 50%, rgba(0,0,0,.04) 50%),
+    #000;
+  background-size: 100% 6px;
+  min-height: 410px;
+  overflow: hidden;
+}
+
+.pv-terminal-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 90, 0.045),
+    transparent
+  );
+  animation: pvScan 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes pvScan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.pv-terminal-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed rgba(0,255,120,.25);
+}
+
+.pv-logo-box {
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(0,255,120,.45);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: #00ff77;
+  font-size: 30px;
+  box-shadow:
+    inset 0 0 18px rgba(0,255,120,.12),
+    0 0 18px rgba(0,255,120,.15);
+}
+
+.pv-terminal-top h2 {
+  margin: 0;
+  color: #00ff77;
+  font-size: 22px;
+  text-shadow: 0 0 10px rgba(0,255,120,.65);
+}
+
+.pv-terminal-top p {
+  margin: 5px 0 0;
+  color: #b7ffcc;
+  font-size: 13px;
+}
+
+/* TEXTO TERMINAL */
+#pv-terminal-intro,
+#pv-terminal-output {
+  position: relative;
+  z-index: 2;
+  white-space: pre-wrap;
+  color: #00ff77;
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  text-shadow: 0 0 6px rgba(0,255,120,.45);
+}
+
+#pv-terminal-output {
+  margin-top: 18px;
+}
+
+/* LOADING EN MEDIO */
+.pv-progress-area {
+  display: none;
+  position: relative;
+  z-index: 3;
+  margin: 18px 0 20px;
+  padding: 10px 0 4px;
+  color: #00ff77;
+  text-shadow: 0 0 8px rgba(0,255,120,.65);
+}
+
+.pv-progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.pv-progress-box {
+  width: 100%;
+  height: 16px;
+  background: rgba(0, 255, 120, 0.08);
+  border: 1px solid rgba(0, 255, 120, 0.55);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 12px rgba(0, 255, 120, 0.18),
+    0 0 18px rgba(0, 255, 120, 0.12);
+}
+
+.pv-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00ff77, #00ffaa, #00ff77);
+  box-shadow: 0 0 18px rgba(0,255,120,.9);
+  transition: width .15s ease;
+}
+
+/* INPUT */
+.pv-input-line {
+  position: relative;
+  z-index: 2;
+  margin-top: 18px;
+  color: #d7ffd7;
+  font-size: 14px;
+}
+
+.pv-prompt {
+  color: #00b7ff;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(0,183,255,.65);
+}
+
+.pv-command {
+  color: #f1f1f1;
+}
+
+.pv-cursor {
+  display: inline-block;
+  width: 9px;
+  height: 17px;
+  background: #00ff77;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: pvBlink .8s infinite;
+  box-shadow: 0 0 8px #00ff77;
+}
+
+@keyframes pvBlink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+/* CONTENIDO */
+.pv-content {
+  display: none;
+  background: linear-gradient(180deg, #050505, #010101);
+  border: 1px solid rgba(0,255,120,.25);
+  border-radius: 16px;
+  padding: 26px;
+  margin: 25px 0 35px;
+  box-shadow: 0 0 30px rgba(0,255,120,.10);
+  animation: pvFadeUp .8s ease forwards;
+}
+
+@keyframes pvFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pv-access-box {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.pv-access-box h2 {
+  color: #00ff77;
+  margin: 0 0 10px;
+  font-size: 24px;
+  text-shadow: 0 0 12px rgba(0,255,120,.65);
+}
+
+.pv-access-box p {
+  color: #cfcfcf;
+  margin: 0 auto;
+  max-width: 720px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pv-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.pv-card {
+  text-decoration: none !important;
+  color: #d7ffd7 !important;
+  background:
+    linear-gradient(145deg, rgba(0,255,120,.10), rgba(0,0,0,.95));
+  border: 1px solid rgba(0,255,120,.28);
+  border-radius: 16px;
+  padding: 22px;
+  min-height: 170px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .35s ease, border .35s ease, box-shadow .35s ease;
+}
+
+.pv-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(0,255,120,.14), transparent);
+  transform: translateX(-100%);
+  transition: transform .6s ease;
+}
+
+.pv-card:hover::before {
+  transform: translateX(100%);
+}
+
+.pv-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0,255,120,.75);
+  box-shadow: 0 0 24px rgba(0,255,120,.18);
+}
+
+.pv-card-icon {
+  display: inline-block;
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.pv-card h3 {
+  color: #00ff77;
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.pv-card p {
+  color: #c8c8c8;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.pv-card strong {
+  color: #00ff77;
+  font-size: 13px;
+}
+
+@media (max-width: 800px) {
+  .pv-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pv-terminal-body {
+    padding: 18px;
+  }
+
+  .pv-terminal-top {
+    align-items: flex-start;
+  }
+
+  .pv-terminal-top h2 {
+    font-size: 18px;
+  }
+
+  #pv-terminal-intro,
+  #pv-terminal-output {
+    font-size: 12.5px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var introBox = document.getElementById("pv-terminal-intro");
+  var out = document.getElementById("pv-terminal-output");
+  var content = document.getElementById("pv-content");
+  var progressArea = document.getElementById("pv-progress-area");
+  var progressBar = document.getElementById("pv-progress-bar");
+  var progressPercent = document.getElementById("pv-progress-percent");
+
+  if (!introBox || !out || !content || !progressArea || !progressBar || !progressPercent) return;
+
+  var intro =
+"root@pvguard:~# ./pvguard --target corp.internal --stealth --opsec-max\n" +
+"[+] Initializing advanced modules...\n" +
+"[+] Fingerprinting Active Directory environment\n";
+
+  var lines = [
+   			"",
+            "[💀] Full domain enumeration: corp.internal",
+            "[💀] Domain Controller identified: DC01.corp.internal",
+            "[💀] Active EDR detected: SentinelCore v5 ",
+            "[💀] Corporate Antivirus: ShieldAV Enterprise",
+            "",
+            "[💀] Initiating EDR/AV evasion sequence...",
+            "[+] Memory signature modulation - OK",
+            "[+] API hook bypass on EDR - OK",
+            "[+] Trusted-process execution pipeline established → OK",
+            "[*] EDR telemetry redirected to decoy handler",
+            "",
+            "[💀] Initial compromise: workstation WIN10-EMP23",
+            "[+] Obtained context: limited local user",
+            "",
+            "[💀] Lateral movement to Domain Controller using stealth route",
+            "[+] Kerberos authentication succeeded",
+            "[+] Access to DC01 established with zero alerts",
+            "",
+            "[💀] Enumerating sensitive AD objects...",
+            "[*] Searching exposed GPOs...",
+            "[+] Found vulnerable policy allowing unsigned execution",
+            "",
+            "[💀] Abusing GPO for persistent pivot...",
+            "[+] Internal tunnel linked",
+            "[+] EDR did not flag the activity",
+            "",
+            "[💀] Accessing SYSVOL..",
+            "[💀] Inspecting login scripts..",
+            "[+] Suspicious file discovered: hidden_ops.bak",
+            "",
+            "[💀] Privilege escalation to Domain Admin",
+            "[+] Domain Admin token successfully impersonated",
+            "",
+            "[💀] Searching for hidden storage containers on DC01..",
+            "[*] Scanning internal paths..",
+            "[+] Hidden directory found: C:\\AD-Internal\\archiveprotect\\",
+            "",
+            "[💀] Inspecting files...",
+            "[+] flag.txt located",
+            "",
+            "[💀] Extracting flag from Domain Controller...",
+            "",
+            "======== FLAG ========",
+            "FLAG{PVGu4rd_Cyb3rS3curity_C0mpl3t3}",
+            "======================",
+            "",
+     ];
+
+  var i = 0;
+
+  function typeIntro() {
+    if (i < intro.length) {
+      introBox.textContent += intro.charAt(i);
+      i++;
+      setTimeout(typeIntro, 20);
+    } else {
+      setTimeout(showProgress, 250);
+    }
+  }
+
+  function showProgress() {
+    progressArea.style.display = "block";
+
+    var percent = 0;
+
+    function loadBar() {
+      progressBar.style.width = percent + "%";
+      progressPercent.textContent = percent + "%";
+
+      if (percent < 100) {
+        percent += 4;
+        setTimeout(loadBar, 65);
+      } else {
+        setTimeout(function () {
+          typeLines(0);
+        }, 500);
+      }
+    }
+
+    loadBar();
+  }
+
+  function typeLines(index) {
+    if (index < lines.length) {
+      out.textContent += lines[index] + "\n";
+      index++;
+      setTimeout(function () {
+        typeLines(index);
+      }, 110);
+    } else {
+      setTimeout(function () {
+        content.style.display = "block";
+      }, 500);
+    }
+  }
+
+  setTimeout(typeIntro, 350);
+});
+</script>{% endraw %}

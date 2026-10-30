@@ -1,0 +1,15 @@
+{% comment %} Tarjeta de post para la portada y las secciones. Espera la variable "card". {% endcomment %}
+<article class="post-outer">
+  <h3 class="post-title"><a href="{{ card.url | relative_url }}">{{ card.title }}</a></h3>
+  <div class="post-body">
+    {% if card.content contains site.excerpt_separator %}
+      {{ card.excerpt }}
+      <div class="jump-link">
+        <a href="{{ card.url | relative_url }}#more" title="{{ card.title }}">PULSE AQUI PARA LEER ESTE ARTICULO»</a>
+      </div>
+    {% else %}
+      {{ card.content }}
+    {% endif %}
+  </div>
+  {% include post-footer.html %}
+</article>

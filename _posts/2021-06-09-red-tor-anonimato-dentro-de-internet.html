@@ -1,0 +1,2062 @@
+---
+title: "RED TOR: NAVEGANDO ANONIMAMENTE DENTRO DE INTERNET"
+date: 2021-06-09 01:10:00 -0500
+tags: ["articulos"]
+description: "🧅 PRIVACY · TOR · PROXYCHAINS · KALI LINUX Privacidad y enrutamiento mediante TOR + ProxyChains Introducción técnica a TOR y su utilización en Kali Linux,…"
+image: "/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/09-AVvXsEha6OdlBjJcveYkzwQKXX1k_l5k8wE_LkWMgXNCXl6eVw0aE1B2mwQQ.jpg"
+permalink: "/2021/06/red-tor-anonimato-dentro-de-internet.html"
+blogger_url: "https://pvguard.blogspot.com/2021/06/red-tor-anonimato-dentro-de-internet.html"
+---
+{% raw %}<!-- =========================================================
+     CABECERA NATIVA DE BLOGGER
+     Gh0s7m4n // Cybersecurity Blog
+     ========================================================= -->
+
+<h1 style="
+    text-align:center;
+    margin:0 0 22px 0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:30px;
+    line-height:1.25;
+    font-weight:800;
+    color:#00f5ff;
+    text-shadow:
+        0 0 8px rgba(0,245,255,.55),
+        0 0 18px rgba(0,245,255,.20);
+">
+    TOR en Kali Linux: privacidad y navegación mediante ProxyChains
+</h1>
+
+
+<div class="separator"
+     style="
+        clear:both;
+        text-align:center;
+        margin:0 0 24px 0;
+     ">
+
+    <a
+        href="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/09-AVvXsEha6OdlBjJcveYkzwQKXX1k_l5k8wE_LkWMgXNCXl6eVw0aE1B2mwQQ.jpg"
+        style="display:block;text-align:center;">
+
+        <img
+            alt="TOR en Kali Linux con ProxyChains"
+            border="0"
+            data-original-height="576"
+            data-original-width="1024"
+            src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/10-TOR.jpg"
+
+            style="
+                width:100%;
+                max-width:760px;
+                height:auto;
+                border-radius:16px;
+                border:1px solid rgba(0,245,255,.38);
+                box-shadow:
+                    0 0 24px rgba(0,245,255,.18),
+                    0 14px 38px rgba(0,0,0,.60);
+            ">
+
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     CORTE DE PORTADA BLOGGER
+     ========================================================= -->
+
+<span>{% endraw %}
+<!--more-->
+{% raw %}</span>
+
+
+<style>
+/* =========================================================
+   GH0S7M4N // PROFESSIONAL PENTEST BLOGGER
+   CYAN OFFENSIVE SECURITY EDITION
+   TOR + PROXYCHAINS
+   ========================================================= */
+
+.pentest-post {
+
+    --bg:#010506;
+    --bg-deep:#000304;
+
+    --cyan:#00f5ff;
+    --cyan-soft:#00d9e8;
+    --cyan-dark:#008e9e;
+
+    --green:#69ff9f;
+    --red:#ff3b62;
+    --yellow:#ffd84a;
+
+    --white:#f2feff;
+    --text:#c7f7fa;
+    --muted:#6f9fa4;
+
+    --border:rgba(0,245,255,.22);
+
+    max-width:1050px;
+    margin:0 auto;
+
+    position:relative;
+    overflow:hidden;
+
+    color:var(--text);
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(0,245,255,.12),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 95% 18%,
+            rgba(0,150,170,.09),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #020a0b 0%,
+            #010607 52%,
+            #000 100%
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        22px;
+
+    box-shadow:
+        0 0 50px rgba(0,245,255,.10),
+        0 25px 60px rgba(0,0,0,.70);
+}
+
+
+.pentest-post * {
+    box-sizing:border-box;
+}
+
+
+.pentest-post p {
+
+    color:var(--text);
+
+    font-size:16px;
+    line-height:1.8;
+
+    text-align:justify;
+}
+
+
+.pentest-post a {
+
+    color:var(--cyan);
+
+    text-decoration:none;
+
+    transition:.20s ease;
+}
+
+
+.pentest-post a:hover {
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 10px var(--cyan);
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.pt-grid {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:0;
+
+    background-image:
+        linear-gradient(
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.045) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        40px 40px;
+}
+
+
+/* =========================================================
+   SCANLINES
+   ========================================================= */
+
+.pt-scanlines {
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    opacity:.17;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.025) 0,
+            rgba(255,255,255,.025) 1px,
+            transparent 2px,
+            transparent 5px
+        );
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.pt-content {
+
+    position:relative;
+
+    z-index:2;
+
+    padding:30px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.pt-hero {
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border:
+        1px solid rgba(0,245,255,.34);
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.105),
+            rgba(0,80,90,.045)
+        ),
+        rgba(0,0,0,.45);
+
+    box-shadow:
+        inset
+        0 0 35px
+        rgba(0,245,255,.05);
+}
+
+
+.pt-hero::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:340px;
+    height:340px;
+
+    right:-140px;
+    top:-160px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,245,255,.24),
+            transparent 70%
+        );
+}
+
+
+.pt-kicker {
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 14px;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:999px;
+
+    background:
+        rgba(0,245,255,.065);
+
+    color:var(--cyan);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+}
+
+
+.pt-title {
+
+    max-width:900px;
+
+    margin:
+        20px 0 14px;
+
+    color:var(--white);
+
+    font-size:
+        clamp(32px,5vw,56px);
+
+    line-height:1.04;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.55),
+        0 0 25px rgba(0,245,255,.16);
+}
+
+
+.pt-title span {
+    color:var(--cyan);
+}
+
+
+.pt-subtitle {
+
+    max-width:900px;
+
+    margin:0;
+
+    color:#b7edf0;
+
+    font-size:17px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.pt-badges {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:22px;
+}
+
+
+.pt-badge {
+
+    padding:9px 13px;
+
+    color:#dffeff;
+
+    background:
+        rgba(0,245,255,.05);
+
+    border:
+        1px solid rgba(0,245,255,.27);
+
+    border-radius:11px;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.pt-section {
+
+    margin-top:25px;
+
+    padding:25px;
+
+    background:
+        rgba(0,10,12,.78);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:19px;
+
+    box-shadow:
+        inset
+        0 0 25px
+        rgba(0,245,255,.025);
+}
+
+
+.pt-section h2 {
+
+    margin:
+        0 0 17px;
+
+    color:var(--cyan);
+
+    font-size:25px;
+
+    font-weight:800;
+
+    text-shadow:
+        0 0 10px rgba(0,245,255,.34);
+}
+
+
+.pt-section h3 {
+
+    margin:
+        23px 0 12px;
+
+    color:#e7ffff;
+
+    font-size:19px;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.pt-cards {
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+
+.pt-card {
+
+    position:relative;
+
+    min-height:160px;
+
+    padding:19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,245,255,.055),
+            rgba(0,0,0,.14)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.17);
+
+    border-radius:16px;
+
+    transition:.22s ease;
+}
+
+
+.pt-card::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:22px;
+    bottom:22px;
+
+    width:2px;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 9px var(--cyan);
+}
+
+
+.pt-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(0,245,255,.50);
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.10);
+}
+
+
+.pt-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:var(--white);
+}
+
+
+.pt-card p {
+
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    text-align:left;
+}
+
+
+.pt-icon {
+
+    width:42px;
+    height:42px;
+
+    margin-bottom:13px;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#001011;
+
+    background:var(--cyan);
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.25);
+}
+
+
+/* =========================================================
+   TERMINAL
+   ========================================================= */
+
+.pt-terminal {
+
+    margin-top:19px;
+
+    overflow:hidden;
+
+    background:#000405;
+
+    border:
+        1px solid rgba(0,245,255,.28);
+
+    border-radius:15px;
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.07),
+        0 15px 35px rgba(0,0,0,.60);
+}
+
+
+.pt-terminal-top {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:
+        10px 14px;
+
+    color:var(--cyan);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,245,255,.12),
+            rgba(0,245,255,.025)
+        );
+
+    border-bottom:
+        1px solid rgba(0,245,255,.18);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size:12px;
+
+    font-weight:700;
+}
+
+
+.pt-dots {
+
+    display:flex;
+
+    gap:6px;
+}
+
+
+.pt-dot {
+
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    box-shadow:
+        0 0 8px
+        var(--cyan);
+}
+
+
+.pt-terminal pre {
+
+    margin:0;
+
+    padding:18px;
+
+    overflow-x:auto;
+
+    color:#d8feff;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:14px;
+
+    line-height:1.7;
+
+    white-space:pre-wrap;
+}
+
+
+.pt-prompt {
+    color:var(--green);
+}
+
+
+.pt-command {
+    color:var(--cyan);
+}
+
+
+.pt-comment {
+    color:#5d898e;
+}
+
+
+/* =========================================================
+   INFO / WARNING / SUCCESS
+   ========================================================= */
+
+.pt-info,
+.pt-warning,
+.pt-success {
+
+    margin-top:18px;
+
+    padding:
+        16px 18px;
+
+    border-radius:12px;
+
+    line-height:1.7;
+}
+
+
+.pt-info {
+
+    color:#cfffff;
+
+    background:
+        rgba(0,245,255,.055);
+
+    border-left:
+        3px solid var(--cyan);
+}
+
+
+.pt-warning {
+
+    color:#ffdce4;
+
+    background:
+        rgba(255,59,98,.07);
+
+    border-left:
+        3px solid var(--red);
+}
+
+
+.pt-warning strong {
+    color:#ff859b;
+}
+
+
+.pt-success {
+
+    color:#d7ffe5;
+
+    background:
+        rgba(105,255,159,.055);
+
+    border-left:
+        3px solid var(--green);
+}
+
+
+/* =========================================================
+   EVIDENCE
+   ========================================================= */
+
+.pt-evidence {
+
+    margin-top:20px;
+
+    padding:10px;
+
+    background:#000607;
+
+    border:
+        1px solid rgba(0,245,255,.22);
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 0 20px
+        rgba(0,245,255,.055);
+}
+
+
+.pt-evidence img {
+
+    display:block;
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:auto;
+
+    border-radius:10px;
+}
+
+
+.pt-caption {
+
+    margin-top:9px;
+
+    color:var(--muted);
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:12px;
+
+    letter-spacing:.3px;
+}
+
+
+/* =========================================================
+   LINK BOX
+   ========================================================= */
+
+.pt-link-box {
+
+    margin-top:18px;
+
+    padding:16px;
+
+    background:
+        rgba(0,245,255,.035);
+
+    border:
+        1px solid rgba(0,245,255,.20);
+
+    border-radius:12px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        monospace;
+
+    word-break:break-word;
+}
+
+
+/* =========================================================
+   CONFIG
+   ========================================================= */
+
+.pt-config {
+
+    margin-top:18px;
+
+    padding:18px;
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,245,255,.035);
+}
+
+
+.pt-config-row {
+
+    padding:9px 0;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.09);
+}
+
+
+.pt-config-row:last-child {
+    border-bottom:none;
+}
+
+
+.pt-code {
+
+    display:inline-block;
+
+    padding:
+        3px 7px;
+
+    color:var(--cyan);
+
+    background:
+        rgba(0,245,255,.06);
+
+    border:
+        1px solid rgba(0,245,255,.18);
+
+    border-radius:7px;
+
+    font-family:
+        Consolas,
+        Monaco,
+        "Courier New",
+        monospace;
+
+    font-size:13px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.pt-actions {
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:24px;
+}
+
+
+.pt-btn {
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:45px;
+
+    padding:12px 19px;
+
+    color:
+        var(--cyan) !important;
+
+    font-weight:800;
+
+    border:
+        1px solid rgba(0,245,255,.42);
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.15),
+            rgba(0,80,90,.06)
+        );
+
+    box-shadow:
+        0 0 18px
+        rgba(0,245,255,.08);
+
+    transition:.22s ease;
+}
+
+
+.pt-btn:hover {
+
+    color:#001011 !important;
+
+    background:var(--cyan);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 0 24px
+        rgba(0,245,255,.30);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.pt-footer {
+
+    margin-top:25px;
+
+    padding:28px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,245,255,.09),
+            rgba(0,90,100,.025)
+        );
+
+    border:
+        1px solid rgba(0,245,255,.21);
+
+    border-radius:18px;
+}
+
+
+.pt-footer h2 {
+
+    margin:
+        0 0 8px;
+
+    color:#ffffff;
+
+    text-shadow:
+        0 0 12px
+        rgba(0,245,255,.43);
+}
+
+
+.pt-footer p {
+
+    margin:
+        0 0 16px;
+
+    color:var(--muted);
+
+    text-align:center;
+}
+
+
+.pt-separator {
+
+    height:1px;
+
+    margin:22px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0,245,255,.7),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+    .pt-cards {
+        grid-template-columns:1fr;
+    }
+
+    .pt-content {
+        padding:19px;
+    }
+}
+
+
+@media(max-width:640px) {
+
+    .pt-hero,
+    .pt-section,
+    .pt-footer {
+        padding:18px;
+    }
+
+    .pt-title {
+        font-size:31px;
+    }
+
+    .pt-btn {
+        width:100%;
+    }
+}
+</style>
+
+
+<div class="pentest-post">
+
+    <div class="pt-grid"></div>
+    <div class="pt-scanlines"></div>
+
+
+    <div class="pt-content">
+
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
+        <section class="pt-hero">
+
+            <div class="pt-kicker">
+                🧅 PRIVACY · TOR · PROXYCHAINS · KALI LINUX
+            </div>
+
+
+            <h1 class="pt-title">
+
+                Privacidad y enrutamiento mediante
+
+                <span>
+                    TOR + ProxyChains
+                </span>
+
+            </h1>
+
+
+            <p class="pt-subtitle">
+
+                Introducción técnica a TOR y su utilización en Kali Linux,
+                incluyendo instalación del servicio, administración básica,
+                configuración de ProxyChains y validación del tráfico
+                enrutado mediante diferentes nodos.
+
+            </p>
+
+
+            <div class="pt-badges">
+
+                <span class="pt-badge">
+                    🐧 Kali Linux
+                </span>
+
+                <span class="pt-badge">
+                    🧅 TOR
+                </span>
+
+                <span class="pt-badge">
+                    🔗 ProxyChains
+                </span>
+
+                <span class="pt-badge">
+                    SOCKS
+                </span>
+
+                <span class="pt-badge">
+                    🛡 Privacy
+                </span>
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    ⚠ Consideración de privacidad:
+                </strong>
+
+                TOR puede reducir la exposición directa de la dirección
+                IP y dificultar determinados tipos de seguimiento, pero
+                no debe interpretarse como una garantía absoluta de
+                anonimato. La identidad también puede exponerse mediante
+                cookies, autenticaciones, fingerprinting, configuraciones
+                incorrectas y otras capas del sistema.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRODUCCIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                📘 Privacidad en Internet
+            </h2>
+
+
+            <p>
+
+                La privacidad constituye un componente importante
+                durante la navegación por Internet. Diferentes
+                plataformas, servicios y terceros pueden obtener
+                información asociada a nuestra actividad, dirección IP,
+                navegador o cuentas autenticadas.
+
+            </p>
+
+
+            <p>
+
+                Existen diferentes mecanismos orientados a mejorar
+                la privacidad. Entre ellos se encuentran las VPN,
+                proxies y redes de anonimización como
+                <strong>TOR</strong>.
+
+            </p>
+
+
+            <p>
+
+                En este artículo nos centraremos principalmente en
+                comprender el funcionamiento básico de TOR y en
+                documentar su integración con Kali Linux y
+                ProxyChains.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             OTRAS ALTERNATIVAS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🌐 Navegadores y funciones de privacidad
+            </h2>
+
+
+            <p>
+
+                Diferentes navegadores incorporan funciones relacionadas
+                con privacidad, bloqueo de rastreadores, navegación
+                privada o utilización de servicios proxy.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/12-image.png"
+                    alt="Opciones de privacidad en Opera">
+
+                <div class="pt-caption">
+                    Opciones de privacidad disponibles en el navegador
+                </div>
+
+            </div>
+
+
+            <p>
+
+                Otra alternativa mencionada en la publicación original
+                es Brave, que incorpora diferentes funciones enfocadas
+                en privacidad y también dispone de opciones relacionadas
+                con TOR.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/08-image.png"
+                    alt="Navegación privada y TOR en Brave">
+
+                <div class="pt-caption">
+                    Navegación privada mediante funciones integradas en el navegador
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TOR
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🧅 ¿Qué es TOR?
+            </h2>
+
+
+            <p>
+
+                TOR significa
+                <strong>The Onion Router</strong>
+                y corresponde a una red diseñada para mejorar la
+                privacidad al dirigir las comunicaciones a través
+                de diferentes nodos.
+
+            </p>
+
+
+            <p>
+
+                La denominación
+                <em>Onion Routing</em>
+                hace referencia al empleo de diferentes capas de
+                cifrado durante el establecimiento del circuito.
+
+            </p>
+
+
+            <p>
+
+                Cada nodo participa en una parte determinada del
+                circuito y el tráfico avanza progresivamente hasta
+                alcanzar el nodo de salida.
+
+            </p>
+
+
+            <div class="pt-cards">
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        1
+                    </div>
+
+                    <h3>
+                        Nodo de entrada
+                    </h3>
+
+                    <p>
+                        Representa el primer punto del circuito TOR
+                        utilizado por el cliente.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        2
+                    </div>
+
+                    <h3>
+                        Nodo intermedio
+                    </h3>
+
+                    <p>
+                        Transporta el tráfico entre diferentes
+                        componentes del circuito.
+                    </p>
+
+                </div>
+
+
+                <div class="pt-card">
+
+                    <div class="pt-icon">
+                        3
+                    </div>
+
+                    <h3>
+                        Nodo de salida
+                    </h3>
+
+                    <p>
+                        Representa el último salto antes de que el
+                        tráfico alcance el destino externo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/17-image.png"
+                    alt="Arquitectura Onion Routing">
+
+                <div class="pt-caption">
+                    Representación conceptual del enrutamiento por capas
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    TOR //
+                </strong>
+
+                La red está orientada principalmente al transporte
+                de flujos TCP. Las aplicaciones utilizadas con TOR
+                deben ser compatibles con la infraestructura de proxy
+                correspondiente.
+
+            </div>
+
+
+            <div class="pt-link-box">
+
+                <strong>
+                    SITIO OFICIAL //
+                </strong>
+
+                <br><br>
+
+                <a
+                    href="https://www.torproject.org/es/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    https://www.torproject.org/es/
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INSTALACIÓN TOR
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🚀 Instalación de TOR en Kali Linux
+            </h2>
+
+
+            <p>
+
+                En el escenario original se utiliza Kali Linux para
+                instalar y ejecutar el servicio TOR desde terminal.
+
+            </p>
+
+
+            <p>
+
+                También puede consultar la publicación relacionada
+                con GNU/Linux disponible en el blog:
+
+            </p>
+
+
+            <div class="pt-link-box">
+
+                <a
+                    href="https://cyb3rgh0stsecurity.blogspot.com/2021/05/aprendiendo-utilizar-comandos-en-el.html"
+                    target="_blank"
+                    rel="noopener">
+
+                    Aprendiendo a utilizar comandos en GNU/Linux
+
+                </a>
+
+            </div>
+
+
+            <h3>
+                Instalar TOR
+            </h3>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · tor-install
+                    </span>
+
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+
+<pre><span class="pt-comment"># Instalación del paquete TOR</span>
+<span class="pt-prompt">root@kali:~#</span> <span class="pt-command">apt-get install tor</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/04-Captura-de-pantalla-de-2021-06-08-21-50-09.png"
+                    alt="Instalación de TOR en Kali Linux">
+
+                <div class="pt-caption">
+                    Instalación del paquete TOR en Kali Linux
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SERVICIO TOR
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                ⚙ Administración del servicio TOR
+            </h2>
+
+
+            <p>
+
+                Una vez instalado el paquete, el servicio puede
+                iniciarse, comprobarse o detenerse mediante los
+                comandos documentados en el laboratorio.
+
+            </p>
+
+
+            <div class="pt-terminal">
+
+                <div class="pt-terminal-top">
+
+                    <span>
+                        kali@linux · tor-service
+                    </span>
+
+
+                    <div class="pt-dots">
+
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+                        <span class="pt-dot"></span>
+
+                    </div>
+
+                </div>
+
+
+<pre><span class="pt-comment"># Iniciar TOR</span>
+<span class="pt-prompt">root@kali:~#</span> <span class="pt-command">service tor start</span>
+
+<span class="pt-comment"># Consultar estado</span>
+<span class="pt-prompt">root@kali:~#</span> <span class="pt-command">service tor status</span>
+
+<span class="pt-comment"># Detener TOR</span>
+<span class="pt-prompt">root@kali:~#</span> <span class="pt-command">service tor stop</span></pre>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/07-servicio.png"
+                    alt="Administración del servicio TOR">
+
+                <div class="pt-caption">
+                    Administración y validación del estado del servicio TOR
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PROXYCHAINS
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔗 Integración con ProxyChains
+            </h2>
+
+
+            <p>
+
+                ProxyChains permite ejecutar aplicaciones haciendo
+                que determinadas conexiones sean dirigidas a través
+                de una cadena de proxies compatibles.
+
+            </p>
+
+
+            <p>
+
+                Dentro del escenario documentado se utiliza
+                ProxyChains junto con el servicio TOR para dirigir
+                el tráfico de determinadas aplicaciones.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/14-proxychains.png"
+                    alt="Instalación de ProxyChains">
+
+                <div class="pt-caption">
+                    Instalación de ProxyChains en Kali Linux
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONFIGURACIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛠 Configuración de ProxyChains
+            </h2>
+
+
+            <p>
+
+                Después de la instalación se modifica el archivo
+                de configuración correspondiente para definir
+                el comportamiento de la cadena de proxies.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/03-1.png"
+                    alt="Archivo de configuración ProxyChains">
+
+                <div class="pt-caption">
+                    Acceso al archivo de configuración de ProxyChains
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/15-Captura-de-pantalla-de-2021-06-08-22-46-18.png"
+                    alt="Configuración dynamic chain ProxyChains">
+
+                <div class="pt-caption">
+                    Configuración del modo de funcionamiento de la cadena
+                </div>
+
+            </div>
+
+
+            <div class="pt-config">
+
+                <div class="pt-config-row">
+
+                    Habilitar:
+
+                    <span class="pt-code">
+                        dynamic_chain
+                    </span>
+
+                </div>
+
+
+                <div class="pt-config-row">
+
+                    Mantener comentada la opción:
+
+                    <span class="pt-code">
+                        strict_chain
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="pt-info">
+
+                <strong>
+                    Dynamic Chain:
+                </strong>
+
+                permite que la cadena continúe utilizando proxies
+                disponibles aunque alguno de los elementos definidos
+                no responda.
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/11-Captura-de-pantalla-de-2021-06-08-22-47-05.png"
+                    alt="Lista de proxies ProxyChains">
+
+                <div class="pt-caption">
+                    Sección utilizada para definir los proxies de la cadena
+                </div>
+
+            </div>
+
+
+            <p>
+
+                La publicación original también menciona la posibilidad
+                de consultar listas públicas de proxies. Debe tenerse
+                presente que un proxy público no debe considerarse
+                automáticamente confiable.
+
+            </p>
+
+
+            <div class="pt-link-box">
+
+                <a
+                    href="https://hidemy.name/es/proxy-list/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    https://hidemy.name/es/proxy-list/
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             VALIDACIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🌐 Validación del tráfico mediante ProxyChains
+            </h2>
+
+
+            <p>
+
+                Una vez iniciado TOR y configurado ProxyChains,
+                se valida que las aplicaciones configuradas puedan
+                generar tráfico utilizando la cadena definida.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/01-1.png"
+                    alt="Ejecución de ProxyChains">
+
+                <div class="pt-caption">
+                    Ejecución de tráfico utilizando ProxyChains
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/16-2.png"
+                    alt="Validación de salida mediante TOR">
+
+                <div class="pt-caption">
+                    Validación de la conexión a través de la cadena configurada
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/13-3.png"
+                    alt="Circuito utilizado mediante ProxyChains">
+
+                <div class="pt-caption">
+                    Información observada durante la conexión
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/06-4.png"
+                    alt="Resultado de navegación mediante ProxyChains">
+
+                <div class="pt-caption">
+                    Resultado de la navegación utilizando el entorno configurado
+                </div>
+
+            </div>
+
+
+            <div class="pt-success">
+
+                <strong>
+                    [ + ] ROUTING ACTIVE
+                </strong>
+
+                <br>
+
+                El entorno permite dirigir el tráfico compatible
+                mediante la cadena configurada en ProxyChains.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             PORT SCANNING
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🔎 Validación con herramientas de red
+            </h2>
+
+
+            <p>
+
+                La publicación original también documenta una prueba
+                de reconocimiento utilizando el proxy previamente
+                configurado.
+
+            </p>
+
+
+            <p>
+
+                Estas pruebas deben realizarse exclusivamente sobre
+                sistemas propios, laboratorios o infraestructura para
+                la que exista autorización explícita.
+
+            </p>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/05-1.png"
+                    alt="Prueba de reconocimiento mediante ProxyChains">
+
+                <div class="pt-caption">
+                    Ejecución de una prueba de reconocimiento mediante la cadena
+                </div>
+
+            </div>
+
+
+            <div class="pt-evidence">
+
+                <img
+                    src="/assets/img/posts/red-tor-anonimato-dentro-de-internet-202106/02-1.png"
+                    alt="Resultado de reconocimiento mediante ProxyChains">
+
+                <div class="pt-caption">
+                    Resultado obtenido durante la validación del laboratorio
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             LIMITACIONES
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛡 Consideraciones de privacidad y seguridad
+            </h2>
+
+
+            <div class="pt-config">
+
+
+                <div class="pt-config-row">
+
+                    TOR no elimina automáticamente cookies,
+                    autenticaciones o fingerprinting del navegador.
+
+                </div>
+
+
+                <div class="pt-config-row">
+
+                    No todo tipo de tráfico puede ser dirigido
+                    correctamente mediante una cadena SOCKS.
+
+                </div>
+
+
+                <div class="pt-config-row">
+
+                    Los proxies públicos pueden registrar,
+                    modificar o inspeccionar determinadas
+                    comunicaciones.
+
+                </div>
+
+
+                <div class="pt-config-row">
+
+                    Utilizar TOR no convierte automáticamente
+                    una actividad en anónima.
+
+                </div>
+
+
+                <div class="pt-config-row">
+
+                    Las herramientas de reconocimiento deben
+                    utilizarse únicamente sobre sistemas autorizados.
+
+                </div>
+
+
+            </div>
+
+
+            <div class="pt-warning">
+
+                <strong>
+                    Security Note:
+                </strong>
+
+                para actividades donde la privacidad sea relevante,
+                debe considerarse el conjunto completo de la arquitectura:
+                sistema operativo, navegador, DNS, cookies, cuentas,
+                aplicaciones, proxies y configuración de red.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONCLUSIÓN
+             ===================================================== -->
+
+        <section class="pt-section">
+
+            <h2>
+                🛠 Conclusión técnica
+            </h2>
+
+
+            <p>
+
+                TOR proporciona una arquitectura de enrutamiento
+                distribuido diseñada para reducir la asociación directa
+                entre el origen de una conexión y su destino.
+
+            </p>
+
+
+            <p>
+
+                En este laboratorio se documentó la instalación de TOR
+                en Kali Linux, la administración básica de su servicio
+                y la configuración de ProxyChains para dirigir tráfico
+                compatible mediante la cadena definida.
+
+            </p>
+
+
+            <p>
+
+                Estas tecnologías son útiles para comprender conceptos
+                de privacidad y enrutamiento, pero deben utilizarse
+                teniendo presentes sus limitaciones técnicas y sin
+                asumir que proporcionan anonimato absoluto.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <section class="pt-footer">
+
+
+            <h2>
+                &lt;/ Happy Hacking &gt;
+            </h2>
+
+
+            <p>
+                Cybersecurity · Privacy · TOR · Linux · Network Security
+            </p>
+
+
+            <div class="pt-separator"></div>
+
+
+            <div
+                class="pt-actions"
+                style="justify-content:center;">
+
+
+                <a
+                    class="pt-btn"
+                    href="https://github.com/joepm21/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ⭐ Apoyar en GitHub
+
+                </a>
+
+
+            </div>
+
+
+            <p style="margin-top:20px;">
+
+                Desarrollado por
+
+                <strong style="
+                    color:#00f5ff;
+                    text-shadow:
+                        0 0 9px rgba(0,245,255,.55);
+                ">
+                    Gh0s7m4n
+                </strong>
+
+            </p>
+
+
+        </section>
+
+
+    </div>
+
+</div>{% endraw %}
