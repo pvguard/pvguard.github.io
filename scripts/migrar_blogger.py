@@ -413,6 +413,8 @@ def write_post(post, overwrite, existing, dry, blog="https://pvguard.blogspot.co
             os.remove(existing[post["url"]])
 
     body = rewrite_internal_links(post["body"].strip(), blog)
+    # Restos del editor de Blogger: enlaces vacios a "goog_123..."
+    body = re.sub(r"<a href=\"goog_\d+\">(.*?)</a>", r"\1", body, flags=re.S)
     body = re.sub(r"(?:<span>\s*)?<a\s+name=['\"]more['\"]\s*>\s*</a>(?:\s*</span>)?", "<!--more-->", body, count=1)
     if "<!--more-->" in body:
         before, after = body.split("<!--more-->", 1)

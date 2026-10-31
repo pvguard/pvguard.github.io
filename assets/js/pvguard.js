@@ -30,6 +30,40 @@
     });
   });
 
+  // Bloques de codigo: barra tipo terminal con lenguaje y boton Copiar
+  document.querySelectorAll(".post-body div.highlighter-rouge, .post-body figure.highlight").forEach(function (block) {
+    if (block.querySelector(".code-bar")) return;
+    var m = (block.className || "").match(/language-([\w+-]+)/);
+    var code = block.querySelector("code") || block.querySelector("pre");
+    if (!code) return;
+    var cm = (code.className || "").match(/language-([\w+-]+)/);
+    var lang = (m && m[1]) || (cm && cm[1]) || "code";
+    if (lang === "plaintext" || lang === "text") lang = "output";
+    var bar = document.createElement("div");
+    bar.className = "code-bar";
+    bar.innerHTML = '<span><span class="dots"><i></i><i></i><i></i></span><span class="lang"></span></span>' +
+      '<button type="button" class="copy-btn">Copiar</button>';
+    bar.querySelector(".lang").textContent = lang;
+    block.insertBefore(bar, block.firstChild);
+    bar.querySelector(".copy-btn").addEventListener("click", function () {
+      var btn = this;
+      var text = code.innerText.replace(/\n$/, "");
+      var done = function () {
+        btn.textContent = "Copiado ✓"; btn.classList.add("ok");
+        setTimeout(function () { btn.textContent = "Copiar"; btn.classList.remove("ok"); }, 1600);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () {});
+      } else {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        ta.remove();
+      }
+    });
+  });
+
   // Selector "Archivo del Blog"
   var archive = document.querySelector(".archive-select");
   if (archive) {
