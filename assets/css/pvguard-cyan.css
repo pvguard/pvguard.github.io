@@ -28,7 +28,7 @@
 * { box-sizing: border-box; }
 
 html {
-  background: var(--pv-bg-deep);
+  background: #000;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
@@ -41,14 +41,29 @@ body {
   font-family: var(--sans);
   font-size: 15px;
   line-height: 1.5;
-  background:
-    linear-gradient(rgba(0, 245, 255, .025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 245, 255, .025) 1px, transparent 1px),
-    radial-gradient(circle at 8% 0%, rgba(0, 245, 255, .11), transparent 27%),
-    radial-gradient(circle at 96% 18%, rgba(0, 150, 170, .08), transparent 30%),
-    linear-gradient(150deg, #020a0b 0%, #010506 52%, #000 100%);
-  background-size: 42px 42px, 42px 42px, auto, auto, auto;
-  background-attachment: fixed;
+  background: transparent;
+}
+
+/* Fondo: lluvia de codigo binario (assets/img/fondo/).
+   Capa fija aparte para que funcione tambien en iPhone/Android. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #000;
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .10) 22%, rgba(0, 0, 0, .10) 78%, rgba(0, 0, 0, .35)),
+    url("../img/fondo/binary-rain.jpg");
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .10) 22%, rgba(0, 0, 0, .10) 78%, rgba(0, 0, 0, .35)),
+    image-set(url("../img/fondo/binary-rain.webp") type("image/webp") 1x,
+              url("../img/fondo/binary-rain-4k.webp") type("image/webp") 2x,
+              url("../img/fondo/binary-rain.jpg") type("image/jpeg") 1x);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
 
 /* Lineas de escaneo */
