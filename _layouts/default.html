@@ -9,8 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+  {% assign build_v = site.time | date: "%s" %}
   {% capture theme_css %}/assets/css/pvguard-{{ site.estilo | default: 'cyan' }}.css{% endcapture %}
-  <link rel="stylesheet" href="{{ theme_css | relative_url }}">
+  <link rel="stylesheet" href="{{ theme_css | relative_url }}?v={{ build_v }}">
+  {% if page.layout == "home" %}<link rel="stylesheet" href="{{ '/assets/css/pvguard-terminal.css' | relative_url }}?v={{ build_v }}">{% endif %}
   <link rel="icon" href="{{ site.logo | relative_url }}">
 </head>
 <body class="theme-{{ site.estilo | default: 'cyan' }}">
@@ -27,6 +29,6 @@
 
     {% include footer.html %}
   </div>
-  <script src="{{ '/assets/js/pvguard.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/pvguard.js' | relative_url }}?v={{ build_v }}" defer></script>
 </body>
 </html>

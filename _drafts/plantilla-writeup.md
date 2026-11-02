@@ -7,6 +7,8 @@
 # 3. Lo que va antes de la marca "more" (mas abajo) sale en la portada.
 # 4. Las imagenes van en assets/img/posts/<nombre>/
 # 5. Avisos: escribe "> texto" y debajo {: .tip}  {: .warning}  {: .danger}  {: .flag}
+# 6. Si actualizas una entrada vieja y quieres que suba a "updates.log" de la portada,
+#    agrega la linea:  actualizado: 2026-11-05 18:30:00 -0500   (fecha del cambio)
 title: "Machine Ejemplo | Hack The Box | Medium"
 tags: [hackthebox]
 description: "Writeup de la máquina Ejemplo de Hack The Box: enumeración, explotación y escalada de privilegios."

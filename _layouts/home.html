@@ -1,16 +1,4 @@
 ---
 layout: default
 ---
-{% for card in paginator.posts %}
-  {% include post-card.html %}
-{% endfor %}
-
-<nav class="blog-pager" aria-label="Paginación">
-  {% if paginator.previous_page %}
-    <a class="blog-pager-newer-link" href="{{ paginator.previous_page_path | relative_url }}">« Entradas más recientes</a>
-  {% endif %}
-  <a class="home-link" href="{{ '/' | relative_url }}">Página Principal</a>
-  {% if paginator.next_page %}
-    <a class="blog-pager-older-link" href="{{ paginator.next_page_path | relative_url }}">Entradas antiguas »</a>
-  {% endif %}
-</nav>
+{% include home-terminal.html %}

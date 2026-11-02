@@ -35,8 +35,6 @@ permalink: /:year/:month/:title.html
 # Todo lo que va antes de <!--more--> se muestra en la portada
 excerpt_separator: "<!--more-->"
 
-paginate: 10
-paginate_path: "/page:num/"
 
 plugins:
   - jekyll-feed

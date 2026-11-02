@@ -1,0 +1,44 @@
+# ==========================================================
+#  Textos de la terminal de bienvenida (portada)
+#  Edita aqui sin tocar codigo. Las ultimas entradas se
+#  generan solas a partir de _posts/.
+# ==========================================================
+
+usuario: "root"
+host: "pvguard"
+
+# Cuantas entradas mostrar en "actualizaciones recientes".
+# Se ordenan por la fecha "actualizado:" de la entrada (si la tiene) o por su fecha.
+recientes: 3
+
+# Dias que una entrada se marca como NUEVO / UPDATE
+dias_nuevo: 30
+
+# Parrafos de bienvenida (cada guion es un parrafo)
+bienvenida:
+  - "Bienvenido a PVGuard Cybersecurity Technology, un espacio creado por Gh0s7m4n para compartir lo aprendido en el mundo del pentesting, el Red Team y la seguridad ofensiva. Aquí no encontrarás teoría vacía: cada entrada nace de horas frente a la terminal, de máquinas que se resistieron, de certificaciones preparadas a fondo y de herramientas construidas para resolver problemas reales."
+  - "El objetivo es simple: que cualquier persona interesada en la ciberseguridad, desde quien da sus primeros pasos en Linux hasta quien ya se prepara para un examen práctico, encuentre material claro, ordenado y reproducible. Encontrarás writeups paso a paso, metodologías de enumeración y explotación, notas de Active Directory, reviews honestas de certificaciones, herramientas propias de código abierto y recursos descargables."
+  - "Todo el contenido tiene fines educativos y debe usarse solo en entornos propios o con autorización expresa. Aprende, practica en laboratorios y protege. Que comience el viaje."
+
+# Secciones del "ls -la": "etiquetas" suma las entradas de esas etiquetas
+secciones:
+  - nombre: "certificaciones/"
+    titulo: "Certificaciones"
+    url: "/search/label/certificaciones/"
+    etiquetas: ["Certificaciones"]
+  - nombre: "labs/"
+    titulo: "Labs"
+    url: "/search/label/labs/"
+    etiquetas: ["labs", "hackthebox", "tryhackme", "otros"]
+  - nombre: "workspace/"
+    titulo: "Workspace"
+    url: "/search/label/workspace/"
+    etiquetas: ["workspace", "red team", "blue team"]
+  - nombre: "downloads/"
+    titulo: "Downloads"
+    url: "/search/label/descargas/"
+    etiquetas: ["descargas", "repositorios", "libros"]
+  - nombre: "articulos/"
+    titulo: "Artículos"
+    url: "/search/label/articulos/"
+    etiquetas: ["articulos"]

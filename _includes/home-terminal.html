@@ -1,0 +1,112 @@
+{% comment %}
+  Terminal de bienvenida de la portada.
+  Textos en _data/home.yml. Las entradas recientes salen solas de _posts/:
+  se ordenan por "actualizado" (si la entrada lo tiene) o por su fecha.
+{% endcomment %}
+{% assign h = site.data.home %}
+{% assign k_user = h.usuario | default: "root" %}
+{% assign k_host = h.host | default: "pvguard" %}
+{% assign n_recent = h.recientes | default: 3 %}
+{% assign dias_nuevo = h.dias_nuevo | default: 30 %}
+{% assign now_s = site.time | date: "%s" | plus: 0 %}
+{% assign total_tags = 0 %}{% for t in site.tags %}{% assign total_tags = total_tags | plus: 1 %}{% endfor %}
+{% capture keys_raw %}{% for post in site.posts %}{% if post.actualizado %}{% assign ts = post.actualizado | date: "%s" %}{% else %}{% assign ts = post.date | date: "%s" %}{% endif %}{{ ts }}|{{ forloop.index0 }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign recent_keys = keys_raw | strip | split: "," | sort | reverse %}
+{% assign first_key = recent_keys | first | split: "|" %}
+{% assign last_update_s = first_key[0] | plus: 0 %}
+
+<section class="pv-term" id="pv-term" aria-label="Terminal de bienvenida de PVGuard">
+  <div class="pv-term-bar">
+    <div class="pv-term-left">
+      <span class="pv-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="pv-term-title">{{ k_user }}@{{ k_host }}: ~</span>
+    </div>
+    <div class="pv-term-right">
+      <span class="pv-term-meta">zsh · 120×40</span>
+      <button type="button" class="pv-term-skip" id="pv-term-skip" hidden>saltar ⏭</button>
+    </div>
+  </div>
+
+  <div class="pv-term-body">
+
+    <div class="t-line t-cmd"><div class="k-top"><span class="k-ln">┌──(</span><span class="k-user">{{ k_user }}㉿{{ k_host }}</span><span class="k-ln">)-[</span><span class="k-path">~</span><span class="k-ln">]</span></div><div class="k-bot"><span class="k-ln">└─</span><span class="k-hash">#</span> <span class="t-typed">./pvguard --boot --stealth</span></div></div>
+    <div class="t-line t-out"><span class="t-ok">[  OK  ]</span> Cargando módulos: recon · web · active-directory · mobile · red-team</div>
+    <div class="t-line t-out"><span class="t-ok">[  OK  ]</span> Montando <span class="hl">/blog</span> → <a class="t-inline-link" href="{{ '/archivo/' | relative_url }}"><b>{{ site.posts.size }}</b> entradas</a> · <b>{{ total_tags }}</b> etiquetas</div>
+    <div class="t-line t-out"><span class="t-ok">[  OK  ]</span> Última actualización: <b>{{ last_update_s | date: "%d/%m/%Y" }}</b></div>
+    <div class="t-line t-out"><span class="t-ok">[  OK  ]</span> Sesión cifrada · OPSEC: <span class="hl">máximo</span></div>
+    <div class="t-line t-progress" aria-hidden="true">
+      <div class="t-progress-head"><span>Inicializando PVGuard 🐞</span><span class="t-pct">100%</span></div>
+      <div class="t-bar"><i></i></div>
+    </div>
+
+    <div class="t-line t-cmd"><div class="k-top"><span class="k-ln">┌──(</span><span class="k-user">{{ k_user }}㉿{{ k_host }}</span><span class="k-ln">)-[</span><span class="k-path">~</span><span class="k-ln">]</span></div><div class="k-bot"><span class="k-ln">└─</span><span class="k-hash">#</span> <span class="t-typed">cat bienvenida.txt</span></div></div>
+    <div class="t-line t-block t-welcome">
+      <pre class="t-banner" aria-label="PVGuard">██████╗ ██╗   ██╗ ██████╗ ██╗   ██╗ █████╗ ██████╗ ██████╗
+██╔══██╗██║   ██║██╔════╝ ██║   ██║██╔══██╗██╔══██╗██╔══██╗
+██████╔╝██║   ██║██║  ███╗██║   ██║███████║██████╔╝██║  ██║
+██╔═══╝ ╚██╗ ██╔╝██║   ██║██║   ██║██╔══██║██╔══██╗██║  ██║
+██║      ╚████╔╝ ╚██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝
+╚═╝       ╚═══╝   ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝</pre>
+      <p class="t-banner-sub">CYBERSECURITY · PENTESTING · RED TEAM · OFFENSIVE SECURITY</p>
+      {% for p in h.bienvenida %}<p class="t-par">{{ p }}</p>{% endfor %}
+    </div>
+
+    <div class="t-line t-cmd"><div class="k-top"><span class="k-ln">┌──(</span><span class="k-user">{{ k_user }}㉿{{ k_host }}</span><span class="k-ln">)-[</span><span class="k-path">~</span><span class="k-ln">]</span></div><div class="k-bot"><span class="k-ln">└─</span><span class="k-hash">#</span> <span class="t-typed">tail -n {{ n_recent }} /var/log/pvguard/updates.log</span></div></div>
+    <div class="t-line t-block">
+      <ul class="t-updates">
+        {% for key in recent_keys limit: n_recent %}
+          {% assign parts = key | split: "|" %}
+          {% assign idx = parts[1] | plus: 0 %}
+          {% assign post = site.posts[idx] %}
+          {% assign shown_s = parts[0] | plus: 0 %}
+          {% assign age = now_s | minus: shown_s | divided_by: 86400 %}
+          {% assign first_tag = post.tags | first %}
+          <li>
+            {% if age <= dias_nuevo and post.actualizado %}<span class="t-badge upd">UPDATE</span>{% elsif age <= dias_nuevo %}<span class="t-badge new">NUEVO</span>{% else %}<span class="t-badge">INFO</span>{% endif %}
+            <time datetime="{{ shown_s | date: '%Y-%m-%d' }}">{{ shown_s | date: "%Y-%m-%d %H:%M" }}</time>
+            {% if first_tag %}{% capture tag_url %}/search/label/{{ first_tag | slugify }}/{% endcapture %}<a class="t-tag" href="{{ tag_url | relative_url }}">{{ first_tag }}</a>{% endif %}
+            <a class="t-post" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="t-line t-cmd"><div class="k-top"><span class="k-ln">┌──(</span><span class="k-user">{{ k_user }}㉿{{ k_host }}</span><span class="k-ln">)-[</span><span class="k-path">~</span><span class="k-ln">]</span></div><div class="k-bot"><span class="k-ln">└─</span><span class="k-hash">#</span> <span class="t-typed">ls -la --time-style=long-iso ~/secciones/</span></div></div>
+    <div class="t-line t-block">
+      <div class="t-sections">
+        <div class="t-sec-total">total {{ h.secciones.size }}</div>
+        {% for s in h.secciones %}
+          {% assign count = 0 %}
+          {% for et in s.etiquetas %}{% if site.tags[et] %}{% assign count = count | plus: site.tags[et].size %}{% endif %}{% endfor %}
+          {% assign sec_date = "" %}
+          {% for post in site.posts %}{% if sec_date == "" %}{% for et in s.etiquetas %}{% if post.tags contains et %}{% assign sec_date = post.date | date: "%Y-%m-%d %H:%M" %}{% endif %}{% endfor %}{% endif %}{% endfor %}
+          <a class="t-sec" href="{{ s.url | relative_url }}" title="cd ~/secciones/{{ s.nombre }}">
+            <span class="t-perm">drwxr-xr-x</span>
+            <span class="t-count">{{ count }}</span>
+            <span class="t-owner">gh0s7m4n</span>
+            <span class="t-group">pvguard</span>
+            <span class="t-size">4096</span>
+            <span class="t-date">{{ sec_date | default: "----------  --:--" }}</span>
+            <span class="t-dir">{{ s.nombre }}</span>
+            <span class="t-go" aria-hidden="true">cd ↵</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="t-line t-cmd"><div class="k-top"><span class="k-ln">┌──(</span><span class="k-user">{{ k_user }}㉿{{ k_host }}</span><span class="k-ln">)-[</span><span class="k-path">~</span><span class="k-ln">]</span></div><div class="k-bot"><span class="k-ln">└─</span><span class="k-hash">#</span> <span class="t-typed">cat ~/.perfiles</span></div></div>
+    <div class="t-line t-block">
+      <ul class="t-links">
+        {% if site.social.github %}<li><span class="t-ok-s">[*]</span> <span class="t-key">GitHub</span><span class="t-arrow">→</span><a href="{{ site.social.github }}" target="_blank" rel="noopener">{{ site.social.github | remove: "https://" | remove: "www." }}</a></li>{% endif %}
+        {% if site.social.linkedin %}<li><span class="t-ok-s">[*]</span> <span class="t-key">LinkedIn</span><span class="t-arrow">→</span><a href="{{ site.social.linkedin }}" target="_blank" rel="noopener">{{ site.social.linkedin | remove: "https://" | remove: "www." }}</a></li>{% endif %}
+        {% if site.social.coffee %}<li><span class="t-ok-s">[*]</span> <span class="t-key">Coffee</span><span class="t-arrow">→</span><a href="{{ site.social.coffee }}" target="_blank" rel="noopener">{{ site.social.coffee | remove: "https://" | remove: "www." }}</a></li>{% endif %}
+      </ul>
+    </div>
+
+    <div class="t-line t-cmd t-end">
+      <div class="k-top"><span class="k-ln">┌──(</span><span class="k-user">{{ k_user }}㉿{{ k_host }}</span><span class="k-ln">)-[</span><span class="k-path">~</span><span class="k-ln">]</span></div>
+      <div class="k-bot"><span class="k-ln">└─</span><span class="k-hash">#</span> <span class="t-out-inline">Hacked by {{ site.author }}</span> <span class="cursor" aria-hidden="true">█</span></div>
+    </div>
+  </div>
+</section>
+<script src="{{ '/assets/js/pvguard-terminal.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
