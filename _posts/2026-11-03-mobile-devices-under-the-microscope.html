@@ -1,0 +1,470 @@
+---
+title: "Mobile Devices Under the Microscope"
+date: 2026-11-03 16:30:00 -0500
+tags: ["red team"]
+description: "Preparando un laboratorio de pentesting móvil: Android rooteado con scrcpy y ADB, emuladores, Corellium con OpenVPN y acceso SSH a iOS virtualizado."
+image: "/assets/img/posts/mobile-devices-under-the-microscope/00-portada.jpg"
+---
+{% raw %}<h1 style="text-align: center;">
+  <span style="color: red;">Mobile Devices Under the Microscope: explorando emuladores, root y jailbreak en fase de pruebas</span>
+</h1>
+
+<div class="separator" style="clear: both;">
+  <a href="/assets/img/posts/mobile-devices-under-the-microscope/00-portada.jpg" style="display: block; padding: 1em 0; text-align: center;">
+    <img alt="Mobile Devices Under the Microscope - PVGuard" width="600" src="/assets/img/posts/mobile-devices-under-the-microscope/00-portada.jpg">
+  </a>
+</div>{% endraw %}
+<!--more-->
+{% raw %}<style>
+/* =========================================================
+   PVGUARD - MOBILE DEVICES UNDER THE MICROSCOPE
+   Terminal Hacker / Mobile Pentesting / by Gh0s7m4n
+   ========================================================= */
+.pvm {
+  --bg: #02070a;
+  --card: rgba(4, 16, 20, .92);
+  --green: #00ff88;
+  --cyan: #00f5ff;
+  --blue: #2f7fff;
+  --yellow: #ffd166;
+  --red: #ff3b62;
+  --text: #e6fbff;
+  --muted: #9fbcc2;
+  --line: rgba(0, 245, 255, .22);
+  position: relative;
+  overflow: hidden;
+  font-family: "Segoe UI", system-ui, Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 5%, rgba(0, 245, 255, .13), transparent 30%),
+    radial-gradient(circle at 90% 18%, rgba(0, 255, 136, .09), transparent 28%),
+    linear-gradient(140deg, #010508 0%, #04121a 50%, #010508 100%);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  box-shadow: 0 0 30px rgba(0, 245, 255, .12);
+}
+.pvm * { box-sizing: border-box; }
+.pvm::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .45;
+  background-image: linear-gradient(rgba(0, 245, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 245, 255, .05) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.pvm::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .25;
+  background: linear-gradient(transparent 50%, rgba(0, 0, 0, .18) 50%); background-size: 100% 4px;
+}
+.pvm-inner { position: relative; z-index: 2; padding: 26px; }
+.pvm a { color: var(--cyan); text-decoration: none; border-bottom: 1px dashed rgba(0, 245, 255, .4); }
+.pvm a:hover { color: #fff; }
+.pvm pre code { background: none !important; border: 0 !important; padding: 0 !important; font-size: inherit; }
+.pvm code {
+  color: #dffcff; background: rgba(0, 0, 0, .38); padding: 1px 7px; border-radius: 6px;
+  border: 1px solid rgba(0, 245, 255, .16); font-family: Consolas, "Fira Code", monospace; font-size: .9em;
+}
+
+/* ---- HERO ---- */
+.pvm-hero {
+  display: grid; grid-template-columns: 1.05fr .95fr; gap: 24px; align-items: center;
+  padding: 28px; border-radius: 20px; border: 1px solid var(--line);
+  background: linear-gradient(135deg, rgba(0, 245, 255, .08), rgba(0, 255, 136, .04)), rgba(0, 0, 0, .38);
+  box-shadow: inset 0 0 45px rgba(0, 245, 255, .05);
+}
+.pvm-kicker {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 8px 12px;
+  color: var(--green); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase;
+  border: 1px solid rgba(0, 255, 136, .35); border-radius: 999px; background: rgba(0, 255, 136, .06);
+}
+.pvm-kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+.pvm-title {
+  margin: 0 0 14px; color: #fff; font-size: clamp(30px, 5.2vw, 56px); line-height: .98; letter-spacing: -1.5px;
+  text-shadow: 0 0 22px rgba(0, 245, 255, .3);
+}
+.pvm .pvm-title { padding: 0; border: 0; }
+.pvm-title::before { content: none !important; }
+.pvm-title span { display: block; color: var(--cyan); }
+.pvm-sub { margin: 0 0 18px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+.pvm-badges { display: flex; flex-wrap: wrap; gap: 9px; margin: 18px 0; }
+.pvm-badge {
+  padding: 8px 11px; border-radius: 11px; font-size: 12.5px; font-weight: 700; color: #dffcff;
+  border: 1px solid rgba(0, 245, 255, .3); background: rgba(0, 0, 0, .36);
+}
+.pvm-badge.g { color: var(--green); border-color: rgba(0, 255, 136, .38); }
+.pvm-badge.y { color: var(--yellow); border-color: rgba(255, 209, 102, .45); }
+.pvm-badge.r { color: var(--red); border-color: rgba(255, 59, 98, .45); }
+.pvm-actions { display: flex; flex-wrap: wrap; gap: 11px; }
+.pvm .pvm-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 13px; border: 0;
+  font-weight: 800; font-size: 14px; transition: transform .2s, box-shadow .2s;
+}
+.pvm .pvm-btn.primary { color: #001316; background: linear-gradient(135deg, var(--cyan), var(--green)); box-shadow: 0 0 22px rgba(0, 245, 255, .3); }
+.pvm .pvm-btn.secondary { color: var(--cyan); border: 1px solid rgba(0, 245, 255, .42); background: rgba(0, 0, 0, .35); }
+.pvm .pvm-btn:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(0, 245, 255, .32); color: inherit; }
+.pvm .pvm-btn.primary:hover { color: #001316; }
+
+/* ---- TERMINAL (hero) ---- */
+.pvm-term { overflow: hidden; border-radius: 16px; background: rgba(0, 0, 0, .76); border: 1px solid rgba(0, 255, 136, .26); box-shadow: 0 0 32px rgba(0, 0, 0, .45); }
+.pvm-term-head { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(255, 255, 255, .05); border-bottom: 1px solid rgba(0, 255, 136, .18); }
+.pvm-dots { display: flex; gap: 7px; }
+.pvm-dots i { display: block; width: 10px; height: 10px; border-radius: 50%; }
+.pvm-dots i:nth-child(1) { background: #ff5f57; } .pvm-dots i:nth-child(2) { background: #febc2e; } .pvm-dots i:nth-child(3) { background: #28c840; }
+.pvm-term-title { color: var(--muted); font: 12px Consolas, "Fira Code", monospace; }
+.pvm-term-body { padding: 16px 18px; color: #dffcff; font: 13.5px/1.8 Consolas, "Fira Code", monospace; overflow-x: auto; white-space: nowrap; }
+.k-ln { color: var(--blue); } .k-us { color: var(--red); font-weight: 700; } .k-pt { color: #fff; font-weight: 700; }
+.c-g { color: var(--green); } .c-c { color: var(--cyan); } .c-y { color: var(--yellow); } .c-r { color: var(--red); } .c-m { color: #6f8f96; }
+
+/* ---- INDICE ---- */
+.pvm-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; padding: 14px 16px; border-radius: 14px; border: 1px dashed rgba(0, 245, 255, .25); background: rgba(0, 0, 0, .3); }
+.pvm-toc b { width: 100%; color: var(--green); font: 13px Consolas, "Fira Code", monospace; margin-bottom: 2px; }
+.pvm .pvm-toc a {
+  border: 1px solid rgba(0, 245, 255, .22); border-radius: 9px; padding: 6px 10px; font-size: 13px; color: #cdeff3; background: rgba(0, 245, 255, .04);
+}
+.pvm .pvm-toc a:hover { color: #001316; background: var(--cyan); }
+
+/* ---- SECCIONES ---- */
+.pvm-section { margin-top: 24px; padding: 24px; border-radius: 20px; background: var(--card); border: 1px solid rgba(0, 245, 255, .16); box-shadow: 0 0 26px rgba(0, 0, 0, .25); scroll-margin-top: 16px; }
+.pvm-section h2 { margin: 0 0 14px !important; padding: 0 !important; border: 0 !important; color: #fff; font-size: 26px; letter-spacing: -.5px; line-height: 1.25; }
+.pvm-section h2::before, .pvm-section h3::before { content: none !important; }
+.pvm-section h2 span { color: var(--cyan); }
+.pvm-section h3 { margin: 26px 0 10px; color: var(--green); font-size: 19px; line-height: 1.35; }
+.pvm-section h3 span { color: var(--cyan); font-family: Consolas, "Fira Code", monospace; font-size: .9em; margin-right: 6px; }
+.pvm-section p { margin: 0 0 14px; color: var(--muted); font-size: 15.5px; line-height: 1.78; }
+.pvm-section p strong, .pvm-section li strong { color: #fff; }
+
+/* ---- TARJETAS ---- */
+.pvm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px; }
+.pvm-grid.five { grid-template-columns: repeat(3, 1fr); }
+.pvm-grid.two { grid-template-columns: repeat(2, 1fr); }
+.pvm-grid.two .pvm-card { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; align-items: start; }
+.pvm-grid.two .pvm-card .ico { grid-row: span 3; margin: 0; }
+.pvm-card { position: relative; padding: 16px; border-radius: 15px; border: 1px solid rgba(0, 245, 255, .16); background: rgba(0, 0, 0, .32); transition: border-color .2s, transform .2s; }
+.pvm-card:hover { border-color: rgba(0, 245, 255, .45); transform: translateY(-2px); }
+.pvm-card .ico { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 10px; border-radius: 11px; font-size: 20px; background: rgba(0, 245, 255, .08); border: 1px solid rgba(0, 245, 255, .22); }
+.pvm-card h4 { margin: 0 0 6px; color: #fff; font-family: inherit; font-size: 15px; }
+.pvm-card p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+.pvm-card .tag { display: inline-block; margin-top: 10px; padding: 3px 8px; border-radius: 6px; font: 700 11px Consolas, monospace; letter-spacing: .05em; color: var(--green); border: 1px solid rgba(0, 255, 136, .35); }
+.pvm-card .tag.c { color: var(--cyan); border-color: rgba(0, 245, 255, .35); }
+.pvm-card .tag.y { color: var(--yellow); border-color: rgba(255, 209, 102, .45); }
+.pvm-card .tag.r { color: var(--red); border-color: rgba(255, 59, 98, .45); }
+
+/* ---- FIGURAS ---- */
+.pvm-fig { margin: 18px 0 24px; padding: 0; }
+.pvm .pvm-fig a { display: block; border: 0; }
+.pvm-fig img {
+  display: block; width: 100%; height: auto; margin: 0 auto; border-radius: 12px !important;
+  border: 1px solid rgba(0, 245, 255, .22) !important; background: #000 !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .5), 0 0 18px rgba(0, 245, 255, .06) !important; transition: transform .2s, box-shadow .2s;
+}
+.pvm-fig a:hover img { transform: scale(1.01); box-shadow: 0 16px 36px rgba(0, 0, 0, .55), 0 0 26px rgba(0, 245, 255, .18) !important; }
+.pvm-fig.small img { width: auto; max-width: 100%; }
+.pvm-fig.phone img { width: 100%; max-width: 340px; }
+.pvm-fig figcaption { margin-top: 9px; color: #7fa3aa; font-size: 13px; line-height: 1.5; text-align: center; }
+.pvm-fig figcaption b { color: var(--cyan); font-family: Consolas, "Fira Code", monospace; font-weight: 700; margin-right: 4px; }
+.pvm-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+
+/* ---- AVISOS ---- */
+.pvm-note { margin: 18px 0; padding: 14px 16px 14px 18px; border-radius: 12px; border: 1px solid rgba(0, 245, 255, .2); border-left: 3px solid var(--cyan); background: rgba(0, 245, 255, .05); color: #d6f6fa; font-size: 14.5px; line-height: 1.7; }
+.pvm-note.warn { border-left-color: var(--yellow); border-color: rgba(255, 209, 102, .28); background: rgba(255, 209, 102, .05); }
+.pvm-note.danger { border-left-color: var(--red); border-color: rgba(255, 59, 98, .28); background: rgba(255, 59, 98, .06); }
+.pvm-note.ok { border-left-color: var(--green); border-color: rgba(0, 255, 136, .25); background: rgba(0, 255, 136, .05); }
+.pvm-note b.lbl { display: block; margin-bottom: 4px; font: 700 12px Consolas, "Fira Code", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); }
+.pvm-note.warn b.lbl { color: var(--yellow); } .pvm-note.danger b.lbl { color: var(--red); } .pvm-note.ok b.lbl { color: var(--green); }
+
+/* ---- PASOS ---- */
+.pvm-steps { list-style: none; margin: 16px 0 0; padding: 0; counter-reset: pvs; display: grid; gap: 10px; }
+.pvm-steps li { counter-increment: pvs; display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; padding: 12px 14px; border-radius: 13px; border: 1px solid rgba(0, 245, 255, .14); background: rgba(0, 0, 0, .3); color: var(--muted); font-size: 14.5px; line-height: 1.65; }
+.pvm-steps li::before { content: counter(pvs, decimal-leading-zero); display: grid; place-items: center; height: 36px; border-radius: 10px; color: #001316; background: linear-gradient(135deg, var(--cyan), var(--green)); font: 800 14px Consolas, monospace; }
+.pvm-steps li::marker { content: none; }
+
+.pvm-check { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.pvm-check li { position: relative; padding: 10px 12px 10px 42px; border-radius: 11px; background: rgba(0, 0, 0, .28); border: 1px solid rgba(0, 255, 136, .14); color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+.pvm-check li::before { content: "✓"; position: absolute; left: 12px; top: 9px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; color: #00140b; background: var(--green); font-weight: 900; font-size: 13px; }
+.pvm-check li::marker { content: none; }
+
+/* ---- CIERRE ---- */
+.pvm-end { margin-top: 24px; padding: 24px; border-radius: 20px; text-align: center; border: 1px solid rgba(0, 245, 255, .3); background: linear-gradient(135deg, rgba(0, 245, 255, .1), rgba(0, 255, 136, .06)), rgba(0, 0, 0, .4); }
+.pvm-end h2 { margin: 0 0 12px !important; padding: 0 !important; border: 0 !important; color: #fff; font-size: 26px; }
+.pvm-end h2::before { content: none !important; }
+.pvm-end p { max-width: 820px; margin: 0 auto 14px; color: var(--muted); font-size: 15.5px; line-height: 1.75; }
+.pvm-tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; margin: 16px 0; }
+.pvm-sign { margin-top: 10px; font: 800 13px Consolas, "Fira Code", monospace; letter-spacing: .25em; color: var(--cyan); text-shadow: 0 0 10px rgba(0, 245, 255, .5); }
+.pvm-sign span { color: var(--muted); font-weight: 400; letter-spacing: .1em; }
+
+/* bloques de codigo dentro del post (los estiliza el tema y les agrega "Copiar") */
+.pvm .highlighter-rouge { margin: 14px 0 18px; }
+.pvm .highlighter-rouge pre { white-space: pre; }
+.pvm .highlighter-rouge .gp { color: var(--red); font-weight: 700; }
+.pvm .highlighter-rouge .c1 { color: #5d8a8f; font-style: italic; }
+.pvm .highlighter-rouge .nb { color: var(--cyan); }
+.pvm .highlighter-rouge .go { color: var(--green); }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 980px) {
+  .pvm-hero { grid-template-columns: 1fr; }
+  .pvm-grid, .pvm-grid.five { grid-template-columns: repeat(2, 1fr); }
+  .pvm-grid.five .pvm-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .pvm { border-radius: 16px; }
+  .pvm-inner { padding: 6px; }
+  .pvm-hero, .pvm-section, .pvm-end { padding: 16px 13px; border-radius: 14px; }
+  .pvm-section { margin-top: 14px; }
+  .pvm-toc { padding: 12px; }
+  .pvm-note { padding: 12px 12px 12px 14px; }
+  .pvm-section h2, .pvm-end h2 { font-size: 21px; }
+  .pvm-section h3 { font-size: 17px; }
+  .pvm-grid, .pvm-grid.five, .pvm-grid.two, .pvm-pair { grid-template-columns: 1fr; }
+  .pvm-term-body { font-size: 12px; }
+  .pvm-steps li { grid-template-columns: 36px 1fr; }
+}
+</style>
+
+<div class="pvm">
+<div class="pvm-inner">
+
+  <!-- HERO -->
+  <section class="pvm-hero">
+    <div>
+      <div class="pvm-kicker">Mobile Pentesting / Lab Setup</div>
+      <h2 class="pvm-title">Mobile Devices <span>Under the Microscope</span></h2>
+      <p class="pvm-sub">Explorando emuladores, root y jailbreak en fase de pruebas. Preparamos un laboratorio controlado con un Android físico rooteado y dispositivos Android e iOS virtualizados para empezar a analizar aplicaciones móviles desde la perspectiva de un evaluador de seguridad.</p>
+      <div class="pvm-badges">
+        <span class="pvm-badge g">Android 12 · Root</span>
+        <span class="pvm-badge">Android 16 · Corellium</span>
+        <span class="pvm-badge">iOS · Corellium</span>
+        <span class="pvm-badge y">scrcpy v5.0.1</span>
+        <span class="pvm-badge">Kali Linux</span>
+        <span class="pvm-badge r">by Gh0s7m4n</span>
+      </div>
+      <div class="pvm-actions">
+        <a class="pvm-btn primary" href="#pvm-android">▶ Android rooteado</a>
+        <a class="pvm-btn secondary" href="#pvm-ios">iOS virtualizado</a>
+      </div>
+    </div>
+
+    <div class="pvm-term" aria-label="Resumen del laboratorio">
+      <div class="pvm-term-head"><span class="pvm-dots"><i></i><i></i><i></i></span><span class="pvm-term-title">root@pvguard: ~/mobile-lab</span></div>
+      <div class="pvm-term-body">
+        <div><span class="k-ln">┌──(</span><span class="k-us">root㉿pvguard</span><span class="k-ln">)-[</span><span class="k-pt">~/mobile-lab</span><span class="k-ln">]</span></div>
+        <div><span class="k-ln">└─</span><span class="k-us">#</span> ./lab --status</div>
+        <div><span class="c-g">[ OK ]</span> SM-A225M · Android 12 · <span class="c-c">root</span></div>
+        <div><span class="c-g">[ OK ]</span> scrcpy v5.0.1 · control de pantalla</div>
+        <div><span class="c-g">[ OK ]</span> Corellium · Android 16.0.0 <span class="c-c">(Rooted)</span></div>
+        <div><span class="c-g">[ OK ]</span> OpenVPN · tap0 · adb connect</div>
+        <div><span class="c-g">[ OK ]</span> Corellium · iOS · <span class="c-c">ssh root</span></div>
+        <div><span class="c-y">[INFO]</span> Siguiente fase: app de laboratorio</div>
+        <div><span class="c-m"># Solo apps propias o con autorización</span></div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pvm-toc" aria-label="Índice">
+    <b>$ cat indice.txt</b>
+    <a href="#pvm-intro">00. Introducción</a>
+    <a href="#pvm-android">01. Android rooteado</a>
+    <a href="#pvm-emu">02. Emuladores</a>
+    <a href="#pvm-ios">03. iOS</a>
+    <a href="#pvm-plan">04. Qué buscaremos</a>
+    <a href="#pvm-scope">05. Alcance</a>
+    <a href="#pvm-end">Conclusión</a>
+  </nav>
+
+  <!-- 00 INTRO -->
+  <section class="pvm-section" id="pvm-intro">
+    <h2><span>00.</span> Antes de empezar</h2>
+    <p>En esta oportunidad iniciaremos una exploración práctica del análisis de aplicaciones móviles desde la perspectiva de un evaluador de seguridad. Antes de profundizar en técnicas de análisis dinámico o de intentar identificar mecanismos de protección, es importante preparar un entorno controlado que permita observar el comportamiento de una aplicación en diferentes dispositivos y configuraciones.</p>
+    <p>El primer paso será reconocer el entorno de ejecución: qué sistema operativo utiliza el dispositivo, qué permisos tiene disponibles, qué restricciones de seguridad están activas y qué posibilidades ofrece un dispositivo con privilegios elevados. Para ello, trabajaremos con escenarios <strong>Android</strong> e <strong>iOS</strong>, utilizando tanto dispositivos físicos como entornos virtualizados.</p>
+
+    <div class="pvm-grid two">
+      <div class="pvm-card"><div class="ico">💻</div><h4>Estación de análisis</h4><p>Kali Linux con scrcpy, ADB, OpenVPN y SSH.</p><span class="tag c">ATTACKER</span></div>
+      <div class="pvm-card"><div class="ico">📱</div><h4>Samsung SM-A225M</h4><p>Dispositivo físico con Android 12 y acceso root.</p><span class="tag">FÍSICO · ROOT</span></div>
+      <div class="pvm-card"><div class="ico">🤖</div><h4>Android en Corellium</h4><p>Instancia virtualizada con Android 16.0.0 rooteado.</p><span class="tag y">VIRTUAL · ROOT</span></div>
+      <div class="pvm-card"><div class="ico">🍏</div><h4>iOS en Corellium</h4><p>Instancia virtualizada con acceso SSH como root.</p><span class="tag r">VIRTUAL · JAILBREAK</span></div>
+    </div>
+
+    <div class="pvm-note danger">
+      <b class="lbl">Alcance</b>
+      Las pruebas se realizarán sobre aplicaciones de laboratorio o aplicaciones para las que se cuente con autorización expresa. El objetivo es comprender cómo se comporta una aplicación ante distintos escenarios de seguridad, identificar posibles controles de protección y documentar los hallazgos de manera reproducible. <strong>No se realizarán pruebas contra aplicaciones o servicios de terceros sin autorización.</strong>
+    </div>
+  </section>
+
+  <!-- 01 ANDROID -->
+  <section class="pvm-section" id="pvm-android">
+    <h2><span>01.</span> Explorando Android rooteado — Samsung</h2>
+    <p>Para comenzar, utilizaré un dispositivo <strong>Samsung SM-A225M con Android 12 y acceso root</strong>. Contar con un dispositivo rooteado permite realizar observaciones que normalmente están restringidas a una aplicación convencional, por ejemplo, revisar directorios internos, consultar información del sistema y analizar determinados comportamientos durante la ejecución.</p>
+    <div class="pvm-note">
+      <b class="lbl">Tip</b>
+      El acceso root debe entenderse como una condición especial del entorno de pruebas, no como un requisito para todas las evaluaciones. En un proyecto real conviene comparar el comportamiento de la aplicación en un dispositivo estándar y en otro con privilegios elevados.
+    </div>
+
+    <h3><span>1.1</span> Control remoto de pantalla con scrcpy</h3>
+    <p>Para visualizar e interactuar con el dispositivo desde Kali Linux utilizaré <a href="https://github.com/Genymobile/scrcpy" target="_blank" rel="noopener">scrcpy</a>, una herramienta que permite mostrar y controlar un dispositivo Android conectado mediante ADB.</p>
+    <p>Descargué la versión <code>v5.0.1</code> para Linux desde la sección de releases del proyecto.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/01-scrcpy-release-v5.0.1.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/01-scrcpy-release-v5.0.1.png" alt="Release v5.0.1 de scrcpy en GitHub con el paquete para Linux x86_64 resaltado" width="1390" height="832"></a>
+    </figure>
+
+    <p>Después de descargar el paquete, lo extraje y accedí al directorio correspondiente:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar</span> xf scrcpy-linux-x86_64-v5.0.1.tar.gz
+<span class="nb">cd</span> scrcpy-linux-x86_64-v5.0.1</code></pre></div></div>
+    <figure class="pvm-fig small">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/02-extraer-scrcpy.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/02-extraer-scrcpy.png" alt="Extracción del paquete de scrcpy en la terminal" width="529" height="139"></a>
+    </figure>
+
+    <p>Con el dispositivo conectado y la depuración USB habilitada, ejecuté:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./scrcpy</code></pre></div></div>
+    <p>La herramienta detectó el dispositivo Samsung y permitió visualizar su pantalla desde el equipo de análisis.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/03-scrcpy-samsung-sm-a225m.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/03-scrcpy-samsung-sm-a225m.png" alt="scrcpy mostrando la pantalla del Samsung SM-A225M desde Kali Linux" width="1312" height="873"></a>
+    </figure>
+
+    <h3><span>1.2</span> Verificación del acceso root</h3>
+    <div class="pvm-pair">
+      <div>
+        <p>Antes de iniciar el análisis, comprobé que el dispositivo contara con privilegios root. Para ello utilicé una aplicación de verificación de root y confirmé que el acceso de superusuario estuviera disponible.</p>
+        <p>Esta comprobación permite validar que el entorno está preparado para las pruebas que requieran permisos elevados.</p>
+        <div class="pvm-note warn">
+          <b class="lbl">Importante</b>
+          Una aplicación de verificación es solo una referencia inicial: durante una evaluación también se debe comprobar el comportamiento real de los comandos y las restricciones del sistema.
+        </div>
+      </div>
+      <figure class="pvm-fig phone">
+        <a href="/assets/img/posts/mobile-devices-under-the-microscope/04-root-checker.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/04-root-checker.png" alt="Root Checker Basic confirmando el acceso root en el SM-A225M" width="483" height="1106"></a>
+      </figure>
+    </div>
+
+    <h3><span>1.3</span> Conexión mediante ADB y exploración del sistema</h3>
+    <p>Con el dispositivo reconocido por ADB, ejecuté los siguientes comandos para iniciar una sesión de shell y comprobar el usuario efectivo:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">adb</span> devices
+<span class="nb">adb</span> shell
+<span class="nb">su</span>
+<span class="nb">whoami</span></code></pre></div></div>
+    <p>Si el acceso root está correctamente concedido, el comando <code>whoami</code> debe devolver:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">root</span></code></pre></div></div>
+    <p>A continuación, realicé una exploración inicial de los directorios del sistema y de la ubicación donde Android almacena los datos de las aplicaciones:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ls</span>
+<span class="nb">cd</span> /data/data
+<span class="nb">ls</span></code></pre></div></div>
+    <p>En esta ubicación pueden encontrarse directorios asociados a los paquetes instalados. El acceso y la visibilidad de su contenido dependerán de la versión de Android, los permisos y las políticas de seguridad del dispositivo.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/05-adb-shell-root-data.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/05-adb-shell-root-data.png" alt="adb shell como root y listado de paquetes en /data/data" width="1325" height="809"></a>
+    </figure>
+  </section>
+
+  <!-- 02 EMULADORES -->
+  <section class="pvm-section" id="pvm-emu">
+    <h2><span>02.</span> Explorando Android mediante emuladores</h2>
+    <p>Además de los dispositivos físicos, existen diferentes alternativas para ejecutar Android en entornos emulados o virtualizados. La elección dependerá de los recursos disponibles en el equipo, como la memoria RAM, el procesador, el almacenamiento y las características de virtualización.</p>
+
+    <div class="pvm-grid five">
+      <div class="pvm-card"><div class="ico">🧬</div><h4>Genymotion</h4><p>Dispositivos virtuales Android y opciones para pruebas.</p><span class="tag c">VIRTUAL</span></div>
+      <div class="pvm-card"><div class="ico">🛠️</div><h4>Android Studio Emulator</h4><p>Alternativa integrada en el entorno oficial de desarrollo Android.</p><span class="tag">OFICIAL</span></div>
+      <div class="pvm-card"><div class="ico">🎮</div><h4>NoxPlayer</h4><p>Emulador orientado principalmente a la ejecución de aplicaciones Android.</p><span class="tag y">APPS</span></div>
+      <div class="pvm-card"><div class="ico">🕹️</div><h4>BlueStacks</h4><p>Plataforma de emulación Android enfocada en aplicaciones y juegos.</p><span class="tag y">APPS · JUEGOS</span></div>
+      <div class="pvm-card"><div class="ico">🔬</div><h4>Corellium</h4><p>Virtualización comercial de dispositivos móviles, usada también en investigación y pruebas de seguridad.</p><span class="tag r">RESEARCH</span></div>
+    </div>
+    <p style="margin-top:16px">Cada alternativa tiene características, limitaciones y modelos de licencia diferentes. Algunas funciones avanzadas, imágenes de sistema o capacidades de acceso privilegiado pueden depender del producto contratado.</p>
+
+    <h3><span>2.1</span> Entorno seleccionado: Corellium</h3>
+    <p>Para esta prueba de concepto utilizaré <a href="https://www.corellium.com/" target="_blank" rel="noopener">Corellium</a>, una plataforma que permite trabajar con dispositivos móviles virtualizados. En este entorno prepararé instancias Android e iOS para observar su configuración y establecer conectividad desde Kali Linux.</p>
+    <p>La instancia Android utilizada aparece configurada con una versión de sistema indicada como <code>16.0.0 (Rooted)</code>. Esta característica permite trabajar en un escenario de laboratorio con privilegios elevados.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/06-corellium-android-16-rooted.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/06-corellium-android-16-rooted.png" alt="Instancia Android en Corellium con OS 16.0.0 Rooted" width="1644" height="853"></a>
+    </figure>
+
+    <h3><span>2.2</span> Conexión al dispositivo Android virtualizado</h3>
+    <p>Para utilizar ADB desde el equipo de análisis, Corellium proporciona los parámetros de conexión del dispositivo. En este escenario, primero es necesario establecer la conexión VPN indicada por la plataforma.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/07-corellium-vpn-adb.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/07-corellium-vpn-adb.png" alt="Corellium indica descargar el archivo OVPN y el comando adb connect" width="1636" height="361"></a>
+    </figure>
+    <p>Una vez descargado el archivo de configuración correspondiente, inicié OpenVPN:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>openvpn corelium.ovpn</code></pre></div></div>
+    <div class="pvm-note">
+      <b class="lbl">Nota</b>
+      Utiliza el nombre exacto del archivo descargado. En las capturas se muestra <code>corelium.ovpn</code>; si tu archivo tiene otro nombre, reemplázalo en el comando.
+    </div>
+    <p>Cuando OpenVPN informa que la secuencia de inicialización se completó, la interfaz VPN queda disponible. Después, utilicé el comando ADB proporcionado por Corellium:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">adb</span> connect 10.11.1.2:5001</code></pre></div></div>
+    <p>La respuesta <code>connected to 10.11.1.2:5001</code> confirma que ADB pudo establecer la conexión con el dispositivo virtualizado.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/08-openvpn-adb-connect.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/08-openvpn-adb-connect.png" alt="OpenVPN conectado y adb connect exitoso" width="1627" height="455"></a>
+    </figure>
+    <figure class="pvm-fig small">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/09-adb-shell-root-corellium.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/09-adb-shell-root-corellium.png" alt="Shell root en el Android virtualizado: su e id devuelven uid=0(root)" width="324" height="219"></a>
+    </figure>
+  </section>
+
+  <!-- 03 iOS -->
+  <section class="pvm-section" id="pvm-ios">
+    <h2><span>03.</span> Explorando iOS — fase de pruebas</h2>
+    <p>La evaluación no se limitará a Android. También incorporaré un entorno iOS para ampliar el alcance de las pruebas y observar las diferencias entre ambos sistemas operativos.</p>
+    <p>Para esta fase utilizaré una instancia virtualizada de iOS en Corellium. La plataforma permite acceder al dispositivo mediante los mecanismos de conexión que tenga habilitados la instancia y el proyecto.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/10-corellium-ios-ssh.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/10-corellium-ios-ssh.png" alt="Instancia iOS en Corellium con opciones de conexión VPN, SSH y USBFlux" width="1622" height="756"></a>
+    </figure>
+
+    <h3><span>3.1</span> Conectividad y acceso SSH</h3>
+    <p>En el entorno mostrado, Corellium proporciona los datos de conexión SSH para acceder al dispositivo virtualizado. Antes de intentar conectarse, es necesario verificar que la VPN esté activa y que el servicio SSH de la instancia se encuentre disponible.</p>
+    <p>El ejemplo de conexión indicado por la plataforma es:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">ssh</span> root@10.11.1.1</code></pre></div></div>
+    <p>En la captura se observa el establecimiento de la sesión SSH y la comprobación del usuario efectivo mediante:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">whoami</span></code></pre></div></div>
+    <p>La respuesta <code>root</code> indica que la sesión dispone de privilegios de superusuario en ese entorno de laboratorio.</p>
+    <figure class="pvm-fig">
+      <a href="/assets/img/posts/mobile-devices-under-the-microscope/11-ssh-ios-root.png" target="_blank" rel="noopener"><img loading="lazy" src="/assets/img/posts/mobile-devices-under-the-microscope/11-ssh-ios-root.png" alt="Sesión SSH al iOS virtualizado con whoami devolviendo root" width="1637" height="629"></a>
+    </figure>
+    <div class="pvm-note warn">
+      <b class="lbl">Consideración técnica</b>
+      Que una instancia virtualizada permita acceso root o SSH no significa que todos los dispositivos iOS reales tengan esas capacidades. El resultado depende de la imagen, versión, configuración y características habilitadas en el entorno de pruebas.
+    </div>
+  </section>
+
+  <!-- 04 PLAN -->
+  <section class="pvm-section" id="pvm-plan">
+    <h2><span>04.</span> ¿Qué buscaremos durante las pruebas?</h2>
+    <p>Con los entornos preparados, el siguiente paso será ejecutar una aplicación de prueba y observar su comportamiento. El análisis podrá organizarse en las siguientes líneas de trabajo:</p>
+    <ol class="pvm-steps">
+      <li><span><strong>Reconocimiento del entorno:</strong> versión del sistema operativo, modelo, arquitectura y configuración del dispositivo.</span></li>
+      <li><span><strong>Análisis de permisos:</strong> permisos solicitados por la aplicación y su justificación funcional.</span></li>
+      <li><span><strong>Inspección del almacenamiento:</strong> revisión autorizada de archivos, preferencias y datos locales generados por la aplicación.</span></li>
+      <li><span><strong>Análisis dinámico:</strong> observación del comportamiento de la aplicación durante su ejecución.</span></li>
+      <li><span><strong>Mecanismos de protección:</strong> evaluación controlada de las comprobaciones de root o jailbreak y de otras medidas de protección.</span></li>
+      <li><span><strong>Comunicaciones:</strong> observación del tráfico de red en un entorno de laboratorio y de acuerdo con el alcance autorizado.</span></li>
+      <li><span><strong>Comparación de plataformas:</strong> identificación de diferencias de comportamiento entre Android e iOS.</span></li>
+    </ol>
+    <div class="pvm-note ok" style="margin-top:18px">
+      <b class="lbl">Objetivo</b>
+      El propósito no es únicamente conseguir acceso a un dispositivo rooteado o con jailbreak, sino comprender qué información expone la aplicación, qué controles implementa y cómo responde ante un entorno de análisis.
+    </div>
+  </section>
+
+  <!-- 05 ALCANCE -->
+  <section class="pvm-section" id="pvm-scope">
+    <h2><span>05.</span> Consideraciones y alcance</h2>
+    <p>Esta entrada documenta la preparación inicial de los dispositivos y la conectividad necesaria para comenzar las pruebas. Las siguientes etapas se desarrollarán de forma progresiva, utilizando aplicaciones de laboratorio y entornos controlados.</p>
+    <ul class="pvm-check">
+      <li>Utilizar únicamente aplicaciones propias, de prueba o con autorización expresa.</li>
+      <li>No acceder, extraer ni divulgar información personal de terceros.</li>
+      <li>Mantener aislado el entorno de laboratorio y proteger las credenciales de acceso.</li>
+      <li>Documentar los comandos, resultados y evidencias para facilitar la reproducibilidad.</li>
+      <li>Diferenciar los resultados obtenidos en dispositivos físicos de los obtenidos en entornos virtualizados.</li>
+    </ul>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="pvm-end" id="pvm-end">
+    <h2>Conclusión</h2>
+    <p>La preparación de dispositivos Android rooteados y entornos iOS virtualizados constituye el punto de partida para una evaluación de seguridad móvil. Con herramientas como <strong>scrcpy</strong>, <strong>ADB</strong>, <strong>SSH</strong>, <strong>OpenVPN</strong> y <strong>Corellium</strong>, es posible construir un laboratorio que facilite la observación y el análisis del comportamiento de las aplicaciones.</p>
+    <p>En las próximas pruebas profundizaré en la interacción con una aplicación móvil de laboratorio, revisando sus mecanismos de protección y documentando los hallazgos desde la perspectiva de un pentester.</p>
+    <div class="pvm-tools">
+      <span class="pvm-badge y">scrcpy</span>
+      <span class="pvm-badge g">ADB</span>
+      <span class="pvm-badge">OpenVPN</span>
+      <span class="pvm-badge g">SSH</span>
+      <span class="pvm-badge r">Corellium</span>
+      <span class="pvm-badge">Kali Linux</span>
+    </div>
+    <div class="pvm-sign">PVGUARD CYBERSECURITY TECHNOLOGY <span>// Gh0s7m4n</span></div>
+  </section>
+
+</div>
+</div>{% endraw %}
