@@ -14,6 +14,42 @@
     <p>{{ site.sidebar.about }}</p>
   </section>
 
+  {% assign cnt = site.data.contador %}
+  <section class="widget pv-stats" id="pv-stats"
+           data-ns="{{ cnt.namespace | default: 'pvguard-github-io' }}"
+           data-base="{{ cnt.base_vistas | default: 0 }}">
+    <h2>Visitas del blog</h2>
+    <div class="pv-stats-label">Vistas totales</div>
+    <div class="pv-odometer" id="pv-total" aria-live="polite">{{ cnt.base_vistas | default: 0 }}</div>
+    <div class="pv-stats-row">
+      <div class="pv-stat">
+        <b id="pv-today-views">···</b>
+        <span>vistas hoy</span>
+      </div>
+      <div class="pv-stat">
+        <b id="pv-today-visitors">···</b>
+        <span>visitantes hoy</span>
+      </div>
+    </div>
+    <div class="pv-stats-foot"><span class="pv-live"></span> contador en vivo</div>
+  </section>
+
+  {% if cnt.info_visitante != false %}
+  <section class="widget pv-visitor" id="pv-visitor">
+    <h2>Información del visitante</h2>
+    <div class="pv-visitor-box">
+      <div class="pv-vrow"><span>Su IP</span><b data-k="ip">···</b></div>
+      <div class="pv-vrow"><span>País</span><b data-k="country">···</b></div>
+      <div class="pv-vrow"><span>Región</span><b data-k="region">···</b></div>
+      <div class="pv-vrow"><span>Ciudad</span><b data-k="city">···</b></div>
+      <div class="pv-vrow"><span>Idioma</span><b data-k="lang">···</b></div>
+      <div class="pv-vrow"><span>Navegador</span><b data-k="browser">···</b></div>
+      <div class="pv-vrow"><span>Sistema</span><b data-k="os">···</b></div>
+    </div>
+    <p class="pv-visitor-note">Solo tú ves estos datos. Este sitio no los guarda.</p>
+  </section>
+  {% endif %}
+
   <section class="widget">
     <h2>Mis Perfiles Profesionales</h2>
     <ul class="widget-list">

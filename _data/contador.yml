@@ -1,0 +1,13 @@
+# ==========================================================
+#  Contador de visitas e informacion del visitante (barra lateral)
+# ==========================================================
+
+# Contador gratuito Abacus (https://abacus.jasoncameron.dev), sin cuenta.
+# No cambies el namespace una vez publicado o el conteo empieza de nuevo.
+namespace: "pvguard-github-io"
+
+# Vistas que ya tenia el blog en Blogger: el contador continua desde aqui.
+base_vistas: 4336
+
+# Mostrar el widget "Informacion del visitante" (true / false)
+info_visitante: true

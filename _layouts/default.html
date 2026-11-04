@@ -13,6 +13,7 @@
   {% capture theme_css %}/assets/css/pvguard-{{ site.estilo | default: 'cyan' }}.css{% endcapture %}
   <link rel="stylesheet" href="{{ theme_css | relative_url }}?v={{ build_v }}">
   {% if page.layout == "home" %}<link rel="stylesheet" href="{{ '/assets/css/pvguard-terminal.css' | relative_url }}?v={{ build_v }}">{% endif %}
+  <link rel="stylesheet" href="{{ '/assets/css/pvguard-widgets.css' | relative_url }}?v={{ build_v }}">
   <link rel="icon" href="{{ site.logo | relative_url }}">
 </head>
 <body class="theme-{{ site.estilo | default: 'cyan' }}">
@@ -30,5 +31,6 @@
     {% include footer.html %}
   </div>
   <script src="{{ '/assets/js/pvguard.js' | relative_url }}?v={{ build_v }}" defer></script>
+  <script src="{{ '/assets/js/pvguard-widgets.js' | relative_url }}?v={{ build_v }}" defer></script>
 </body>
 </html>
